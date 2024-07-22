@@ -3,7 +3,7 @@ import type { AppProps } from "next/app"
 import { useState, useEffect } from "react"
 import Cookies from "js-cookie"
 import Layout from "@/components/layout"
-import { AppProvider } from "@/context/AppContext"
+import { AppContext, AppProvider } from "@/context/AppContext"
 
 export default function App({ Component, pageProps } : AppProps) {
   const [user, setUser] = useState(null)

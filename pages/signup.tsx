@@ -1,5 +1,6 @@
 import { NextPage } from "next"
 import { useContext, useState } from "react"
+import { useRouter } from 'next/router';
 import { register } from "@/lib/auth"
 import { AppContext } from "@/context/AppContext"
 
@@ -10,11 +11,15 @@ const SignUp : NextPage = () => {
   }
   const { setUsername } = appContext
 
+  const router = useRouter();
+
   const [data, setData] = useState({ username : "", email : "", password : "" })
+
   const handleSubmit = async () => {
     try {
       const res = await register(data.username, data.email, data.password)
-      setUsername(res.data.user)
+      setUsername(data.username)
+      router.push('/'); // Use router.push for client-side navigation
     } catch (err) {
       console.log(err)
     }

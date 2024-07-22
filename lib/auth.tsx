@@ -11,7 +11,6 @@ export const register = async (username : string, email : string, password : str
       password
     })
     Cookie.set("token", res.data.jwt, { expires : 7 })
-    window.location.href = "/"
     return res
   } catch (err) {
     console.log(err)
@@ -19,17 +18,16 @@ export const register = async (username : string, email : string, password : str
   }
 }
 
-export const login = (identifier : string, password : string) => {
-  return axios
-  .post(`${API_URL}/api/auth/local`, {
-    identifier,
-    password
-  }).then((res) => {
+export const login = async (identifier : string, password : string) => {
+  try {
+    const res = await axios.post(`${API_URL}/api/auth/local`, {
+      identifier,
+      password
+    })
     Cookie.set("token", res.data.jwt, { expires : 7 })
-    window.location.href = "/login"
     return res
-  }).catch((err) => {
+  } catch (err) {
     console.log(err)
     throw err
-  })
+  }
 }
