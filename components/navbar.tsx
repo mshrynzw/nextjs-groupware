@@ -17,12 +17,9 @@ const Navbar = () => {
         <li>Chat</li>
         <li>Time Card</li>
         <li>Setting</li>
-        {username ? (
-          <li>{username}</li>
-        ) : (
-          <li><Link href="/signup">Sign Up</Link></li>
-        )}
+        <li>{username ? username : null}</li>
         <li><Link href="/signin">Sign In</Link></li>
+        <li><Link href="/signup">Sign Up</Link></li>
       </ul>
     </header>
   )

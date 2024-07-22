@@ -10,7 +10,6 @@ const SignUp : NextPage = () => {
     throw new Error("UserProfile must be used within an AppProvider")
   }
   const { setUsername } = appContext
-
   const router = useRouter();
 
   const [data, setData] = useState({ username : "", email : "", password : "" })
@@ -19,7 +18,7 @@ const SignUp : NextPage = () => {
     try {
       const res = await register(data.username, data.email, data.password)
       setUsername(data.username)
-      router.push('/'); // Use router.push for client-side navigation
+      await router.push('/')
     } catch (err) {
       console.log(err)
     }
