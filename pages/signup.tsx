@@ -1,7 +1,7 @@
 import { NextPage } from "next"
 import { useContext, useState } from "react"
 import { useRouter } from 'next/router';
-import { register } from "@/lib/auth"
+import { signUp } from "@/lib/auth"
 import { AppContext } from "@/context/AppContext"
 
 const SignUp : NextPage = () => {
@@ -14,11 +14,11 @@ const SignUp : NextPage = () => {
 
   const [data, setData] = useState({ username : "", email : "", password : "" })
 
-  const handleSignIn = async () => {
+  const handleSignUp = async () => {
     try {
-      const res = await register(data.username, data.email, data.password)
+      const res = await signUp(data.username, data.email, data.password)
       setUsername(res.data.user.username)
-      await router.push('/')
+      await router.push("/")
     } catch (err) {
       console.log(err)
     }
@@ -30,7 +30,7 @@ const SignUp : NextPage = () => {
       <form
         onSubmit={async (e) => {
           e.preventDefault()
-          await handleSignIn() // Await the handleSubmit function
+          await handleSignUp() // Await the handleSubmit function
         }}
       >
         <label htmlFor="username">Name</label>
@@ -57,7 +57,7 @@ const SignUp : NextPage = () => {
           autoComplete="current-password"
           onChange={(e) => setData({ ...data, password : e.target.value })}
         />
-        <button type="submit">Sign In</button>
+        <button type="submit">Sign Up</button>
       </form>
     </>
   )

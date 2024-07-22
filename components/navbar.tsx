@@ -35,7 +35,7 @@ const Navbar = () => {
         {username ? (
           <li><a href="#" onClick={handleLogout}>Logout</a></li>
         ) : (
-          <li><Link href="/signin">Login</Link></li>
+          <li><Link href="/login">Login</Link></li>
         )}
       </ul>
     </header>
