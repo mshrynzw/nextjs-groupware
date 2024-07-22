@@ -13,13 +13,14 @@ const Login : NextPage = () => {
   const router = useRouter()
 
   const [data, setData] = useState({ identifier : "", password : "" })
-
+  const [error, setError] = useState("")
   const handleLogin = async () => {
     try {
       const res = await login(data.identifier, data.password)
       setUsername(res.data.user.username)
       await router.push("/")
     } catch (err) {
+      setError(err.response.data.error.message)
       console.log(err)
     }
   }
@@ -51,6 +52,9 @@ const Login : NextPage = () => {
         />
         <button type="submit">Login</button>
       </form>
+      {error ? (
+        <p>{error}</p>
+      ) : null}
     </>
   )
 }
