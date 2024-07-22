@@ -1,29 +1,29 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react"
 
 type AppContextType = {
-  username : string;
-  setUsername : (username : string) => void;
-};
+  username : string | null;
+  setUsername : (username : string | null) => void;
+}
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
 
 const AppProvider = ({ children } : { children : ReactNode }) => {
-  const [username, setUsernameState] = useState<string>("")
+  const [username, setUsername] = useState<string>(null)
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem('username');
+    const storedUsername = localStorage.getItem("username")
     if (storedUsername) {
-      setUsernameState(storedUsername);
+      setUsername(storedUsername)
     }
-  }, []);
+  }, [])
 
-  const setUsername = (username: string) => {
-    localStorage.setItem('username', username);
-    setUsernameState(username);
-  };
+  const loadUsername = (username : string) => {
+    localStorage.setItem("username", username)
+    setUsername(username)
+  }
 
   return (
-    <AppContext.Provider value={{ username, setUsername }}>
+    <AppContext.Provider value={{ username, setUsername : loadUsername }}>
       {children}
     </AppContext.Provider>
   )

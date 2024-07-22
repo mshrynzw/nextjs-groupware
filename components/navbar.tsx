@@ -1,13 +1,23 @@
 import Link from "next/link"
 import { useContext } from "react"
 import { AppContext } from "@/context/AppContext"
+import Cookies from "js-cookie"
+import { useRouter } from "next/router"
 
 const Navbar = () => {
   const appContext = useContext(AppContext)
   if (!appContext) {
     throw new Error("Navbar must be used within an AppProvider")
   }
-  const { username } = appContext
+  const { username, setUsername } = appContext
+
+  const router = useRouter()
+  const handleLogout = () => {
+    // TODO
+    // Cookies.remove("token")
+    setUsername(null)
+    router.push("/")
+  }
 
   return (
     <header className="bg-gray-500">
@@ -17,9 +27,16 @@ const Navbar = () => {
         <li>Chat</li>
         <li>Time Card</li>
         <li>Setting</li>
-        <li>{username ? username : null}</li>
-        <li><Link href="/signin">Sign In</Link></li>
-        <li><Link href="/signup">Sign Up</Link></li>
+        {username ? (
+          <li>{username}</li>
+        ) : (
+          <li><Link href="/signup">Sign Up</Link></li>
+        )}
+        {username ? (
+          <li><a href="#" onClick={handleLogout}>Logout</a></li>
+        ) : (
+          <li><Link href="/signin">Login</Link></li>
+        )}
       </ul>
     </header>
   )

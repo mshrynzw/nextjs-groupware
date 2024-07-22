@@ -14,10 +14,10 @@ const SignUp : NextPage = () => {
 
   const [data, setData] = useState({ username : "", email : "", password : "" })
 
-  const handleSubmit = async () => {
+  const handleSignIn = async () => {
     try {
       const res = await register(data.username, data.email, data.password)
-      setUsername(data.username)
+      setUsername(res.data.user.username)
       await router.push('/')
     } catch (err) {
       console.log(err)
@@ -30,7 +30,7 @@ const SignUp : NextPage = () => {
       <form
         onSubmit={async (e) => {
           e.preventDefault()
-          await handleSubmit() // Await the handleSubmit function
+          await handleSignIn() // Await the handleSubmit function
         }}
       >
         <label htmlFor="username">Name</label>
@@ -57,7 +57,7 @@ const SignUp : NextPage = () => {
           autoComplete="current-password"
           onChange={(e) => setData({ ...data, password : e.target.value })}
         />
-        <button type="submit">Submit</button>
+        <button type="submit">Sign In</button>
       </form>
     </>
   )
