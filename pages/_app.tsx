@@ -33,6 +33,11 @@ export default function App({ Component, pageProps } : AppProps) {
     if (!token && router.pathname !== "/login" && router.pathname !== "/signup") {
       router.push("/login")
     }
+
+    if (router.pathname === "/login"){
+      Cookies.remove("token")
+      setUser(null)
+    }
   }, [router])
 
   return (

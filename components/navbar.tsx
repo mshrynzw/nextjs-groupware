@@ -13,10 +13,8 @@ const Navbar = () => {
 
   const router = useRouter()
   const handleLogout = () => {
-    // TODO
-    // Cookies.remove("token")
     setUsername(null)
-    router.push("/")
+    router.push("/login")
   }
 
   return (
@@ -33,7 +31,7 @@ const Navbar = () => {
           <li><Link href="/signup">Sign Up</Link></li>
         )}
         {username ? (
-          <li><a href="#" onClick={handleLogout}>Logout</a></li>
+          <li><button onClick={handleLogout}>Logout</button></li>
         ) : (
           <li><Link href="/login">Login</Link></li>
         )}
