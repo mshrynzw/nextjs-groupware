@@ -1,7 +1,7 @@
 import { NextPage } from "next"
 import { useContext, useState } from "react"
 import { postMessage } from "@/lib/chat"
-import Messages from "@/components/chat/messages"
+import Read from "@/components/chat/read"
 import { AppContext } from "@/context/AppContext"
 
 const Chat : NextPage = () => {
@@ -25,7 +25,7 @@ const Chat : NextPage = () => {
   return (
     <>
       <h1>Chat</h1>
-      <Messages/>
+      <Read/>
       <form
         onSubmit={async (e) => {
           await handleSend()

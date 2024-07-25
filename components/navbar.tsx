@@ -20,7 +20,7 @@ const Navbar = () => {
     <header className="bg-gray-500">
       <ul>
         <li><Link href="/">Home</Link></li>
-        <li>Info</li>
+        <li><Link href="/info">Info</Link></li>
         <li><Link href="/chat">Chat</Link></li>
         <li>Time Card</li>
         <li>Setting</li>
@@ -30,7 +30,9 @@ const Navbar = () => {
           <li><Link href="/signup">Sign Up</Link></li>
         )}
         {user ? (
-          <li><button onClick={handleLogout}>Logout</button></li>
+          <li>
+            <button onClick={handleLogout}>Logout</button>
+          </li>
         ) : (
           <li><Link href="/login">Login</Link></li>
         )}

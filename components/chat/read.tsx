@@ -22,7 +22,7 @@ const query = gql`
   }
 `
 
-const Messages = () => {
+const Read = () => {
   const { loading, error, data } = useQuery(query)
 
   if (loading) return <p>Loading...</p>
@@ -52,4 +52,4 @@ const Messages = () => {
   )
 }
 
-export default Messages
+export default Read
