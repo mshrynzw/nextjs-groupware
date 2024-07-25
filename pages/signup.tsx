@@ -9,19 +9,19 @@ const SignUp : NextPage = () => {
   if (!appContext) {
     throw new Error("UserProfile must be used within an AppProvider")
   }
-  const { setUsername } = appContext
+  const { setUser } = appContext
   const router = useRouter()
 
   const [data, setData] = useState({ username : "", email : "", password : "" })
   const [error, setError] = useState("")
   const handleSignUp = async () => {
     try {
-      const res = await signUp(data.username, data.email, data.password)
-      setUsername(res.data.user.username)
+      const response = await signUp(data.username, data.email, data.password)
+      setUser(response.data.user)
       await router.push("/")
-    } catch (err) {
-      setError(err.response.data.error.message)
-      console.log(err.response.data.error.message)
+    } catch (error) {
+      setError(error.response.data.error.message)
+      console.log(error.response.data.error.message)
     }
   }
 

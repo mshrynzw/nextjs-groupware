@@ -5,13 +5,13 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337"
 
 export const signUp = async (username : string, email : string, password : string) => {
   try {
-    const res = await axios.post(`${API_URL}/api/auth/local/register`, {
+    const response = await axios.post(`${API_URL}/api/auth/local/register`, {
       username,
       email,
       password
     })
-    Cookie.set("token", res.data.jwt, { expires : 7 })
-    return res
+    Cookie.set("token", response.data.jwt, { expires : 7 })
+    return response
   } catch (err) {
     throw err
   }
@@ -19,12 +19,12 @@ export const signUp = async (username : string, email : string, password : strin
 
 export const login = async (identifier : string, password : string) => {
   try {
-    const res = await axios.post(`${API_URL}/api/auth/local`, {
+    const response = await axios.post(`${API_URL}/api/auth/local`, {
       identifier,
       password
     })
-    Cookie.set("token", res.data.jwt, { expires : 7 })
-    return res
+    Cookie.set("token", response.data.jwt, { expires : 7 })
+    return response
   } catch (err) {
     throw err
   }

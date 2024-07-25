@@ -5,9 +5,12 @@ import Cookies from "js-cookie"
 import Layout from "@/components/layout"
 import { AppProvider } from "@/context/AppContext"
 import { useRouter } from "next/router"
+import { User } from "@/types/user"
+import client from "@/lib/apollo"
+import { ApolloProvider } from "@apollo/client"
 
-export default function App({ Component, pageProps } : AppProps) {
-  const [user, setUser] = useState(null)
+const App = ({ Component, pageProps } : AppProps) => {
+  const [user, setUser] = useState<User | null>(null)
   useEffect(() => {
     const token = Cookies.get("token")
     if (token) {
@@ -15,11 +18,8 @@ export default function App({ Component, pageProps } : AppProps) {
         headers : {
           Authorization : `Bearer ${token}`
         }
-      }).then(async (res) => {
-        if (res.ok) {
-          const user = await res.json()
-          setUser(user)
-        } else {
+      }).then(async (response) => {
+        if (!response.ok) {
           Cookies.remove("token")
           setUser(null)
         }
@@ -34,17 +34,21 @@ export default function App({ Component, pageProps } : AppProps) {
       router.push("/login")
     }
 
-    if (router.pathname === "/login"){
+    if (router.pathname === "/login") {
       Cookies.remove("token")
       setUser(null)
     }
   }, [router])
 
   return (
-    <AppProvider value={{ user : user, setUser : setUser }}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+    <AppProvider value={{ user, setUser }}>
+      <ApolloProvider client={client}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ApolloProvider>
     </AppProvider>
   )
 }
+
+export default App

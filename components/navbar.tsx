@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { useContext } from "react"
 import { AppContext } from "@/context/AppContext"
-import Cookies from "js-cookie"
 import { useRouter } from "next/router"
 
 const Navbar = () => {
@@ -9,11 +8,11 @@ const Navbar = () => {
   if (!appContext) {
     throw new Error("Navbar must be used within an AppProvider")
   }
-  const { username, setUsername } = appContext
+  const { user, setUser } = appContext
 
   const router = useRouter()
   const handleLogout = () => {
-    setUsername(null)
+    setUser(null)
     router.push("/login")
   }
 
@@ -22,15 +21,15 @@ const Navbar = () => {
       <ul>
         <li><Link href="/">Home</Link></li>
         <li>Info</li>
-        <li>Chat</li>
+        <li><Link href="/chat">Chat</Link></li>
         <li>Time Card</li>
         <li>Setting</li>
-        {username ? (
-          <li>{username}</li>
+        {user ? (
+          <li>{user.username}</li>
         ) : (
           <li><Link href="/signup">Sign Up</Link></li>
         )}
-        {username ? (
+        {user ? (
           <li><button onClick={handleLogout}>Logout</button></li>
         ) : (
           <li><Link href="/login">Login</Link></li>
