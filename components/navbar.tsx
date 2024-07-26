@@ -22,7 +22,7 @@ const Navbar = () => {
         <li><Link href="/">Home</Link></li>
         <li><Link href="/info">Info</Link></li>
         <li><Link href="/chat">Chat</Link></li>
-        <li>Time Card</li>
+        <li><Link href="/timecard">Time Card</Link></li>
         <li>Setting</li>
         {user ? (
           <li>{user.username}</li>

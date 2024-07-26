@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { editedInfo } from "@/lib/info"
 
 const Edit = ({ editInfo, setScreen, refetch }) => {
@@ -40,7 +40,7 @@ const Edit = ({ editInfo, setScreen, refetch }) => {
           value={body}
           onChange={(e) => setBody(e.target.value)}
         />
-        <button type="submit">Edit</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   )

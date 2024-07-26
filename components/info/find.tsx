@@ -1,6 +1,6 @@
+import React, { useEffect } from "react"
 import { gql } from "apollo-boost"
 import { useQuery } from "@apollo/client"
-import React, { useEffect } from "react"
 
 const query = gql`
   {
