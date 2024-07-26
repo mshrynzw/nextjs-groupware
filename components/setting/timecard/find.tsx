@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import { gql } from "apollo-boost"
 import { useQuery } from "@apollo/client"
 

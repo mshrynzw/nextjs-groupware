@@ -1,4 +1,3 @@
-import React from "react"
 import { deletedTimecardSetting } from "@/lib/setting/timecard"
 
 const Delete = ({ deleteTimecardSetting, setScreen, refetch }) => {
