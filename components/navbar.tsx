@@ -24,7 +24,12 @@ const Navbar = () => {
         <li><Link href="/chat">Chat</Link></li>
         <li><Link href="/todo">Todo</Link></li>
         <li><Link href="/timecard">Time Card</Link></li>
-        <li>Setting</li>
+        <li>
+          Setting
+          <ul>
+            <li><Link href="/setting/group">Group</Link></li>
+          </ul>
+        </li>
         {user ? (
           <li>{user.username}</li>
         ) : (
