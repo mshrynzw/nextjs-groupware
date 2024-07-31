@@ -22,6 +22,7 @@ const Navbar = () => {
         <li><Link href="/">Home</Link></li>
         <li><Link href="/info">Info</Link></li>
         <li><Link href="/chat">Chat</Link></li>
+        <li><Link href="/todo">Todo</Link></li>
         <li><Link href="/timecard">Time Card</Link></li>
         <li>Setting</li>
         {user ? (
