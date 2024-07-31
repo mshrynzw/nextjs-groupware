@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import { AppContext } from "@/context/AppContext"
-import { createdInfo } from "@/lib/info"
+import { createdInfo } from "@/lib/api/info"
 
 const Create = () => {
   const appContext = useContext(AppContext)

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { createTimecardSetting } from "@/lib/setting/timecard"
+import { createTimecardSetting } from "@/lib/api/setting/timecard"
 
 const Create = () => {
   const [name, setName] = useState<string>("")

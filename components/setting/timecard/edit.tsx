@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { editedTimecardSetting } from "@/lib/setting/timecard"
+import { editedTimecardSetting } from "@/lib/api/setting/timecard"
 
 const Edit = ({ editTimecardSetting, setScreen, refetch }) => {
   const [name, setName] = useState<string>(editTimecardSetting.attributes.name)

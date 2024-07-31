@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { editedInfo } from "@/lib/info"
+import { editedInfo } from "@/lib/api/info"
 
 const Edit = ({ editInfo, setScreen, refetch }) => {
   const [title, setTitle] = useState<string>(editInfo.attributes.title)

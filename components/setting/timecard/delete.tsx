@@ -1,4 +1,4 @@
-import { deletedTimecardSetting } from "@/lib/setting/timecard"
+import { deletedTimecardSetting } from "@/lib/api/setting/timecard"
 
 const Delete = ({ deleteTimecardSetting, setScreen, refetch }) => {
   const handleDelete = async () => {

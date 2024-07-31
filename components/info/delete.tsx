@@ -1,5 +1,5 @@
 import React from "react"
-import { deletedInfo } from "@/lib/info"
+import { deletedInfo } from "@/lib/api/info"
 
 const Delete = ({ deleteInfo, setScreen, refetch }) => {
   const handleDelete = async () => {
