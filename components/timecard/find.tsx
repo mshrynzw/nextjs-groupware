@@ -38,7 +38,7 @@ interface FindProps {
 const Find: React.FC<FindProps> = ({ setScreen, setEditTimecard, setDeleteTimecard, setCreateDate, refetchFlag }) => {
   const appContext = useContext(AppContext)
   if (!appContext) {
-    throw new Error("Navbar must be used within an AppProvider")
+    throw new Error("Sidebar must be used within an AppProvider")
   }
   const { user } = appContext
   const { loading, error, data, refetch } = useQuery(query, {

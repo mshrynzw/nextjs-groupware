@@ -5,7 +5,7 @@ import { createdTodo } from "@/lib/api/todo"
 const Create = () => {
   const appContext = useContext(AppContext)
   if (!appContext) {
-    throw new Error("Navbar must be used within an AppProvider")
+    throw new Error("Sidebar must be used within an AppProvider")
   }
   const { user } = appContext
   const [name, setName] = useState<string>("")

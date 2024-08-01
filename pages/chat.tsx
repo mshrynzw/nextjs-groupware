@@ -1,13 +1,13 @@
 import { NextPage } from "next"
 import { useContext, useState } from "react"
-import { postMessage } from "@/lib/chat"
+import { postMessage } from "@/lib/api/chat"
 import Read from "@/components/chat/read"
 import { AppContext } from "@/context/AppContext"
 
 const Chat : NextPage = () => {
   const appContext = useContext(AppContext)
   if (!appContext) {
-    throw new Error("Navbar must be used within an AppProvider")
+    throw new Error("Sidebar must be used within an AppProvider")
   }
   const { user } = appContext
   const [sendMessage, setSendMessage] = useState("")
