@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { editedInfo } from "@/lib/api/info"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPenToSquare, faSnowflake } from "@fortawesome/free-solid-svg-icons"
+import { getLocalTime } from "@/lib/datetime"
 
 const Edit = ({ editInfo, setScreen, refetch }) => {
   const [title, setTitle] = useState<string>(editInfo.attributes.title)
@@ -13,14 +14,7 @@ const Edit = ({ editInfo, setScreen, refetch }) => {
     setScreen("find")
   }
 
-  const localTime = new Date(editInfo.attributes.updatedAt).toLocaleString("ja-JP", {
-    year : "numeric",
-    month : "2-digit",
-    day : "2-digit",
-    hour : "2-digit",
-    minute : "2-digit",
-    hour12 : false // 24時間表示
-  })
+  const localTime = getLocalTime(editInfo.attributes.updatedAt)
 
   return (
     <div className="flex items-center justify-center h-full">

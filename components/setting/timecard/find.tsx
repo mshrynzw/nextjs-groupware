@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { gql } from "apollo-boost"
 import { useQuery } from "@apollo/client"
+import { getLocalTime } from "@/lib/datetime"
 
 const query = gql`
   {
@@ -48,8 +49,9 @@ const Find = ({ setScreen, setEditTimecardSetting, setDeleteTimecardSetting, ref
       <h2>Find</h2>
       {data.timecardSettings.data.map((timecardSetting) => {
         try {
-          const createdAtLocalTime = new Date(timecardSetting.attributes.createdAt).toLocaleString()
-          const updatedAtLocalTime = new Date(timecardSetting.attributes.updatedAt).toLocaleString()
+          const createdAtLocalTime = getLocalTime(timecardSetting.attributes.createdAt)
+          const updatedAtLocalTime = getLocalTime(timecardSetting.attributes.updatedAt)
+
           return (
             <div key={timecardSetting.id}>
               <h3>{timecardSetting.attributes.name}</h3>

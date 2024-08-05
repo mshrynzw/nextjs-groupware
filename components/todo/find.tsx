@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { gql } from "apollo-boost"
 import { useQuery } from "@apollo/client"
+import { getLocalTime } from "@/lib/datetime"
 
 const query = gql`
   {
@@ -48,7 +49,8 @@ const Find = ({ setScreen, setEditTodo, setDeleteTodo, refetchFlag }) => {
       <h2>Find</h2>
       {data.todos.data.map((todo) => {
         try {
-          const localTime = new Date(todo.attributes.updatedAt).toLocaleString()
+          const localTime = getLocalTime(todo.attributes.updatedAt)
+
           return (
             <div key={todo.id}>
               <h3>{todo.attributes.name}</h3>

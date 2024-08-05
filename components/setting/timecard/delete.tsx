@@ -1,4 +1,5 @@
 import { deletedTimecardSetting } from "@/lib/api/setting/timecard"
+import { getLocalTime } from "@/lib/datetime"
 
 const Delete = ({ deleteTimecardSetting, setScreen, refetch }) => {
   const handleDelete = async () => {
@@ -7,7 +8,7 @@ const Delete = ({ deleteTimecardSetting, setScreen, refetch }) => {
     setScreen("find")
   }
 
-  const localTime = new Date(deleteTimecardSetting.attributes.updatedAt).toLocaleString()
+  const localTime = getLocalTime(deleteTimecardSetting.attributes.updatedAt)
 
   return (
     <div>

@@ -15,3 +15,14 @@ export const getDatesInCurrentMonth = () : Date[] => {
 
   return dates
 }
+
+export const getLocalTime = (datetime) : string => {
+  return new Date(datetime).toLocaleString('ja-JP', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  })
+}

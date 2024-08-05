@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { editedTimecardSetting } from "@/lib/api/setting/timecard"
+import { getLocalTime } from "@/lib/datetime"
 
 const Edit = ({ editTimecardSetting, setScreen, refetch }) => {
   const [name, setName] = useState<string>(editTimecardSetting.attributes.name)
@@ -13,7 +14,7 @@ const Edit = ({ editTimecardSetting, setScreen, refetch }) => {
     setScreen("find")
   }
 
-  const localTime = new Date(editTimecardSetting.attributes.updatedAt).toLocaleString()
+  const localTime = getLocalTime(editTimecardSetting.attributes.updatedAt)
 
   return (
     <div>

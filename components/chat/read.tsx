@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client"
 import { gql } from "apollo-boost"
+import { getLocalTime } from "@/lib/datetime"
 
 const query = gql`
   {
@@ -35,7 +36,7 @@ const Read = () => {
     <>
       {data.messages.data.map((message) => {
         try {
-          const localTime = new Date(message.attributes.updatedAt).toLocaleString()
+          const localTime = getLocalTime(message.attributes.updatedAt)
           return (
             <div key={message.id}>
               <p>{localTime}</p>

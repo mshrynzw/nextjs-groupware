@@ -2,6 +2,7 @@ import React from "react"
 import { deletedInfo } from "@/lib/api/info"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSnowflake, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { getLocalTime } from "@/lib/datetime"
 
 const Delete = ({ deleteInfo, setScreen, refetch }) => {
   const handleDelete = async () => {
@@ -10,14 +11,7 @@ const Delete = ({ deleteInfo, setScreen, refetch }) => {
     setScreen("find")
   }
 
-  const localTime = new Date(deleteInfo.attributes.updatedAt).toLocaleString('ja-JP', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false // 24時間表示
-  })
+  const localTime = getLocalTime(deleteInfo.attributes.updatedAt)
 
   return (
     <div className="flex items-center justify-center h-full">

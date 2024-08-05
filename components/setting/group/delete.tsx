@@ -1,4 +1,5 @@
 import { deletedGroup } from "@/lib/api/setting/group"
+import { getLocalTime } from "@/lib/datetime"
 
 const Delete = ({ deleteGroup, setScreen, refetch }) => {
   const handleDelete = async () => {
@@ -7,7 +8,7 @@ const Delete = ({ deleteGroup, setScreen, refetch }) => {
     setScreen("find")
   }
 
-  const localTime = new Date(deleteGroup.attributes.updatedAt).toLocaleString()
+  const localTime = getLocalTime(deleteGroup.attributes.updatedAt)
 
   return (
     <div>

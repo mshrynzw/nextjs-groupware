@@ -1,4 +1,5 @@
 import { deletedTodo } from "@/lib/api/todo"
+import { getLocalTime } from "@/lib/datetime"
 
 const Delete = ({ deleteTodo, setScreen, refetch }) => {
   const handleDelete = async () => {
@@ -7,7 +8,7 @@ const Delete = ({ deleteTodo, setScreen, refetch }) => {
     setScreen("find")
   }
 
-  const localTime = new Date(deleteTodo.attributes.updatedAt).toLocaleString()
+  const localTime = getLocalTime(deleteTodo.attributes.createdAt)
 
   return (
     <>

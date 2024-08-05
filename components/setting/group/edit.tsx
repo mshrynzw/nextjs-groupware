@@ -3,6 +3,7 @@ import { editedGroup } from "@/lib/api/setting/group"
 import { User } from "@/types/user"
 import { gql } from "apollo-boost"
 import { useQuery } from "@apollo/client"
+import { getLocalTime } from "@/lib/datetime"
 
 const query = gql`
   {
@@ -34,7 +35,7 @@ const Edit = ({ editGroup, setScreen, refetch }) => {
     setScreen("find")
   }
 
-  const localTime = new Date(editGroup.attributes.updatedAt).toLocaleString()
+  const localTime = getLocalTime(editGroup.attributes.updatedAt)
 
   return (
     <div>

@@ -3,6 +3,7 @@ import { gql } from "apollo-boost"
 import { useQuery } from "@apollo/client"
 import { faGear, faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { getLocalTime } from "@/lib/datetime"
 
 const query = gql`
   {
@@ -56,14 +57,7 @@ const Find = ({ setScreen, setEditInfo, setDeleteInfo, refetchFlag }) => {
           <div className="flex flex-wrap">
             {data.infos.data.map((info) => {
               try {
-                const localTime = new Date(info.attributes.updatedAt).toLocaleString("ja-JP", {
-                  year : "numeric",
-                  month : "2-digit",
-                  day : "2-digit",
-                  hour : "2-digit",
-                  minute : "2-digit",
-                  hour12 : false // 24時間表示
-                })
+                const localTime = getLocalTime(info.attributes.updatedAt)
                 return (
                   <div key={info.id} className="w-full px-4 py-4 xl:w-6/12">
                     <div className="relative mb-6 flex min-w-0 flex-col break-words rounded bg-white shadow-lg xl:mb-0">

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { editedTodo } from "@/lib/api/todo"
+import { getLocalTime } from "@/lib/datetime"
 
 const Edit = ({ editTodo, setScreen, refetch }) => {
   const [name, setName] = useState<string>(editTodo.attributes.name)
@@ -14,7 +15,7 @@ const Edit = ({ editTodo, setScreen, refetch }) => {
     setScreen("find")
   }
 
-  const localTime = new Date(editTodo.attributes.updatedAt).toLocaleString()
+  const localTime = getLocalTime(editTodo.attributes.updatedAt)
 
   return (
     <>
