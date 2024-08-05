@@ -1,10 +1,12 @@
 import React, { useEffect } from "react"
 import { gql } from "apollo-boost"
 import { useQuery } from "@apollo/client"
+import { faGear, faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const query = gql`
   {
-    infos(pagination: { limit: 10 }, sort: "updatedAt:asc"){
+    infos(pagination: { limit: 10 }, sort: "updatedAt:desc"){
       data{
         id
         attributes{
@@ -49,25 +51,69 @@ const Find = ({ setScreen, setEditInfo, setDeleteInfo, refetchFlag }) => {
 
   return (
     <>
-      <h2>Find</h2>
-      {data.infos.data.map((info) => {
-        try {
-          const localTime = new Date(info.attributes.updatedAt).toLocaleString()
-          return (
-            <div key={info.id}>
-              <h3>{info.attributes.title}</h3>
-              <p>{localTime}</p>
-              <p>{info.attributes.user.data.attributes.username}</p>
-              <p>{info.attributes.body}</p>
-              <button onClick={() => handleEdit(info)}>Edit</button>
-              <button onClick={() => handleDelete(info)}>Delete</button>
-            </div>
-          )
-        } catch (e) {
-          console.error("Error processing message:", info, e)
-          return <p key={info.id}>Error displaying message</p>
-        }
-      })}
+      <div className="relative py-12">
+        <div className="mx-auto w-full px-4 md:px-10">
+          <div className="flex flex-wrap">
+            {data.infos.data.map((info) => {
+              try {
+                const localTime = new Date(info.attributes.updatedAt).toLocaleString("ja-JP", {
+                  year : "numeric",
+                  month : "2-digit",
+                  day : "2-digit",
+                  hour : "2-digit",
+                  minute : "2-digit",
+                  hour12 : false // 24時間表示
+                })
+                return (
+                  <div key={info.id} className="w-full px-4 py-4 xl:w-6/12">
+                    <div className="relative mb-6 flex min-w-0 flex-col break-words rounded bg-white shadow-lg xl:mb-0">
+                      <div className="flex-auto p-4">
+                        <div className="flex flex-wrap">
+                          <div className="relative w-full max-w-full flex-1 flex-grow pr-4">
+                            <span className="text-xl font-semibold text-blueGray-700">
+                              {info.attributes.title}
+                            </span>
+                            <h5 className="text-xs font-bold text-blueGray-400">
+                              {info.attributes.body}
+                            </h5>
+                          </div>
+                        </div>
+                        <div className="mt-4 flex items-end justify-between">
+                          <p className="text-sm text-blueGray-400">
+                            <span className="whitespace-nowrap">
+                              {localTime}
+                            </span>
+                            <span className="ml-2 text-lightBlue-500">
+                              {info.attributes.user.data.attributes.username}
+                            </span>
+                          </p>
+                          <div className="mt-2 flex justify-end">
+                            <button
+                              onClick={() => handleEdit(info)}
+                              className="mr-2 flex h-8 w-8 items-center justify-center rounded-md p-2 text-white shadow-sm bg-blueGray-700 hover:bg-blueGray-400 hover:shadow-xl"
+                            >
+                              <FontAwesomeIcon icon={faPenToSquare}/>
+                            </button>
+                            <button
+                              onClick={() => handleDelete(info)}
+                              className="flex h-8 w-8 items-center justify-center rounded-md p-2 text-white shadow-sm bg-blueGray-700 hover:bg-blueGray-400 hover:shadow-xl"
+                            >
+                              <FontAwesomeIcon icon={faTrash}/>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              } catch (e) {
+                console.error("Error processing message:", info, e)
+                return <p key={info.id}>Error displaying message</p>
+              }
+            })}
+          </div>
+        </div>
+      </div>
     </>
   )
 }

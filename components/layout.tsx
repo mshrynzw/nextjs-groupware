@@ -5,8 +5,8 @@ const Layout = ({ children } : { children : React.ReactNode }) => {
   return (
     <>
       <Sidebar/>
-      <div className="relative md:ml-64 bg-blueGray-100">
-        <main className="px-4 md:px-10 mx-auto w-full -m-24">
+      <div className="relative bg-blueGray-50 md:ml-64">
+        <main className="h-screen mx-auto w-full px-4 md:px-10">
           {children}
         </main>
       </div>
