@@ -122,10 +122,10 @@ const Sidebar = () => {
                 <Link
                   href="/chat"
                   className={
-                    "text-xs uppercase p-3 font-bold block " +
+                    "text-xs uppercase p-3 font-bold block text-blueGray-300" +
                     (router.pathname.indexOf("/chat") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
+                      ? " bg-blueGray-600 rounded-lg shadow-xl"
+                      : null)
                   }
                 >
                   <FontAwesomeIcon
