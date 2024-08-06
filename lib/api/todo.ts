@@ -1,7 +1,7 @@
 import Cookies from "js-cookie"
 import { User } from "@/types/user"
 
-export const createdTodo = async (user : User, name : string, description : string, priority : number, completed : boolean, due : string) => {
+export const createdTodo = async (user : User, name : string, description : string, priority : number, check : boolean, due : string) => {
   const token = Cookies.get("token")
   try {
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/todos`, {
@@ -11,7 +11,7 @@ export const createdTodo = async (user : User, name : string, description : stri
         Authorization : `Bearer ${token}`
       },
       body : JSON.stringify({
-        data : { user, name, description, priority, completed, due }
+        data : { user, name, description, priority, check, due }
       })
     })
   } catch (error) {
@@ -19,7 +19,7 @@ export const createdTodo = async (user : User, name : string, description : stri
   }
 }
 
-export const editedTodo = async (id : number, name : string, description : string, priority : number, completed : boolean, due : string) => {
+export const editedTodo = async (id : number, name : string, description : string, priority : number, check : boolean, due : string) => {
   const token = Cookies.get("token")
   try {
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/todos/${id}`, {
@@ -29,7 +29,7 @@ export const editedTodo = async (id : number, name : string, description : strin
         Authorization : `Bearer ${token}`
       },
       body : JSON.stringify({
-        data : { name, description, priority, completed, due }
+        data : { name, description, priority, check, due }
       })
     })
   } catch (error) {

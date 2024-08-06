@@ -4,6 +4,8 @@ import Find from "@/components/todo/find"
 import Delete from "@/components/todo/delete"
 import Create from "@/components/todo/create"
 import Edit from "@/components/todo/edit"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPen, faRectangleList } from "@fortawesome/free-solid-svg-icons"
 
 const Todo : NextPage = () => {
   const [screen, setScreen] = useState("find")
@@ -17,18 +19,57 @@ const Todo : NextPage = () => {
 
   return (
     <>
-      <h1>Todo</h1>
+      <Find setScreen={setScreen} setEditTodo={setEditTod} setDeleteTodo={setDeleteTodo} refetchFlag={refetchFlag}/>
       {screen === "find" ? (
-        <Find setScreen={setScreen} setEditTodo={setEditTod} setDeleteTodo={setDeleteTodo} refetchFlag={refetchFlag}/>
-      ) : screen === "edit" && editTodo !== null ?(
-        <Edit editTodo={editTodo} setScreen={setScreen} refetch={refetch}/>
+        <button
+          className="fixed right-6 bottom-6 rounded-xl p-2 text-white shadow-xl bg-blueGray-700 hover:text-blueGray-100 hover:shadow-sm"
+          onClick={() => setScreen("create")}
+        >
+          <FontAwesomeIcon
+            icon={faPen}
+            className="h-8 w-8 p-2"
+          />
+        </button>
+      ) : screen === "edit" && editTodo !== null ? (
+        <div className="fixed top-0 left-0 right-0 bottom-0 min-h-screen md:ml-64 bg-blueGray-50 opacity-95">
+          <Edit editTodo={editTodo} setScreen={setScreen} refetch={refetch}/>
+          <button
+            className="fixed right-6 bottom-6 rounded-xl p-2 text-white shadow-xl bg-blueGray-700 hover:text-blueGray-100 hover:shadow-sm"
+            onClick={() => setScreen("find")}
+          >
+            <FontAwesomeIcon
+              icon={faRectangleList}
+              className="h-8 w-8 p-2"
+            />
+          </button>
+        </div>
       ) : screen === "delete" && deleteTodo !== null ? (
-        <Delete deleteTodo={deleteTodo} setScreen={setScreen} refetch={refetch}/>
+        <div className="fixed top-0 left-0 right-0 bottom-0 min-h-screen md:ml-64 bg-blueGray-50 opacity-95">
+          <Delete deleteTodo={deleteTodo} setScreen={setScreen} refetch={refetch}/>
+          <button
+            className="fixed right-6 bottom-6 rounded-xl p-2 text-white shadow-xl bg-blueGray-700 hover:text-blueGray-100 hover:shadow-sm"
+            onClick={() => setScreen("find")}
+          >
+            <FontAwesomeIcon
+              icon={faRectangleList}
+              className="h-8 w-8 p-2"
+            />
+          </button>
+        </div>
       ) : screen === "create" ? (
-        <Create/>
+        <div className="fixed top-0 left-0 right-0 bottom-0 min-h-screen md:ml-64 bg-blueGray-50 opacity-95">
+          <Create/>
+          <button
+            className="fixed right-6 bottom-6 rounded-xl p-2 text-white shadow-xl bg-blueGray-700 hover:text-blueGray-100 hover:shadow-sm"
+            onClick={() => setScreen("find")}
+          >
+            <FontAwesomeIcon
+              icon={faRectangleList}
+              className="h-8 w-8 p-2"
+            />
+          </button>
+        </div>
       ) : null}
-      <button onClick={() => setScreen("find")}>Read</button>
-      <button onClick={() => setScreen("create")}>Create</button>
     </>
   )
 }

@@ -6,6 +6,6 @@ export interface Todo {
   description : string;
   user : User;
   priority : Number;
-  completed : boolean;
+  check : boolean;
   due : string;
 }

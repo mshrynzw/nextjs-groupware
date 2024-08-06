@@ -27,6 +27,7 @@ const Delete = ({ deleteInfo, setScreen, refetch }) => {
           />
           Delete
         </h1>
+
         <label htmlFor="title"
                className="block uppercase text-blueGray-600 text-sm font-bold mb-2"
         >
@@ -43,6 +44,7 @@ const Delete = ({ deleteInfo, setScreen, refetch }) => {
         >
           {deleteInfo.attributes.title}
         </p>
+
         <label htmlFor="body"
                className="block uppercase text-blueGray-600 text-sm font-bold mb-2"
         >
@@ -59,6 +61,7 @@ const Delete = ({ deleteInfo, setScreen, refetch }) => {
         >
           {deleteInfo.attributes.body}
         </p>
+
         <label htmlFor="updated"
                className="block uppercase text-blueGray-600 text-sm font-bold mb-2"
         >
