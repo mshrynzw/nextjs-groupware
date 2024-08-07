@@ -6,7 +6,7 @@ const Layout = ({ children } : { children : React.ReactNode }) => {
     <>
       <Sidebar/>
       <div className="relative bg-blueGray-50 md:ml-64">
-        <main className="h-screen mx-auto w-full px-4 md:px-10">
+        <main className="min-h-screen mx-auto w-full p-4 md:p-12">
           {children}
         </main>
       </div>

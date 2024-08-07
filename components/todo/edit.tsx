@@ -1,15 +1,15 @@
 import React, { useState } from "react"
 import { editedTodo } from "@/lib/api/todo"
-import { formatTime, getLocalTime } from "@/lib/datetime"
+import { formatDateTime, getLocalTime } from "@/lib/datetime"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPenToSquare, faSnowflake } from "@fortawesome/free-solid-svg-icons"
+import { faEllipsis, faSnowflake } from "@fortawesome/free-solid-svg-icons"
 
 const Edit = ({ editTodo, setScreen, refetch }) => {
   const [name, setName] = useState<string>(editTodo.attributes.name)
   const [description, setDescription] = useState<string>(editTodo.attributes.description)
   const [priority, setPriority] = useState<number>(editTodo.attributes.priority)
   const [check, setCheck] = useState<boolean>(editTodo.attributes.check)
-  const [due, setDue] = useState<string>(formatTime(editTodo.attributes.due))
+  const [due, setDue] = useState<string>(formatDateTime(editTodo.attributes.due))
 
   const handleEdit = async () => {
     await editedTodo(editTodo.id, name, description, priority, check, due)
@@ -27,7 +27,7 @@ const Edit = ({ editTodo, setScreen, refetch }) => {
           className="mr-1 mb-8 w-full border-b-4 bg-white py-1 text-center font-bold uppercase outline-none ease-linear text-blueGray-800 border-blueGray-800 focus:outline-none"
         >
           <FontAwesomeIcon
-            icon={faPenToSquare}
+            icon={faEllipsis}
             className={
               "fas fa-tv mr-2"
             }

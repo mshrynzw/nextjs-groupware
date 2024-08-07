@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react"
 import { AppContext } from "@/context/AppContext"
 import { createdInfo } from "@/lib/api/info"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPen, faSnowflake } from "@fortawesome/free-solid-svg-icons"
+import { faPenToSquare, faSnowflake } from "@fortawesome/free-solid-svg-icons"
 
 const Create = () => {
   const appContext = useContext(AppContext)
@@ -31,7 +31,7 @@ const Create = () => {
           className="mb-8 text-blueGray-800 border-b-4 border-blueGray-800 bg-white font-bold uppercase text-center py-1 outline-none focus:outline-none mr-1 w-full ease-linear"
         >
           <FontAwesomeIcon
-            icon={faPen}
+            icon={faPenToSquare}
             className={
               "fas fa-tv mr-2"
             }

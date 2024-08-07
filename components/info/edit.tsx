@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { editedInfo } from "@/lib/api/info"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPenToSquare, faSnowflake } from "@fortawesome/free-solid-svg-icons"
+import { faEllipsis, faSnowflake } from "@fortawesome/free-solid-svg-icons"
 import { getLocalTime } from "@/lib/datetime"
 
 const Edit = ({ editInfo, setScreen, refetch }) => {
@@ -23,7 +23,7 @@ const Edit = ({ editInfo, setScreen, refetch }) => {
           className="mb-8 text-blueGray-800 border-b-4 border-blueGray-800 bg-white font-bold uppercase text-center py-1 outline-none focus:outline-none mr-1 w-full ease-linear"
         >
           <FontAwesomeIcon
-            icon={faPenToSquare}
+            icon={faEllipsis}
             className={
               "fas fa-tv mr-2"
             }

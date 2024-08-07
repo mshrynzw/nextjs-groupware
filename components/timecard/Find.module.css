@@ -1,0 +1,50 @@
+.tableContainer {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.stickyHeader {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #475569; /* bg-blueGray-600 */
+}
+
+.stickyHeader th {
+    position: sticky;
+    top: 0;
+}
+
+.stickyHeader th:first-child {
+    left: 0;
+    z-index: 20;
+}
+
+/* Apply this class to the first cell of each row in the tbody */
+.stickyColumn {
+    position: sticky;
+    left: 0;
+    background-color: inherit;
+    z-index: 5;
+}
+
+.tableRow {
+    /* Do not set background-color here */
+}
+
+.tableRow:hover {
+    background-color: #f1f5f9 !important; /* bg-blueGray-100 */
+}
+
+.tableRow:hover .stickyColumn {
+    background-color: #f1f5f9 !important; /* bg-blueGray-100 */
+}
+
+/* Add styles for even and odd rows */
+.tableRow:nth-child(even) {
+    background-color: #ffffff; /* bg-white */
+}
+
+.tableRow:nth-child(odd) {
+    background-color: #f8fafc; /* bg-blueGray-50 */
+}

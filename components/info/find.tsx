@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { gql } from "apollo-boost"
 import { useQuery } from "@apollo/client"
-import { faGear, faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { faGear, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { getLocalTime } from "@/lib/datetime"
 
@@ -85,7 +85,7 @@ const Find = ({ setScreen, setEditInfo, setDeleteInfo, refetchFlag }) => {
                             onClick={() => handleEdit(info)}
                             className="mr-2 flex h-8 w-8 items-center justify-center rounded-md p-2 text-white shadow-sm bg-blueGray-700 hover:bg-blueGray-400 hover:shadow-xl"
                           >
-                            <FontAwesomeIcon icon={faPenToSquare}/>
+                            <FontAwesomeIcon icon={faEllipsis}/>
                           </button>
                           <button
                             onClick={() => handleDelete(info)}

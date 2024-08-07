@@ -5,7 +5,7 @@ import Delete from "@/components/info/delete"
 import Create from "@/components/info/create"
 import Edit from "@/components/info/edit"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPen, faRectangleList } from "@fortawesome/free-solid-svg-icons"
+import { faPenToSquare, faRectangleList } from "@fortawesome/free-solid-svg-icons"
 
 const Info : NextPage = () => {
   const [screen, setScreen] = useState("find")
@@ -26,7 +26,7 @@ const Info : NextPage = () => {
           onClick={() => setScreen("create")}
         >
           <FontAwesomeIcon
-            icon={faPen}
+            icon={faPenToSquare}
             className="h-8 w-8 p-2"
           />
         </button>

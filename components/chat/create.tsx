@@ -1,6 +1,8 @@
 import { useContext, useState } from "react"
 import { AppContext } from "@/context/AppContext"
 import { postMessage } from "@/lib/api/chat"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
 
 const Create =()=>{
   const appContext = useContext(AppContext)
@@ -39,7 +41,10 @@ const Create =()=>{
             type="submit"
             className="flex-shrink-0 rounded-lg px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear bg-blueGray-800 hover:shadow-lg focus:outline-none"
           >
-            Send
+            <FontAwesomeIcon
+              icon={faPenToSquare}
+              className="h-6 w-6 p-1"
+            />
           </button>
         </div>
       </form>

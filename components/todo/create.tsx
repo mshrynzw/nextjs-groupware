@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react"
 import { AppContext } from "@/context/AppContext"
 import { createdTodo } from "@/lib/api/todo"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPen, faSnowflake } from "@fortawesome/free-solid-svg-icons"
+import { faPenToSquare, faSnowflake } from "@fortawesome/free-solid-svg-icons"
 import { getTodayTime } from "@/lib/datetime"
 
 const Create = () => {
@@ -40,7 +40,7 @@ const Create = () => {
           className="mr-1 mb-8 w-full border-b-4 bg-white py-1 text-center font-bold uppercase outline-none ease-linear text-blueGray-800 border-blueGray-800 focus:outline-none"
         >
           <FontAwesomeIcon
-            icon={faPen}
+            icon={faPenToSquare}
             className={
               "fas fa-tv mr-2"
             }

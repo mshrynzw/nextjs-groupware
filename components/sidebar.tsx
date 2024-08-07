@@ -22,7 +22,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <nav className="relative z-10 flex flex-wrap items-center justify-between bg-white px-6 py-4 shadow-xl md:fixed md:top-0 md:bottom-0 md:left-0 md:block md:w-64 md:flex-row md:flex-nowrap md:overflow-hidden md:overflow-y-auto">
+      <nav className="relative z-50 flex flex-wrap items-center justify-between bg-white px-6 py-4 shadow-xl md:fixed md:top-0 md:bottom-0 md:left-0 md:block md:w-64 md:flex-row md:flex-nowrap md:overflow-hidden md:overflow-y-auto">
         <div className="mx-auto flex w-full flex-wrap items-center justify-between px-0 md:min-h-full md:flex-col md:flex-nowrap md:items-stretch">
           {/*TODO*/}
           {/* Toggler */}
@@ -168,10 +168,10 @@ const Sidebar = () => {
                 <Link
                   href="/timecard"
                   className={
-                    "text-xs uppercase p-3 font-bold block " +
+                    "text-xs uppercase p-3 font-bold block text-blueGray-300" +
                     (router.pathname.indexOf("/timecard") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
+                      ? " bg-blueGray-600 rounded-lg shadow-xl"
+                      : null)
                   }
                 >
                   <FontAwesomeIcon
@@ -214,6 +214,29 @@ const Sidebar = () => {
                     }
                   />{" "}
                   Group
+                </Link>
+              </li>
+
+              <li className="items-center">
+                <Link
+                  href="/setting/timecard"
+                  className={
+                    "text-xs uppercase p-3 font-bold block " +
+                    (router.pathname.indexOf("/setting/timecard") !== -1
+                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      : "text-blueGray-700 hover:text-blueGray-500")
+                  }
+                >
+                  <FontAwesomeIcon
+                    icon={faClock}
+                    className={
+                      "fas fa-tv mr-2 text-sm " +
+                      (router.pathname.indexOf("/setting/timecard") !== -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  />{" "}
+                  Time Card
                 </Link>
               </li>
 
