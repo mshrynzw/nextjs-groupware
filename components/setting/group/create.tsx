@@ -34,7 +34,7 @@ const Create = () => {
       setName("")
       setUsers([])
     } catch (error) {
-      console.log(error.response.data.error.message)
+      console.error(error.response.data.error.message)
     }
   }
 

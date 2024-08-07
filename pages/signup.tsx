@@ -21,7 +21,7 @@ const SignUp : NextPage = () => {
       await router.push("/")
     } catch (error) {
       setError(error.response.data.error.message)
-      console.log(error.response.data.error.message)
+      console.error(error.response.data.error.message)
     }
   }
 

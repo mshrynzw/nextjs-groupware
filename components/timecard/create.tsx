@@ -47,7 +47,7 @@ const Create = ({ createDate }) => {
     try {
       await createTimecard(user, new Date(date), timecardSetting, new Date(startWork), new Date(startBreak), new Date(endBreak), new Date(endWork))
     } catch (error) {
-      console.log(error.response.data.error.message)
+      console.error(error.response.data.error.message)
       return <p>{error.response.data.error.message}</p>
     }
   }

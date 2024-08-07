@@ -29,7 +29,7 @@ const Create = () => {
       setCheck(false)
       setDue("")
     } catch (error) {
-      console.log(error.response.data.error.message)
+      console.error(error.response.data.error.message)
     }
   }
 

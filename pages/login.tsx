@@ -21,7 +21,7 @@ const Login : NextPage = () => {
       await router.push("/")
     } catch (err) {
       setError(err.response.data.error.message)
-      console.log(err)
+      console.error(err)
     }
   }
 

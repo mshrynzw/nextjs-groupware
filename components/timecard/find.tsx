@@ -89,7 +89,7 @@ const Find : React.FC<FindProps> = ({ setScreen, setEditTimecard, setDeleteTimec
   if (error) return <p>Error: {error.message}</p>
 
   const dates : Date[] = getDatesInCurrentMonth()
-console.log(data)
+
   return (
     <div className="relative block w-full min-w-0 overflow-x-auto break-words rounded-lg bg-white p-4 shadow-lg">
       <div className={styles.tableContainer}>
