@@ -1,9 +1,9 @@
 import { NextPage } from "next"
 import { useState } from "react"
-import Find from "@/components/info/find"
-import Delete from "@/components/info/delete"
-import Create from "@/components/info/create"
-import Edit from "@/components/info/edit"
+import Find from "@/components/info/Find"
+import Delete from "@/components/info/Delete"
+import Create from "@/components/info/Create"
+import Edit from "@/components/info/Edit"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPenToSquare, faRectangleList } from "@fortawesome/free-solid-svg-icons"
 

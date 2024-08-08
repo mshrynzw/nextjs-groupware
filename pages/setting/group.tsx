@@ -1,9 +1,9 @@
 import { NextPage } from "next"
 import { useState } from "react"
-import Find from "@/components/setting/group/find"
-import Delete from "@/components/setting/group/delete"
-import Create from "@/components/setting/group/create"
-import Edit from "@/components/setting/group/edit"
+import Find from "@/components/setting/group/Find"
+import Delete from "@/components/setting/group/Delete"
+import Create from "@/components/setting/group/Create"
+import Edit from "@/components/setting/group/Edit"
 
 const Group : NextPage = () => {
   const [screen, setScreen] = useState("find")

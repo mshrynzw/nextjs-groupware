@@ -1,9 +1,9 @@
 import { NextPage } from "next"
 import { useState } from "react"
-import Find from "@/components/setting/timecard/find"
-import Create from "@/components/setting/timecard/create"
-import Edit from "@/components/setting/timecard/edit"
-import Delete from "@/components/setting/timecard/delete"
+import Find from "@/components/setting/timecard/Find"
+import Create from "@/components/setting/timecard/Create"
+import Edit from "@/components/setting/timecard/Edit"
+import Delete from "@/components/setting/timecard/Delete"
 
 const Timecard : NextPage = () => {
   const [screen, setScreen] = useState<string>("find")

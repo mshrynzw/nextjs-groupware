@@ -1,9 +1,9 @@
 import { NextPage } from "next"
 import { useState } from "react"
-import Find from "@/components/timecard/find"
-import Edit from "@/components/timecard/edit"
-import Create from "@/components/timecard/create"
-import Delete from "@/components/timecard/delete"
+import Find from "@/components/timecard/Find"
+import Edit from "@/components/timecard/Edit"
+import Create from "@/components/timecard/Create"
+import Delete from "@/components/timecard/Delete"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faRectangleList } from "@fortawesome/free-solid-svg-icons"
 

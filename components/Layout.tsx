@@ -1,4 +1,4 @@
-import Sidebar from "././sidebar"
+import Sidebar from "./Sidebar"
 import React from "react"
 
 const Layout = ({ children } : { children : React.ReactNode }) => {
