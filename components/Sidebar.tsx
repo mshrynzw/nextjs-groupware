@@ -91,7 +91,7 @@ const Sidebar = () => {
                         : "text-blueGray-300")
                     }
                   />{" "}
-                  Home
+                  Dashboard
                 </Link>
               </li>
 
