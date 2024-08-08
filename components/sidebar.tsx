@@ -3,7 +3,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { AppContext } from "@/context/AppContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars, faCheck, faCircleInfo, faClock, faHouse, faMessage, faPeopleGroup, faRightFromBracket, faRightToBracket, faTimes, faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons"
+import { faBars, faCalendarDays, faCheck, faCircleInfo, faClock, faHouse, faMessage, faPeopleGroup, faRightFromBracket, faRightToBracket, faTimes, faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons"
 
 const Sidebar = () => {
   const appContext = useContext(AppContext)
@@ -161,6 +161,29 @@ const Sidebar = () => {
                     }
                   />{" "}
                   Todo
+                </Link>
+              </li>
+
+              <li className="items-center">
+                <Link
+                  href="/schedule"
+                  className={
+                    "text-xs uppercase p-3 font-bold block text-blueGray-300" +
+                    (router.pathname.indexOf("/schedule") !== -1
+                      ? " bg-blueGray-600 rounded-lg shadow-xl"
+                      : null)
+                  }
+                >
+                  <FontAwesomeIcon
+                    icon={faCalendarDays}
+                    className={
+                      "fas fa-tv mr-2 text-sm " +
+                      (router.pathname.indexOf("/schedule") !== -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  />{" "}
+                  Schedule
                 </Link>
               </li>
 
