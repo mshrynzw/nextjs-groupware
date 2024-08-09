@@ -4,13 +4,13 @@ import { faBars, faCircleNotch } from "@fortawesome/free-solid-svg-icons"
 
 const PageChange : React.FC = () => {
   return (
-    <div className=" mx-auto md:ml-64">
-      <div className="top-0 left-0 w-full h-full block z-50 absolute bg-blueGray-50"></div>
-      <div className="my-32 mx-auto max-w-sm text-center relative z-50 top-0">
-        <div className="block mb-4">
+    <div className="mx-auto md:ml-64">
+      <div className="absolute top-0 left-0 z-50 block h-full w-full bg-blueGray-50"></div>
+      <div className="relative top-0 z-50 mx-auto my-32 max-w-sm text-center">
+        <div className="mb-4 block">
           <FontAwesomeIcon
             icon={faCircleNotch}
-            className="animate-spin text-blueGray-800 mx-auto  text-6xl"
+            className="mx-auto animate-spin text-6xl text-blueGray-800"
           />
         </div>
         <h4 className="text-lg font-medium text-blueGray-800">
