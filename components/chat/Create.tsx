@@ -1,22 +1,22 @@
 import { useContext, useState } from "react"
 import { AppContext } from "@/context/AppContext"
-import { postMessage } from "@/lib/api/chat"
+import { postChat } from "@/lib/api/chat"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
 
-const Create =()=>{
+const Create = () => {
   const appContext = useContext(AppContext)
   if (!appContext) {
     throw new Error("Sidebar must be used within an AppProvider")
   }
   const { user } = appContext
-  const [sendMessage, setSendMessage] = useState("")
+  const [sendChat, setSendChat] = useState("")
   const handleSend = async () => {
     try {
       if (user) {
-        await postMessage(user, sendMessage)
+        await postChat(user, sendChat)
       }
-      setSendMessage("")
+      setSendChat("")
     } catch (error) {
       console.error(error.response.data.error.message)
     }
@@ -31,11 +31,9 @@ const Create =()=>{
       >
         <div className="flex items-center space-x-4">
           <textarea
-            name="text"
-            id="text"
-            rows="3"
+            name="text" id="text" rows="3" required
             className="flex-grow rounded border-0 bg-white px-2 py-2 text-sm shadow transition-all duration-150 ease-linear placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
-            onChange={(e) => setSendMessage(e.target.value)}
+            onChange={(e) => setSendChat(e.target.value)}
           />
           <button
             type="submit"

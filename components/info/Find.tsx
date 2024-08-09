@@ -63,15 +63,15 @@ const Find = ({ setScreen, setEditInfo, setDeleteInfo, refetchFlag }) => {
                     <div className="flex-auto p-4">
                       <div className="flex flex-wrap">
                         <div className="relative w-full max-w-full flex-1 flex-grow pr-4">
-                            <span className="text-xl font-semibold text-blueGray-700">
-                              {info.attributes.title}
-                            </span>
-                          <h5 className="text-xs font-bold text-blueGray-400">
+                          <h3 className="text-xl font-semibold text-blueGray-700">
+                            {info.attributes.title}
+                          </h3>
+                          <p className="whitespace-pre-wrap break-words text-xs font-bold text-blueGray-400">
                             {info.attributes.body}
-                          </h5>
+                          </p>
                         </div>
                       </div>
-                      <div className="mt-4 flex items-end justify-between">
+                      <div className="mt-2 flex items-end justify-between">
                         <p className="text-sm text-blueGray-400">
                             <span className="whitespace-nowrap">
                               {updatedTime}
@@ -80,7 +80,7 @@ const Find = ({ setScreen, setEditInfo, setDeleteInfo, refetchFlag }) => {
                               {info.attributes.user.data.attributes.username}
                             </span>
                         </p>
-                        <div className="mt-2 flex justify-end">
+                        <div className="flex justify-end">
                           <button
                             onClick={() => handleEdit(info)}
                             className="mr-2 flex h-8 w-8 items-center justify-center rounded-md p-2 text-white shadow-sm bg-blueGray-700 hover:bg-blueGray-400 hover:shadow-xl"

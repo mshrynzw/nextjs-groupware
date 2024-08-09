@@ -6,7 +6,7 @@ import { AppContext } from "@/context/AppContext"
 
 const query = gql`
   {
-    messages(pagination: { limit: 100 }, sort: "updatedAt:asc"){
+    chats(pagination: { limit: 100 }, sort: "updatedAt:asc"){
       data{
         id
         attributes{
@@ -43,14 +43,14 @@ const Find = () => {
 
   return (
     <div className="space-y-4">
-      {data.messages.data.map((message) => {
+      {data.chats.data.map((chat) => {
         try {
-          const localTime = getLocalTime(message.attributes.updatedAt)
-          const isOwnMessage = message.attributes.user.data.id == user?.id
+          const localTime = getLocalTime(chat.attributes.updatedAt)
+          const isOwnMessage = chat.attributes.user.data.id == user?.id
 
           return (
             <div
-              key={message.id}
+              key={chat.id}
               className={`flex ${isOwnMessage ? "justify-end" : "justify-start"}`}
             >
               <div className="flex flex-col">
@@ -59,24 +59,24 @@ const Find = () => {
                     {localTime}
                   </span>
                   <span className="ml-2 text-lightBlue-500">
-                    {message.attributes.user.data.attributes.username}
+                    {chat.attributes.user.data.attributes.username}
                   </span>
                 </div>
-                <div
-                  className={`max-w-xs lg:max-w-md px-2 py-1 mt-1 rounded-lg shadow-xl ${
+                <p
+                  className={`max-w-xs lg:max-w-md px-2 py-1 mt-1 rounded-lg shadow-xl whitespace-pre-wrap break-words ${
                     isOwnMessage
                       ? "bg-blueGray-600 text-white"
                       : "bg-gray-200 text-gray-700"
                   }`}
                 >
-                  <p>{message.attributes.text}</p>
-                </div>
+                  {chat.attributes.text}
+                </p>
               </div>
             </div>
           )
         } catch (e) {
-          console.error("Error processing message:", message, e)
-          return <p key={message.id}>Error displaying message</p>
+          console.error("Error processing chat:", chat, e)
+          return <p key={chat.id}>Error displaying chat</p>
         }
       })}
     </div>

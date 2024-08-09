@@ -65,10 +65,10 @@ const Edit = ({ editTimecard, setScreen, refetch }) => {
   }
 
   return (
-    <div className="flex items-center justify-center h-full">
-      <div className="w-full max-w bg-white shadow-xl rounded-xl m-8 xl:mx-64 p-8">
+    <div className="flex h-full items-center justify-center">
+      <div className="m-8 w-full rounded-xl bg-white p-8 shadow-xl max-w xl:mx-64">
         <h1
-          className="mb-8 text-blueGray-800 border-b-4 border-blueGray-800 bg-white font-bold uppercase text-center py-1 outline-none focus:outline-none mr-1 w-full ease-linear"
+          className="mr-1 mb-8 w-full border-b-4 bg-white py-1 text-center font-bold uppercase outline-none ease-linear text-blueGray-800 border-blueGray-800 focus:outline-none"
         >
           <FontAwesomeIcon
             icon={faPenToSquare}
@@ -86,9 +86,9 @@ const Edit = ({ editTimecard, setScreen, refetch }) => {
           }}
         >
           <div className="flex flex-row">
-            <div className="flex flex-col basis-1/2">
+            <div className="flex basis-1/2 flex-col">
               <label htmlFor="date"
-                     className="block uppercase text-blueGray-600 text-sm font-bold mb-2"
+                     className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
               >
                 <FontAwesomeIcon
                   icon={faSnowflake}
@@ -99,14 +99,14 @@ const Edit = ({ editTimecard, setScreen, refetch }) => {
                 Date
               </label>
               <input type="date" name="date" id="date" value={date}
-                     className="border-0 px-2 py-2 mb-8 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                     className="mb-8 w-full rounded border-0 bg-white px-2 py-2 text-sm shadow transition-all duration-150 ease-linear placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                      onChange={(e) => setDate(e.target.value)}
               />
             </div>
 
-            <div className="flex flex-col basis-1/2">
+            <div className="flex basis-1/2 flex-col">
               <label htmlFor="type"
-                     className="block uppercase text-blueGray-600 text-sm font-bold mb-2"
+                     className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
               >
                 <FontAwesomeIcon
                   icon={faSnowflake}
@@ -117,7 +117,7 @@ const Edit = ({ editTimecard, setScreen, refetch }) => {
                 Type
               </label>
               <select name="type" id="type" value={timecardSetting.attributes.name}
-                      className="border-0 px-2 py-2 mb-8 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      className="mb-8 w-full rounded border-0 bg-white px-2 py-2 text-sm shadow transition-all duration-150 ease-linear placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                       onChange={(e) => {
                         const selectedType = data.timecardSettings.data.find(setting => setting.attributes.name === e.target.value)
                         setTimecardSetting(selectedType)
@@ -135,7 +135,7 @@ const Edit = ({ editTimecard, setScreen, refetch }) => {
           </div>
 
           <label htmlFor="startWork"
-                 className="block uppercase text-blueGray-600 text-sm font-bold mb-2"
+                 className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
           >
             <FontAwesomeIcon
               icon={faSnowflake}
@@ -146,12 +146,12 @@ const Edit = ({ editTimecard, setScreen, refetch }) => {
             Start Work
           </label>
           <input type="datetime-local" name="startWork" id="startWork" value={startWork}
-                 className="border-0 px-2 py-2 mb-8 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                 className="mb-8 w-full rounded border-0 bg-white px-2 py-2 text-sm shadow transition-all duration-150 ease-linear placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                  onChange={(e) => setStartWork(e.target.value)}
           />
 
           <label htmlFor="startBreak"
-                 className="block uppercase text-blueGray-600 text-sm font-bold mb-2"
+                 className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
           >
             <FontAwesomeIcon
               icon={faSnowflake}
@@ -162,12 +162,12 @@ const Edit = ({ editTimecard, setScreen, refetch }) => {
             Start Break
           </label>
           <input type="datetime-local" name="startBreak" id="startBreak" value={startBreak}
-                 className="border-0 px-2 py-2 mb-8 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                 className="mb-8 w-full rounded border-0 bg-white px-2 py-2 text-sm shadow transition-all duration-150 ease-linear placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                  onChange={(e) => setStartBreak(e.target.value)}
           />
 
           <label htmlFor="endBreak"
-                 className="block uppercase text-blueGray-600 text-sm font-bold mb-2"
+                 className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
           >
             <FontAwesomeIcon
               icon={faSnowflake}
@@ -178,12 +178,12 @@ const Edit = ({ editTimecard, setScreen, refetch }) => {
             End Break
           </label>
           <input type="datetime-local" name="endBreak" id="endBreak" value={endBreak}
-                 className="border-0 px-2 py-2 mb-8 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                 className="mb-8 w-full rounded border-0 bg-white px-2 py-2 text-sm shadow transition-all duration-150 ease-linear placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                  onChange={(e) => setEndBreak(e.target.value)}
           />
 
           <label htmlFor="endWork"
-                 className="block uppercase text-blueGray-600 text-sm font-bold mb-2"
+                 className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
           >
             <FontAwesomeIcon
               icon={faSnowflake}
@@ -194,12 +194,12 @@ const Edit = ({ editTimecard, setScreen, refetch }) => {
             End Work
           </label>
           <input type="datetime-local" name="endWork" id="endWork" value={endWork}
-                 className="border-0 px-2 py-2 mb-8 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                 className="mb-8 w-full rounded border-0 bg-white px-2 py-2 text-sm shadow transition-all duration-150 ease-linear placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                  onChange={(e) => setEndWork(e.target.value)}
           />
 
           <button type="submit"
-                  className="bg-blueGray-800 text-white text-sm font-bold uppercase px-6 py-3 rounded-xl shadow-xl outline-none focus:outline-none mr-1 mb-1 w-full ease-linear"
+                  className="mr-1 mb-1 w-full rounded-xl px-6 py-3 text-sm font-bold uppercase text-white shadow-xl outline-none ease-linear bg-blueGray-800 focus:outline-none"
           >
             Submit
           </button>

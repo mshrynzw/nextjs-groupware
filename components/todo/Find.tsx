@@ -65,7 +65,7 @@ const Find = ({ setScreen, setEditTodo, setDeleteTodo, refetchFlag }) => {
                           <h3 className="text-xl font-semibold text-blueGray-700">
                             {todo.attributes.name}
                           </h3>
-                          <p className="mt-4 text-xs font-bold text-blueGray-400">
+                          <p className="mt-4 whitespace-pre-wrap break-words text-xs font-bold text-blueGray-400">
                             {todo.attributes.description}
                           </p>
                         </div>

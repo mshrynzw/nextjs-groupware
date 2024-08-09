@@ -14,10 +14,10 @@ const Delete = ({ deleteInfo, setScreen, refetch }) => {
   const localTime = getLocalTime(deleteInfo.attributes.updatedAt)
 
   return (
-    <div className="flex items-center justify-center h-full">
-      <div className="w-full max-w bg-white shadow-xl rounded-xl m-8 xl:mx-64 p-8">
+    <div className="flex h-full items-center justify-center">
+      <div className="m-8 w-full rounded-xl bg-white p-8 shadow-xl max-w xl:mx-64">
         <h1
-          className="mb-8 text-blueGray-800 border-b-4 border-blueGray-800 bg-white font-bold uppercase text-center py-1 outline-none focus:outline-none mr-1 w-full ease-linear"
+          className="mr-1 mb-8 w-full border-b-4 bg-white py-1 text-center font-bold uppercase outline-none ease-linear text-blueGray-800 border-blueGray-800 focus:outline-none"
         >
           <FontAwesomeIcon
             icon={faTrash}
@@ -29,7 +29,7 @@ const Delete = ({ deleteInfo, setScreen, refetch }) => {
         </h1>
 
         <label htmlFor="title"
-               className="block uppercase text-blueGray-600 text-sm font-bold mb-2"
+               className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
         >
           <FontAwesomeIcon
             icon={faSnowflake}
@@ -40,13 +40,13 @@ const Delete = ({ deleteInfo, setScreen, refetch }) => {
           Title
         </label>
         <p
-          className="border-0 px-2 py-2 mb-8 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          className="mb-8 w-full rounded border-0 bg-white px-2 py-2 text-sm shadow transition-all duration-150 ease-linear placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
         >
           {deleteInfo.attributes.title}
         </p>
 
         <label htmlFor="body"
-               className="block uppercase text-blueGray-600 text-sm font-bold mb-2"
+               className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
         >
           <FontAwesomeIcon
             icon={faSnowflake}
@@ -57,13 +57,13 @@ const Delete = ({ deleteInfo, setScreen, refetch }) => {
           Body
         </label>
         <p
-          className="border-0 px-2 py-2 mb-8 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          className="mb-8 w-full rounded border-0 bg-white px-2 py-2 text-sm shadow transition-all duration-150 ease-linear placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
         >
           {deleteInfo.attributes.body}
         </p>
 
         <label htmlFor="updated"
-               className="block uppercase text-blueGray-600 text-sm font-bold mb-2"
+               className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
         >
           <FontAwesomeIcon
             icon={faSnowflake}
@@ -73,7 +73,7 @@ const Delete = ({ deleteInfo, setScreen, refetch }) => {
           />{" "}
           Updated
         </label>
-        <div className="pb-8 flex items-end justify-between">
+        <div className="flex items-end justify-between pb-8">
           <p className="text-sm text-blueGray-400">
             <span className="whitespace-nowrap">
               {localTime}
@@ -84,7 +84,7 @@ const Delete = ({ deleteInfo, setScreen, refetch }) => {
           </p>
         </div>
         <button onClick={handleDelete}
-                className="bg-blueGray-800 text-white text-sm font-bold uppercase px-6 py-3 rounded-xl shadow-xl outline-none focus:outline-none mr-1 mb-1 w-full ease-linear"
+                className="mr-1 mb-1 w-full rounded-xl px-6 py-3 text-sm font-bold uppercase text-white shadow-xl outline-none ease-linear bg-blueGray-800 focus:outline-none"
         >
           Submit
         </button>

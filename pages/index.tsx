@@ -3,7 +3,7 @@ import LineChart from "@/components/dashboard/LineChart"
 
 const Home : NextPage = () => {
   return (
-    <div className="grid gap-4 grid-cols-1 xl:grid-cols-2">
+    <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
       <div className="bg-red-400">
         Chat既読率（毎事・日別）
         <LineChart/>

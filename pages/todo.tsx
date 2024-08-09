@@ -31,7 +31,7 @@ const Todo : NextPage = () => {
           />
         </button>
       ) : screen === "edit" && editTodo !== null ? (
-        <div className="fixed top-0 left-0 right-0 bottom-0 min-h-screen md:ml-64 bg-blueGray-50 opacity-95">
+        <div className="fixed top-0 right-0 bottom-0 left-0 min-h-screen opacity-95 bg-blueGray-50 md:ml-64">
           <Edit editTodo={editTodo} setScreen={setScreen} refetch={refetch}/>
           <button
             className="fixed right-6 bottom-6 rounded-xl p-2 text-white shadow-xl bg-blueGray-700 hover:text-blueGray-100 hover:shadow-sm"
@@ -44,7 +44,7 @@ const Todo : NextPage = () => {
           </button>
         </div>
       ) : screen === "delete" && deleteTodo !== null ? (
-        <div className="fixed top-0 left-0 right-0 bottom-0 min-h-screen md:ml-64 bg-blueGray-50 opacity-95">
+        <div className="fixed top-0 right-0 bottom-0 left-0 min-h-screen opacity-95 bg-blueGray-50 md:ml-64">
           <Delete deleteTodo={deleteTodo} setScreen={setScreen} refetch={refetch}/>
           <button
             className="fixed right-6 bottom-6 rounded-xl p-2 text-white shadow-xl bg-blueGray-700 hover:text-blueGray-100 hover:shadow-sm"
@@ -57,7 +57,7 @@ const Todo : NextPage = () => {
           </button>
         </div>
       ) : screen === "create" ? (
-        <div className="fixed top-0 left-0 right-0 bottom-0 min-h-screen md:ml-64 bg-blueGray-50 opacity-95">
+        <div className="fixed top-0 right-0 bottom-0 left-0 min-h-screen opacity-95 bg-blueGray-50 md:ml-64">
           <Create/>
           <button
             className="fixed right-6 bottom-6 rounded-xl p-2 text-white shadow-xl bg-blueGray-700 hover:text-blueGray-100 hover:shadow-sm"
