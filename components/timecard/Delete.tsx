@@ -1,7 +1,7 @@
+import React from "react"
 import { deletedTimecard } from "@/lib/api/timecard"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSnowflake, faTrash } from "@fortawesome/free-solid-svg-icons"
-import React from "react"
 import { formatTime } from "@/lib/datetime"
 
 const Delete = ({ deleteTimecard, setScreen, refetch }) => {

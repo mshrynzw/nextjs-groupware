@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { editedTodo } from "@/lib/api/todo"
-import { formatDateTime, getLocalTime } from "@/lib/datetime"
+import { formatDateTimeByStrapi, getLocalTime } from "@/lib/datetime"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEllipsis, faSnowflake } from "@fortawesome/free-solid-svg-icons"
 
@@ -9,7 +9,7 @@ const Edit = ({ editTodo, setScreen, refetch }) => {
   const [description, setDescription] = useState<string>(editTodo.attributes.description)
   const [priority, setPriority] = useState<number>(editTodo.attributes.priority)
   const [check, setCheck] = useState<boolean>(editTodo.attributes.check)
-  const [due, setDue] = useState<string>(formatDateTime(editTodo.attributes.due))
+  const [due, setDue] = useState<string>(formatDateTimeByStrapi(editTodo.attributes.due))
 
   const handleEdit = async () => {
     await editedTodo(editTodo.id, name, description, priority, check, due)

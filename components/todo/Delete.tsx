@@ -1,5 +1,5 @@
 import { deletedTodo } from "@/lib/api/todo"
-import { formatDateTime, getLocalTime } from "@/lib/datetime"
+import { formatDateTimeByStrapi, getLocalTime } from "@/lib/datetime"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSnowflake, faTrash } from "@fortawesome/free-solid-svg-icons"
 import React from "react"
@@ -96,7 +96,7 @@ const Delete = ({ deleteTodo, setScreen, refetch }) => {
               Due
             </label>
             <div className="flex md:justify-center">
-              <input type="datetime-local" name="due" id="due" value={formatDateTime(deleteTodo.attributes.due)}
+              <input type="datetime-local" name="due" id="due" value={formatDateTimeByStrapi(deleteTodo.attributes.due)}
                      className="mb-8 w-48 rounded border-0 bg-white px-2 py-2 text-center text-sm shadow transition-all duration-150 ease-linear placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                      disabled={true}
               />

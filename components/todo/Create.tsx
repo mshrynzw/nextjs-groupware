@@ -3,7 +3,7 @@ import { AppContext } from "@/context/AppContext"
 import { createdTodo } from "@/lib/api/todo"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPenToSquare, faSnowflake } from "@fortawesome/free-solid-svg-icons"
-import { getTodayTime } from "@/lib/datetime"
+import { getNow } from "@/lib/datetime"
 
 const Create = () => {
   const appContext = useContext(AppContext)
@@ -15,7 +15,7 @@ const Create = () => {
   const [name, setName] = useState<string>("")
   const [description, setDescription] = useState<string>("")
   const [priority, setPriority] = useState<number>(3)
-  const [due, setDue] = useState<string>(getTodayTime())
+  const [due, setDue] = useState<string>(getNow())
   const [check, setCheck] = useState<boolean>(false)
 
   const handleSend = async () => {

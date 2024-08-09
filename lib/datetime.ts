@@ -16,7 +16,7 @@ export const getDatesInCurrentMonth = () : Date[] => {
   return dates
 }
 
-export const getLocalTime = (datetime) : string => {
+export const getLocalTime = (datetime : string) : string => {
   return new Date(datetime).toLocaleString("ja-JP", {
     year : "numeric",
     month : "2-digit",
@@ -27,7 +27,7 @@ export const getLocalTime = (datetime) : string => {
   })
 }
 
-export const getTodayTime = () => {
+export const getNow = () => {
   const now = new Date()
   now.setMinutes(0)
 
@@ -39,15 +39,49 @@ export const getTodayTime = () => {
   return `${year}-${month}-${date}T${hours}:00`
 }
 
-export const formatDateTime = (datetime : string) : string => {
-  const dt = new Date(datetime)
+export const getOneHourAgo = () => {
+  const now = new Date()
+  now.setMinutes(0)
+
+  const year = now.getFullYear()
+  const month = String(now.getMonth() + 1).padStart(2, "0")
+  const date = String(now.getDate()).padStart(2, "0")
+  const hours = String(now.getHours() + 2).padStart(2, "0")
+
+  return `${year}-${month}-${date}T${hours}:00`
+}
+
+export const formatDateTimeByStrapi = (datetime : string) : string => {
+  // 時間が24以上の場合、日付を1日進めて時間を調整する
+  const [datePart, timePart] = datetime.split("T")
+  let [hours, minutes] = timePart.split(":").map(Number)
+
+  let dt = new Date(datePart)
+  if (hours >= 24) {
+    dt.setDate(dt.getDate() + Math.floor(hours / 24))
+    hours = hours % 24
+  }
+
+  dt.setHours(hours, minutes)
+
   const year = dt.getFullYear()
   const month = String(dt.getMonth() + 1).padStart(2, "0")
   const date = String(dt.getDate()).padStart(2, "0")
-  const hours = String(dt.getHours()).padStart(2, "0")
-  const minutes = String(dt.getMinutes()).padStart(2, "0")
+  const formattedHours = String(dt.getHours()).padStart(2, "0")
+  const formattedMinutes = String(dt.getMinutes()).padStart(2, "0")
 
-  return `${year}-${month}-${date}T${hours}:${minutes}`
+  return `${year}-${month}-${date}T${formattedHours}:${formattedMinutes}`
+}
+
+export const formatDateTimeByEventCalender = (dt : string) => {
+  const date = new Date(dt)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, "0")
+  const day = String(date.getDate()).padStart(2, "0")
+  const hours = String(date.getHours()).padStart(2, "0")
+  const minutes = String(date.getMinutes()).padStart(2, "0")
+
+  return `${year}-${month}-${day}T${hours}:${minutes}`
 }
 
 export const formatDate = (date : string) : string => {
