@@ -4,6 +4,7 @@ import Find from "@/components/setting/timecard/Find"
 import Create from "@/components/setting/timecard/Create"
 import Edit from "@/components/setting/timecard/Edit"
 import Delete from "@/components/setting/timecard/Delete"
+import Head from "next/head"
 
 const Timecard : NextPage = () => {
   const [screen, setScreen] = useState<string>("find")
@@ -17,6 +18,9 @@ const Timecard : NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Time Card Setting</title>
+      </Head>
       <h1>Time Card Setting</h1>
       {screen === "find" ? (
         <Find setScreen={setScreen} setEditTimecardSetting={setEditTimecardSetting} setDeleteTimecardSetting={setDeleteTimecardSetting} refetchFlag={refetchFlag}/>

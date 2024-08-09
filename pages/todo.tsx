@@ -6,6 +6,7 @@ import Create from "@/components/todo/Create"
 import Edit from "@/components/todo/Edit"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPenToSquare, faRectangleList } from "@fortawesome/free-solid-svg-icons"
+import Head from "next/head"
 
 const Todo : NextPage = () => {
   const [screen, setScreen] = useState("find")
@@ -19,6 +20,9 @@ const Todo : NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Todo</title>
+      </Head>
       <Find setScreen={setScreen} setEditTodo={setEditTod} setDeleteTodo={setDeleteTodo} refetchFlag={refetchFlag}/>
       {screen === "find" ? (
         <button

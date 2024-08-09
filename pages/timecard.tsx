@@ -6,6 +6,7 @@ import Create from "@/components/timecard/Create"
 import Delete from "@/components/timecard/Delete"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faRectangleList } from "@fortawesome/free-solid-svg-icons"
+import Head from "next/head"
 
 const Timecard : NextPage = () => {
   const [screen, setScreen] = useState("find")
@@ -32,6 +33,9 @@ const Timecard : NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Time Card</title>
+      </Head>
       <Find setScreen={setScreen} setEditTimecard={setEditTimecard} setDeleteTimecard={setDeleteTimecard} setCreateDate={setCreateDate} refetchFlag={refetchFlag}/>
       {screen === "edit" && editTimecard !== null ? (
         <div className="fixed top-0 right-0 bottom-0 left-0 z-10 min-h-screen opacity-95 bg-blueGray-50 md:ml-64">

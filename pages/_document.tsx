@@ -4,7 +4,8 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <title>GW</title>
+        <meta charSet="utf-8" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <body>
       <div id="page-transition"></div>

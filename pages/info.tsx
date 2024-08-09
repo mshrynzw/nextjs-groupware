@@ -6,6 +6,7 @@ import Create from "@/components/info/Create"
 import Edit from "@/components/info/Edit"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPenToSquare, faRectangleList } from "@fortawesome/free-solid-svg-icons"
+import Head from "next/head"
 
 const Info : NextPage = () => {
   const [screen, setScreen] = useState("find")
@@ -19,6 +20,9 @@ const Info : NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Info</title>
+      </Head>
       <Find setScreen={setScreen} setEditInfo={setEditInfo} setDeleteInfo={setDeleteInfo} refetchFlag={refetchFlag}/>
       {screen === "find" ? (
         <button

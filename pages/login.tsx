@@ -3,6 +3,7 @@ import { useContext, useState } from "react"
 import { AppContext } from "@/context/AppContext"
 import { useRouter } from "next/router"
 import { login } from "@/lib/auth"
+import Head from "next/head"
 
 const Login : NextPage = () => {
   const appContext = useContext(AppContext)
@@ -27,6 +28,9 @@ const Login : NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Login</title>
+      </Head>
       <h1>Login</h1>
       <form
         onSubmit={async (e) => {

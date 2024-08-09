@@ -4,6 +4,7 @@ import Find from "@/components/setting/group/Find"
 import Delete from "@/components/setting/group/Delete"
 import Create from "@/components/setting/group/Create"
 import Edit from "@/components/setting/group/Edit"
+import Head from "next/head"
 
 const Group : NextPage = () => {
   const [screen, setScreen] = useState("find")
@@ -17,7 +18,10 @@ const Group : NextPage = () => {
 
   return (
     <>
-      <h1>Info</h1>
+      <Head>
+        <title>Group Setting</title>
+      </Head>
+      <h1>Group Setting</h1>
       {screen === "find" ? (
         <Find setScreen={setScreen} setEditGroup={setEditGroup} setDeleteGroup={setDeleteGroup} refetchFlag={refetchFlag}/>
       ) : screen === "edit" && editGroup !== null ? (
