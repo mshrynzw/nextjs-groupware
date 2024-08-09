@@ -1,19 +1,33 @@
 import Cookies from "js-cookie"
 import { User } from "@/types/user"
 
-export const createdInfo = async (user : User, title : string, body : string) => {
+export const createdInfo = async (user : User, title : string, body : string, activeTab : string) => {
   const token = Cookies.get("token")
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/infos`
   try {
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/infos`, {
-      method : "POST",
-      headers : {
-        "Content-Type" : "application/json",
-        Authorization : `Bearer ${token}`
-      },
-      body : JSON.stringify({
-        data : { title, body, user }
+    if (activeTab === "richText") {
+      await fetch(url, {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json",
+          Authorization : `Bearer ${token}`
+        },
+        body : JSON.stringify({
+          data : { title, bodyRichText : body, user }
+        })
       })
-    })
+    } else {
+      await fetch(url, {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json",
+          Authorization : `Bearer ${token}`
+        },
+        body : JSON.stringify({
+          data : { title, body, user }
+        })
+      })
+    }
   } catch (error) {
     throw error
   }

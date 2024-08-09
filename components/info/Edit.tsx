@@ -37,8 +37,9 @@ const Edit = ({ editInfo, setScreen, refetch }) => {
             await handleEdit()
           }}
         >
-          <label htmlFor="title"
-                 className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
+          <label
+            htmlFor="title"
+            className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
           >
             <FontAwesomeIcon
               icon={faSnowflake}
@@ -48,12 +49,14 @@ const Edit = ({ editInfo, setScreen, refetch }) => {
             />{" "}
             Title
           </label>
-          <input type="text" name="title" id="title" value={title}
-                 className="mb-8 w-full rounded border-0 bg-white px-2 py-2 text-sm shadow transition-all duration-150 ease-linear placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
-                 onChange={(e) => setTitle(e.target.value)}
+          <input
+            type="text" name="title" id="title" value={title} required
+            className="mb-8 w-full rounded border-0 bg-white px-2 py-2 text-sm shadow transition-all duration-150 ease-linear placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+            onChange={(e) => setTitle(e.target.value)}
           />
-          <label htmlFor="body"
-                 className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
+          <label
+            htmlFor="body"
+            className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
           >
             <FontAwesomeIcon
               icon={faSnowflake}
@@ -63,12 +66,14 @@ const Edit = ({ editInfo, setScreen, refetch }) => {
             />{" "}
             Body
           </label>
-          <textarea name="body" id="body" rows="20" value={body}
-                    className="mb-8 w-full rounded border-0 bg-white px-2 py-2 text-sm shadow transition-all duration-150 ease-linear placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
-                    onChange={(e) => setBody(e.target.value)}
+          <textarea
+            name="body" id="body" rows="20" value={body}
+            className="mb-8 w-full rounded border-0 bg-white px-2 py-2 text-sm shadow transition-all duration-150 ease-linear placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+            onChange={(e) => setBody(e.target.value)}
           />
-          <label htmlFor="updated"
-                 className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
+          <label
+            htmlFor="updated"
+            className="mb-2 block text-sm font-bold uppercase text-blueGray-600"
           >
             <FontAwesomeIcon
               icon={faSnowflake}
@@ -88,8 +93,9 @@ const Edit = ({ editInfo, setScreen, refetch }) => {
             </span>
             </p>
           </div>
-          <button type="submit"
-                  className="mr-1 mb-1 w-full rounded-xl px-6 py-3 text-sm font-bold uppercase text-white shadow-xl outline-none ease-linear bg-blueGray-800 focus:outline-none"
+          <button
+            type="submit"
+            className="mr-1 mb-1 w-full rounded-xl px-6 py-3 text-sm font-bold uppercase text-white shadow-xl outline-none ease-linear bg-blueGray-800 focus:outline-none"
           >
             Submit
           </button>
