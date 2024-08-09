@@ -23,7 +23,7 @@ const Create = () => {
   }
 
   return (
-    <div className="fixed right-0 bottom-0 left-0 m-0 w-full bg-white p-4 shadow-xl md:pl-72">
+    <div className="fixed right-0 bottom-0 left-0 m-0 w-full p-4 shadow-xl bg-blueGray-600 md:pl-72">
       <form
         onSubmit={async (e) => {
           await handleSend()
@@ -37,11 +37,11 @@ const Create = () => {
           />
           <button
             type="submit"
-            className="flex-shrink-0 rounded-lg px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear bg-blueGray-800 hover:shadow-lg focus:outline-none"
+            className="flex-shrink-0 rounded-lg px-6 py-3 text-sm font-bold uppercase text-white shadow-xl outline-none transition-all duration-150 ease-linear bg-blueGray-200 hover:bg-white hover:shadow"
           >
             <FontAwesomeIcon
               icon={faPenToSquare}
-              className="h-6 w-6 p-1"
+              className="h-6 w-6 p-1 text-blueGray-800"
             />
           </button>
         </div>
