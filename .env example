@@ -1,10 +1,8 @@
-# TimePort 開発環境設定
-
-# データソース切り替え
-NEXT_PUBLIC_USE_SUPABASE=true
+# 環境設定（開発：development, 本番：production）
+NODE_ENV=development
 
 # Supabase設定
-NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 
@@ -14,6 +12,13 @@ DATABASE_URL=postgresql://postgres:[password]@[host]:[port]/[database]
 # アプリケーション設定
 NEXTAUTH_SECRET=your_nextauth_secret
 NEXTAUTH_URL=http://localhost:3000
+
+# PWA
+NEXT_PUBLIC_VAPID_PUBLIC_KEY=
+VAPID_PRIVATE_KEY=
+
+# パーティクル設定
+PARTICLES_COUNT=100
 
 # ユーザー管理設定
 NEXT_PUBLIC_DEFAULT_USER_PASSWORD=P@ssw0rd!
@@ -29,5 +34,5 @@ CSV_EXPORT_DAILY_LIMIT=10
 CSV_FILE_SIZE_LIMIT_MB=50
 CSV_DIALOG_SIZE=modal
 
-# 開発用設定
-NODE_ENV=development
+# レポート設定
+REPORT_MAX_FILE_SIZE_MB=10
