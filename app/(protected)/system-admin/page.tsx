@@ -1,4 +1,4 @@
-import { checkAuth } from '@/lib/auth/checkAuth';
+import { checkAuth } from '@/lib/auth/check-auth';
 
 export default async function Page() {
   const data = await checkAuth();

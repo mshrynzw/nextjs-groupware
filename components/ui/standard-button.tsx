@@ -4,7 +4,6 @@ import { cn } from '@/lib/utils';
 
 import { Button, ButtonProps } from './button';
 
-
 type StandardButtonType = 'save' | 'create' | 'cancel' | 'reset' | 'submit';
 
 interface StandardButtonProps extends ButtonProps {

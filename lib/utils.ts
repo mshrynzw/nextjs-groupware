@@ -7,8 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const hasEnvVars =
-  process.env.NEXT_PUBLIC_SUPABASE_URL &&
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 /**
  * 日時を「YYYY年MM月DD日hh:mm」形式でフォーマット

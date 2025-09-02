@@ -22,6 +22,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { createClient } from '@/lib/supabase/client';
 // import { useAuth } from '@/contexts/auth-context';
 import { cn } from '@/lib/utils';
 
@@ -80,18 +81,19 @@ export default function SidebarClient({
   user,
   features,
 }: SidebarClientProps) {
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   // ログアウトはクライアントの文脈（コンテキスト）で実行
   // const { logout, isLoggingOut } = useAuth();
 
-  const logout = () => {
-    console.log('ログアウト');
+  const logout = async () => {
+    setIsLoggingOut(true);
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push('/login');
   };
-  const isLoggingOut = false;
-
-  // 仮でログアウト中はfalse
 
   const isFeatureEnabled = (feature: FeatureKey) => {
     if (user.role === 'system-admin') return true;
@@ -216,9 +218,10 @@ export default function SidebarClient({
         {/* Navigation */}
         <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
           {menuItems.map((item) => {
-            const Icon = (item as any).icon;
-            const isActive =
-              (item as any).href === (item.href || '') && usePathname() === item.href;
+            const Icon = item.icon;
+            const isActive = pathname === item.href;
+
+            // セパレーターの場合
             if (item.href === '') {
               return (
                 <div
@@ -227,28 +230,24 @@ export default function SidebarClient({
                 />
               );
             }
+
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
                   'flex items-center px-3 py-3 rounded-xl text-sm font-medium transition-all duration-200 group',
-                  usePathname() === item.href
+                  isActive
                     ? 'bg-white/20 text-white backdrop-blur-sm shadow-lg border border-white/30'
                     : 'text-white/80 hover:bg-white/10 hover:text-white transform hover:scale-[1.02]',
                   isCollapsed && 'justify-center'
                 )}
-                prefetch
-                onClick={onToggle}
+                prefetch={true}
+                onClick={onToggle} // モバイルでメニュー項目クリック時にサイドバーを閉じる
               >
-                <Icon
-                  className={cn(
-                    'w-5 h-5 flex-shrink-0',
-                    usePathname() === item.href && 'animate-pulse'
-                  )}
-                />
+                <Icon className={cn('w-5 h-5 flex-shrink-0', isActive && 'animate-pulse')} />
                 {!isCollapsed && <span className="ml-3">{item.label}</span>}
-                {!isCollapsed && usePathname() === item.href && (
+                {!isCollapsed && isActive && (
                   <div className="ml-auto w-2 h-2 bg-white rounded-full animate-pulse" />
                 )}
               </Link>

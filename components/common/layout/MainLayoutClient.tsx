@@ -3,10 +3,10 @@
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
-import Header from '@/components/common/Header';
+import Header from '@/components/common/header/Header';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import Particles from '@/components/common/Particles';
-import Sidebar from '@/components/common/Sidebar/Sidebar';
+import Sidebar from '@/components/common/sidebar/Sidebar';
 
 type Props = {
   children: React.ReactNode;

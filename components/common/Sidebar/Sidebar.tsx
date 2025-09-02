@@ -1,7 +1,7 @@
 // import { cookies } from 'next/headers';
 
 // import { createServerClient } from '@supabase/ssr';
-import SidebarClient from '@/components/common/Sidebar/SidebarClient';
+import SidebarClient from '@/components/common/sidebar/SidebarClient';
 
 type Role = 'member' | 'admin' | 'system-admin';
 type FeatureKey = 'chat' | 'report' | 'schedule';

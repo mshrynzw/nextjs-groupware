@@ -5,7 +5,7 @@ import '@/app/globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 
-import MainLayoutClient from '@/components/common/MainLayoutClient';
+import MainLayoutClient from '@/components/common/layout/MainLayoutClient';
 import { Toaster } from '@/components/ui/toaster';
 
 interface MainLayoutProps {

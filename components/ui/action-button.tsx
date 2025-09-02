@@ -5,7 +5,6 @@ import { cn } from '@/lib/utils';
 
 import { Button, ButtonProps } from './button';
 
-
 type ActionType = 'view' | 'edit' | 'submit' | 'delete' | 'approve' | 'reject';
 
 interface ActionButtonProps extends Omit<ButtonProps, 'children'> {

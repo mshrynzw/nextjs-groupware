@@ -1,6 +1,6 @@
-import '@/app/globals.css'; 
+import '@/app/globals.css';
 
-import MainLayout, { metadata, viewport } from '@/components/common/MainLayout';
+import MainLayout, { metadata, viewport } from '@/components/common/layout/MainLayout';
 
 export { metadata, viewport };
 
