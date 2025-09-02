@@ -1,0 +1,30 @@
+# 環境変数ファイル
+.env*
+.env.example
+.env.example.local
+
+# 設定ファイル
+*.config.js
+*.config.ts
+eslint.config.js
+
+# ビルドファイル
+.next/
+dist/
+build/
+
+# 依存関係
+node_modules/
+
+# ドキュメントファイル
+*.md
+README.md
+.github/
+
+# Git関連ファイル
+.gitignore
+.git/
+
+# その他
+*.log
+*.lock
