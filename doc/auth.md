@@ -23,7 +23,7 @@
 
 ---
 
-### ③ `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_OR_ANON_KEY!` にはどちらを設定すべきか？使い分けは？
+### ③ `NEXT_PUBLIC_SUPABASE_ANON_KEY!` にはどちらを設定すべきか？使い分けは？
 
 - **anon key**  
   - フロントエンドで使う公開用キー
@@ -36,7 +36,7 @@
   - サーバーサイドのバッチや管理者APIなど、信頼できる環境でのみ利用
 
 > **結論：**  
-> `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_OR_ANON_KEY` には**anon key**のみを設定する。  
+> `NEXT_PUBLIC_SUPABASE_ANON_KEY` には**anon key**のみを設定する。  
 > `service_role key` はNext.jsプロジェクト内では使わない。
 
 ---
@@ -97,3 +97,10 @@ if (
 - **クライアントサイドでの認証は「次のリクエスト」までサーバーに反映されない**
 - **サーバーアクションやAPI Route経由なら、即座にサーバーで認証状態を反映できる**
 - **`service_role key`は絶対にNext.jsプロジェクトで使わない**
+
+---
+
+# 7. 参考
+
+https://github.com/vercel/next.js/blob/canary/examples/with-supabase/.env.example
+https://supabase.com/docs/guides/auth/server-side/nextjs?queryGroups=router&router=app
