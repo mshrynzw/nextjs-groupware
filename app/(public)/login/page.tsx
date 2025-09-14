@@ -1,4 +1,8 @@
+import fs from 'fs';
+import path from 'path';
+
 import { Clock, Sparkles } from 'lucide-react';
+import Image from 'next/image';
 
 import LoginForm from '@/components/auth/LoginForm';
 import Particles from '@/components/common/Particles';
@@ -6,6 +10,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const dynamic = 'force-static';
 export default function Page() {
+  const packageJsonPath = path.resolve(process.cwd(), 'package.json');
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+  const version = packageJson.version;
+
   return (
     <div className='min-h-screen relative overflow-hidden flex items-center justify-center p-4'>
       {/* Animated Gradient Background */}
@@ -39,7 +47,7 @@ export default function Page() {
           </CardTitle>
           <div className='flex items-center justify-center space-x-2 mt-2'>
             <Sparkles className='w-4 h-4 text-blue-300' />
-            <p className='text-blue-100 font-medium'>勤怠管理システム</p>
+            <p className='text-blue-100 font-medium'>Version {version}</p>
             <Sparkles className='w-4 h-4 text-purple-300' />
           </div>
         </CardHeader>
@@ -47,29 +55,21 @@ export default function Page() {
         <CardContent>
           <LoginForm />
 
-          {/* TODO: Delete Demo Accounts */}
           <div className='mt-8 p-4 bg-white/5 border border-white/10 rounded-lg backdrop-blur-sm'>
-            <div className='flex items-center space-x-2 mb-3'>
+            <div className='flex justify-center space-x-2 mb-3'>
               <Sparkles className='w-4 h-4 text-blue-300' />
-              <p className='text-xs text-blue-200 font-semibold'>デモアカウント</p>
+              <p className='text-xs text-blue-200 font-semibold'>
+                スマートフォン・タブレット端末用のQRコード
+              </p>
             </div>
-            <div className='space-y-2 text-xs text-white/80'>
-              <div className='flex justify-between'>
-                <span className='font-medium text-purple-200'>システム管理者:</span>
-                <span>system@timeport.com</span>
-              </div>
-              <div className='flex justify-between'>
-                <span className='font-medium text-blue-200'>管理者:</span>
-                <span>admin.peco@timeport.com</span>
-              </div>
-              <div className='flex justify-between'>
-                <span className='font-medium text-green-200'>メンバー:</span>
-                <span>member.kyaru@timeport.com</span>
-              </div>
-              <div className='flex justify-between pt-1 border-t border-white/10'>
-                <span className='font-medium text-yellow-200'>パスワード:</span>
-                <span>P@ssw0rd!</span>
-              </div>
+            <div className='flex justify-center'>
+              <Image
+                src='/qrcode_timeport-v4.vercel.app.png'
+                alt='スマートフォン・タブレット端末用のQRコード'
+                width={100}
+                height={100}
+                priority
+              />
             </div>
           </div>
         </CardContent>

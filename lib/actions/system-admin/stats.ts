@@ -267,16 +267,6 @@ export async function getLogsDataForPeriod(period: string) {
         const jstDate = convertUTCToJST(log.created_at);
         const dateKey = getJSTDateString(jstDate);
 
-        // デバッグ用ログ（実際の最新日のデータを確認）
-        if (dateKey === actualLatestDayKey) {
-          console.log('実際の最新日のエラーログ発見:', {
-            originalUTC: log.created_at,
-            jstDate: jstDate,
-            dateKey: dateKey,
-            level: log.level,
-          });
-        }
-
         const current = logsByDate.get(dateKey) || { errorCount: 0, auditCount: 0 };
         current.errorCount += 1;
         logsByDate.set(dateKey, current);

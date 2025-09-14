@@ -1,7 +1,6 @@
 'use client';
 
 import { Bell, Calendar, Clock, Coffee, FileText, Loader2, LogIn, LogOut } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 // import { useAuth } from '@/lib/utils/auth/client';
@@ -32,10 +31,7 @@ export default function PageClient({
   todayAttendanceResult,
   requestsResult,
 }: PageClientProps) {
-  const router = useRouter();
   const { toast } = useToast();
-
-  // const companyId = user.company_id;
 
   // 状態管理
   const [todayAttendance, setTodayAttendance] = useState<AttendanceData | null>(
@@ -67,10 +63,6 @@ export default function PageClient({
 
     return () => clearInterval(timer);
   }, [isClient]);
-
-  if (!user || (user.role !== 'member' && user.role !== 'admin')) {
-    return null;
-  }
 
   // 統計計算
   const thisMonth = isClient ? new Date().toISOString().slice(0, 7) : '';
