@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { createSupabaseBrowserClient } from '@/lib/supabase/client';
 
 import JoinChatDialog from './JoinChatDialog';
 
@@ -40,6 +41,7 @@ export default function JoinChatButton({
     setIsJoining(true);
     try {
       // chat_usersテーブルに挿入
+      const supabase = await createSupabaseBrowserClient();
       const { error } = await supabase.from('chat_users').insert({
         chat_id: chatId,
         user_id: user.id,

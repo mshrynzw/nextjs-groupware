@@ -140,7 +140,7 @@ export default function Sidebar({ setIsOpen, isOpen = false, user, menu }: Sideb
                 onClick={() => {
                   router.push('/member');
                 }}
-                className={`w-full p-2 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors ${pathname === '/member' ? 'bg-white/30 border-white/50 border-2' : 'bg-white/10'}`}
+                className={`w-full p-2 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors ${pathname.startsWith('/member') ? 'bg-white/30 border-white/50 border-2' : 'bg-white/10'}`}
                 title='メンバー画面'
               >
                 <Users className='w-4 h-4 text-white' />
@@ -153,7 +153,7 @@ export default function Sidebar({ setIsOpen, isOpen = false, user, menu }: Sideb
                 onClick={() => {
                   router.push('/admin');
                 }}
-                className={`w-full p-2 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors ${pathname === '/admin' ? 'bg-white/30 border-white/50 border-2' : 'bg-white/10'}`}
+                className={`w-full p-2 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors ${pathname.startsWith('/admin') ? 'bg-white/30 border-white/50 border-2' : 'bg-white/10'}`}
                 title='管理者画面'
               >
                 <Server className='w-4 h-4 text-white' />
@@ -166,7 +166,7 @@ export default function Sidebar({ setIsOpen, isOpen = false, user, menu }: Sideb
                 onClick={() => {
                   router.push('/system-admin');
                 }}
-                className={`w-full p-2 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors ${pathname === '/system-admin' ? 'bg-white/30 border-white/50 border-2' : 'bg-white/10'}`}
+                className={`w-full p-2 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors ${pathname.startsWith('/system-admin') ? 'bg-white/30 border-white/50 border-2' : 'bg-white/10'}`}
                 title='システム管理者画面'
               >
                 <Shield className='w-4 h-4 text-white' />

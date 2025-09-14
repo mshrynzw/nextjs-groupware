@@ -3,10 +3,9 @@
 import { Paperclip, Send, X } from 'lucide-react';
 import { useRef, useState } from 'react';
 
+import AttachmentOverSizeDialog from '@/components/app/member/chat/detail/AttachmentOverSizeDialog';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-
-import AttachmentOverSizeDialog from '@/components/app/member/chat/AttachmentOverSizeDialog';
 
 export type Attachment = {
   id: string;

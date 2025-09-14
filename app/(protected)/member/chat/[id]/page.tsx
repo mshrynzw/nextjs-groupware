@@ -1,28 +1,19 @@
-'use client';
+import ChatDetail from '@/components/app/member/chat/detail/ChatDetail';
+import { createSupabaseServerClient } from '@/lib/supabase/server';
 
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+export default async function ChatDetailPage() {
+  // 認証チェックのみ（即座に完了）
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user: authUser },
+  } = await supabase.auth.getUser();
 
-import { useAuth } from '@/contexts/auth-context';
-import ChatRoom from '@/components/app/member/chat/room/ChatRoom';
-
-import { getCompanyFeaturesByUserId } from '@/lib/actions/get-company-features';
-
-export default function ChatDetail() {
-  const { user } = useAuth();
-  const router = useRouter();
-  useEffect(() => {
-    if (!user) return;
-    (async () => {
-      const features = await getCompanyFeaturesByUserId(user.id);
-      if (features && !features.features.chat) {
-        router.replace('/member/feature-disabled');
-      }
-    })();
-  }, [user, router]);
+  if (!authUser) {
+    throw new Error('ログアウトの状態です。ログインしてください。');
+  }
   return (
     <div className='h-[calc(100vh-8rem)] flex flex-col backdrop-blur-md rounded-lg'>
-      <ChatRoom />
+      <ChatDetail />
     </div>
   );
 }

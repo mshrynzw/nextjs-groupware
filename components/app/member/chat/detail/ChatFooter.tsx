@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 
+import JoinChatButton from '@/components/app/member/chat/detail/JoinChatButton';
+import MessageInput from '@/components/app/member/chat/detail/MessageInput';
 import type { ChatDetail } from '@/schemas/chat';
 import { ChatUser } from '@/schemas/chat';
-
-import JoinChatButton from '@/components/app/member/chat/JoinChatButton';
-import MessageInput from '@/components/app/member/chat/MessageInput';
 
 export default function InputMessage({
   newMessage,

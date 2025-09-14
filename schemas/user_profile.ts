@@ -133,7 +133,7 @@ export const GetUserSettingsResultSchema2 = z.object({
 export const UserProfileSchema = z.object({
   id: z.string().uuid(),
   company_id: z.string().uuid(),
-  group_id: z.string().uuid(),
+  group_ids: z.array(z.string().uuid()),
   code: z.string(),
   family_name: z.string(),
   first_name: z.string(),

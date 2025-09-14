@@ -1,26 +1,18 @@
 'use server';
 
-import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';
-import { z } from 'zod';
+import { headers } from 'next/headers';
 
 import { logAudit, logSystem } from '@/lib/utils/log-system';
-import { getUserCompanyId } from '@/lib/actions/user';
-import type {
-  UserProfile,
-  CompanyInfo,
-  ChatSendKeySetting,
-  UserSettings,
-  GetUserProfileResult,
-  GetUserGroupsResult,
-  GetCompanyInfoResult,
-  GetChatSendKeySettingResult,
-  UpdateChatSendKeySettingResult,
-  GetUserSettingsResult2,
-} from '@/schemas/user_profile';
+// import { getUserCompanyId } from '@/lib/actions/user';
+import { createSupabaseServerClient } from '@/lib/supabase/server';
 import type { Group } from '@/schemas/group';
-
-import { createServerClient, createAdminClient } from '@/lib/supabase';
+import type {
+  CompanyInfo,
+  UpdateChatSendKeySettingResult,
+  UserProfile,
+  UserSettings,
+} from '@/schemas/user_profile';
 
 /**
  * クライアント情報を取得
@@ -62,7 +54,7 @@ async function getClientInfo() {
  * ユーザープロフィールを取得
  */
 export async function getUserProfile(userId: string): Promise<UserProfile | null> {
-  const supabase = createServerClient();
+  const supabase = await createSupabaseServerClient();
 
   try {
     const { data, error } = await supabase
@@ -95,7 +87,7 @@ export async function getUserProfile(userId: string): Promise<UserProfile | null
       return null;
     }
 
-    return data;
+    return data as UserProfile;
   } catch (error) {
     console.error('Error in getUserProfile:', error);
     return null;
@@ -106,7 +98,7 @@ export async function getUserProfile(userId: string): Promise<UserProfile | null
  * ユーザーが所属するグループ一覧を取得
  */
 export async function getUserGroups(userId: string): Promise<Group[]> {
-  const supabase = createServerClient();
+  const supabase = await createSupabaseServerClient();
 
   try {
     console.log('getUserGroups 開始:', { userId });
@@ -177,7 +169,7 @@ export async function getUserGroups(userId: string): Promise<Group[]> {
  * 企業情報を取得
  */
 export async function getCompanyInfo(companyId: string): Promise<CompanyInfo | null> {
-  const supabase = createServerClient();
+  const supabase = await createSupabaseServerClient();
 
   try {
     const { data, error } = await supabase
@@ -220,20 +212,20 @@ export async function updateCompanyInfo(
     address?: string;
     phone?: string;
   },
-  currentUserId?: string
+  user: UserProfile
 ): Promise<{ success: boolean; message: string; error?: string }> {
-  const supabaseAdmin = createAdminClient();
+  const supabaseAdmin = await createSupabaseServerClient();
 
   try {
     // 現在のユーザーの企業IDを取得して検証
-    if (currentUserId) {
-      const userCompanyId = await getUserCompanyId(currentUserId);
+    if (user.id) {
+      const userCompanyId = user.company_id;
       if (userCompanyId !== companyId) {
         // システムログ: 権限エラー
         await logSystem('warn', '企業情報更新時の権限エラー', {
           feature_name: 'company_management',
           action_type: 'update_company_info',
-          user_id: currentUserId,
+          user_id: user.id,
           company_id: companyId,
           error_message: '権限エラー: 自分の企業の情報のみ更新できます',
         });
@@ -269,7 +261,7 @@ export async function updateCompanyInfo(
       await logSystem('error', '企業情報更新エラー', {
         feature_name: 'company_management',
         action_type: 'update_company_info',
-        user_id: currentUserId,
+        user_id: user.id,
         company_id: companyId,
         error_message: error.message,
       });
@@ -286,7 +278,7 @@ export async function updateCompanyInfo(
     await logSystem('info', '企業情報更新成功', {
       feature_name: 'company_management',
       action_type: 'update_company_info',
-      user_id: currentUserId,
+      user_id: user.id,
       company_id: companyId,
       metadata: {
         updated_fields: Object.keys(companyData),
@@ -294,11 +286,11 @@ export async function updateCompanyInfo(
     });
 
     // 監査ログを記録
-    if (currentUserId) {
+    if (user.id) {
       const clientInfo = await getClientInfo();
       try {
         await logAudit('company_info_updated', {
-          user_id: currentUserId,
+          user_id: user.id,
           company_id: companyId,
           target_type: 'companies',
           target_id: companyId,
@@ -318,7 +310,7 @@ export async function updateCompanyInfo(
         await logSystem('error', '監査ログ記録エラー', {
           feature_name: 'company_management',
           action_type: 'update_company_info',
-          user_id: currentUserId,
+          user_id: user.id,
           company_id: companyId,
           error_message: error instanceof Error ? error.message : 'Unknown error',
         });
@@ -334,7 +326,7 @@ export async function updateCompanyInfo(
     await logSystem('error', '企業情報更新時の予期しないエラー', {
       feature_name: 'company_management',
       action_type: 'update_company_info',
-      user_id: currentUserId,
+      user_id: user.id,
       company_id: companyId,
       error_message: error instanceof Error ? error.message : 'Unknown error',
       error_stack: error instanceof Error ? error.stack : undefined,
@@ -357,7 +349,7 @@ export async function updateCompanyInfo(
  * チャット送信キー設定を取得
  */
 export async function getChatSendKeySetting(userId: string): Promise<boolean> {
-  const supabase = createServerClient();
+  const supabase = await createSupabaseServerClient();
 
   try {
     const { data, error } = await supabase
@@ -385,7 +377,7 @@ export async function updateChatSendKeySetting(
   userId: string,
   useShiftEnter: boolean
 ): Promise<UpdateChatSendKeySettingResult> {
-  const supabase = createServerClient();
+  const supabase = await createSupabaseServerClient();
 
   try {
     // 更新前のデータを取得（監査ログ用）
@@ -472,7 +464,7 @@ export async function updateChatSendKeySetting(
  * ユーザーの全設定を取得
  */
 export async function getUserSettings(userId: string): Promise<UserSettings | null> {
-  const supabase = createServerClient();
+  const supabase = await createSupabaseServerClient();
 
   try {
     const { data, error } = await supabase
@@ -506,7 +498,6 @@ export async function getUserSettings(userId: string): Promise<UserSettings | nu
  * ユーザープロフィールを更新
  */
 export async function updateUserProfile(
-  userId: string,
   profileData: {
     family_name?: string;
     first_name?: string;
@@ -515,18 +506,16 @@ export async function updateUserProfile(
     phone?: string;
     dashboard_notification_count?: number;
   },
-  currentUserId?: string
+  user: UserProfile
 ): Promise<{ success: boolean; message: string; error?: string }> {
-  const supabase = createServerClient();
+  const supabase = await createSupabaseServerClient();
 
   try {
-    console.log('updateUserProfile 開始:', { userId, profileData });
-
     // 更新前のデータを取得（監査ログ用）
     const { data: beforeData } = await supabase
       .from('user_profiles')
       .select('*')
-      .eq('id', userId)
+      .eq('id', user.id)
       .single();
 
     // 更新データを準備
@@ -545,7 +534,7 @@ export async function updateUserProfile(
     const { error: updateError } = await supabase
       .from('user_profiles')
       .update(updateData)
-      .eq('id', userId);
+      .eq('id', user.id);
 
     if (updateError) {
       console.error('プロフィール更新エラー:', updateError);
@@ -556,19 +545,19 @@ export async function updateUserProfile(
       };
     }
 
-    console.log('プロフィール更新完了:', userId);
+    console.log('プロフィール更新完了:', user.id);
 
     // 監査ログを記録
-    if (currentUserId) {
+    if (user.id) {
       try {
-        const companyId = await getUserCompanyId(currentUserId);
+        const companyId = user.company_id;
         const clientInfo = await getClientInfo();
 
         await logAudit('user_profile_updated', {
-          user_id: currentUserId,
+          user_id: user.id,
           company_id: companyId || undefined,
           target_type: 'user_profiles',
-          target_id: userId,
+          target_id: user.id,
           before_data: beforeData,
           after_data: { ...beforeData, ...updateData },
           details: { updated_fields: Object.keys(updateData) },

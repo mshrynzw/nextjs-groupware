@@ -1,9 +1,8 @@
 import { ArrowLeft, Settings, Users } from 'lucide-react';
 
+import ExitChatButton from '@/components/app/member/chat/detail/ExitChatButton';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-
-import ExitChatButton from '@/components/app/member/chat/ExitChatButton';
 
 export default function ChatHeader({
   chat,

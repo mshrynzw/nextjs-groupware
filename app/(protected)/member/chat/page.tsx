@@ -1,9 +1,9 @@
 import { Suspense } from 'react';
 
-import PageClient from '@/components/app/member/chat/PageClient';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { getChats } from '@/lib/actions/chat';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import PageClient from '@/components/app/member/chat/PageClient';
 
 // プロフィール取得とチャットデータ取得の非同期コンポーネント
 async function ChatContent({ authUser }: { authUser: { id: string } }) {

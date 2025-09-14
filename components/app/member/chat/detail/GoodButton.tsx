@@ -4,6 +4,7 @@ import { ThumbsUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
+import { createSupabaseBrowserClient } from '@/lib/supabase/client';
 import { ChatMessageData } from '@/schemas/chat';
 
 // import { useAuth } from '@/contexts/auth-context';
@@ -42,6 +43,7 @@ export default function GoodButton({ message, isOwnMessage, onGoodUpdate }: Good
       }
 
       // データベースを更新
+      const supabase = await createSupabaseBrowserClient();
       const { error } = await supabase
         .from('chat_messages')
         .update({ good_user_ids: newGoodUserIds })

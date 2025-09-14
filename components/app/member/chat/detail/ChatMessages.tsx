@@ -1,15 +1,14 @@
 import { Download, SquarePen, Trash2 } from 'lucide-react';
 import React from 'react';
 
+import GoodButton from '@/components/app/member/chat/detail/GoodButton';
+import GoodUsersDisplay from '@/components/app/member/chat/detail/GoodUsersDisplay';
+import MessageCopyButton from '@/components/app/member/chat/detail/MessageCopyButton';
+import MessageMarkdown from '@/components/app/member/chat/detail/MessageMarkdown';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ChatDetail, ChatMessageData } from '@/schemas/chat';
-
-import GoodButton from '@/components/app/member/chat/GoodButton';
-import GoodUsersDisplay from '@/components/app/member/chat/GoodUsersDisplay';
-import MessageCopyButton from '@/components/app/member/chat/MessageCopyButton';
-import MessageMarkdown from '@/components/app/member/chat/MessageMarkdown';
-// import LinkkButton from '@/components/app/member/chat/LinkkButton';
+// import LinkkButton from '@/components/app/member/chat/detail/detailLinkkButton';
 import '@/styles/github-markdown.css';
 
 export default function ChatMessages({

@@ -32,8 +32,9 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
+import { createSupabaseBrowserClient } from '@/lib/supabase/client';
 
-import { useData } from '@/contexts/data-context';
+// import { useData } from '@/contexts/data-context';
 
 interface ChatSettingsDialogProps {
   open: boolean;
@@ -75,7 +76,7 @@ export default function ChatSettingsDialog({
   chat,
   onSettingsUpdate,
 }: ChatSettingsDialogProps) {
-  const { companyId, users } = useData();
+  // const { companyId, users } = useData();
   const { toast } = useToast();
   const [channelName, setChannelName] = useState(chat.name || '');
   const [isPrivate, setIsPrivate] = useState(chat.is_private);
@@ -97,6 +98,7 @@ export default function ChatSettingsDialog({
 
     const loadChatUsers = async () => {
       try {
+        const supabase = await createSupabaseBrowserClient();
         const { data, error } = await supabase
           .from('chat_users')
           .select(
@@ -195,6 +197,7 @@ export default function ChatSettingsDialog({
     setUpdating(true);
     try {
       // チャンネル名とプライベート設定を更新
+      const supabase = await createSupabaseBrowserClient();
       const { error: chatError } = await supabase
         .from('chats')
         .update({
@@ -242,6 +245,7 @@ export default function ChatSettingsDialog({
       }
 
       // データベース側でも重複チェック
+      const supabase = await createSupabaseBrowserClient();
       const { data: existingUser, error: checkError } = await supabase
         .from('chat_users')
         .select('id')
@@ -331,6 +335,7 @@ export default function ChatSettingsDialog({
 
     try {
       // 物理削除を行う（deleted_atではなく）
+      const supabase = await createSupabaseBrowserClient();
       const { error } = await supabase
         .from('chat_users')
         .delete()
@@ -381,6 +386,7 @@ export default function ChatSettingsDialog({
     if (!chat.id) return;
 
     try {
+      const supabase = await createSupabaseBrowserClient();
       const { error } = await supabase
         .from('chat_users')
         .update({ role: newRole })

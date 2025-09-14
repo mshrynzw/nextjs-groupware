@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { createSupabaseBrowserClient } from '@/lib/supabase/client';
 
 import ExitChatDialog from './ExitChatDialog';
 
@@ -43,7 +44,7 @@ export default function ExitChatButton({
     setIsExiting(true);
     try {
       // chat_usersテーブルから物理削除
-      const { error } = await supabase
+      const { error } = await createSupabaseBrowserClient
         .from('chat_users')
         .delete()
         .eq('chat_id', chatId)

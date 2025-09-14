@@ -1,6 +1,5 @@
 'use server';
-
-import { getUserCompanyId } from '@/lib/actions/user';
+import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { logAudit } from '@/lib/utils/log-system';
 
 type UUID = string;
@@ -59,7 +58,7 @@ export interface ReverseOnCancelParams {
 }
 
 async function fetchPolicyOrDefault(companyId: UUID, leaveTypeId: UUID): Promise<LeavePolicy> {
-  const supabase = createAdminClient();
+  const supabase = await createSupabaseServerClient();
   const { data } = await supabase
     .from('leave_policies')
     .select('*')
@@ -100,7 +99,7 @@ async function fetchPolicyOrDefault(companyId: UUID, leaveTypeId: UUID): Promise
  * 指定ユーザー・種別の残高（分）を取得
  */
 export async function getBalanceMinutes(userId: UUID, leaveTypeId: UUID): Promise<number> {
-  const supabase = createAdminClient();
+  const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase
     .from('v_leave_balances')
     .select('balance_minutes')
@@ -122,7 +121,7 @@ export async function allocateConsumptionFIFO(
     params;
   if (quantityMinutes <= 0) throw new Error('quantityMinutes must be positive');
 
-  const supabase = createAdminClient();
+  const supabase = await createSupabaseServerClient();
 
   // 現在の残高確認（allowNegative=false なら不足時エラー）
   if (!allowNegative) {
@@ -207,7 +206,7 @@ export async function allocateConsumptionFIFO(
  */
 export async function holdConsumptionsForRequest(params: HoldForRequestParams): Promise<void> {
   const { requestId, currentUserId } = params;
-  const supabase = createAdminClient();
+  const supabase = await createSupabaseServerClient();
 
   // 申請・明細・申請者取得
   const { data: request, error: reqErr } = await supabase
@@ -260,7 +259,7 @@ export async function finalizeConsumptionsOnApprove(
   params: FinalizeOnApproveParams
 ): Promise<void> {
   const { requestId, approverId } = params;
-  const supabase = createAdminClient();
+  const supabase = await createSupabaseServerClient();
 
   const { data: request, error: reqErr } = await supabase
     .from('requests')
@@ -309,7 +308,7 @@ export async function finalizeConsumptionsOnApprove(
  */
 export async function releaseConsumptionsForRequest(params: ReleaseOnRejectParams): Promise<void> {
   const { requestId, currentUserId } = params;
-  const supabase = createAdminClient();
+  const supabase = await createSupabaseServerClient();
 
   const { error } = await supabase
     .from('leave_consumptions')
@@ -330,7 +329,7 @@ export async function releaseConsumptionsForRequest(params: ReleaseOnRejectParam
  */
 export async function reverseConsumptionsForRequest(params: ReverseOnCancelParams): Promise<void> {
   const { requestId, currentUserId } = params;
-  const supabase = createAdminClient();
+  const supabase = await createSupabaseServerClient();
 
   const { data: rows, error: fetchErr } = await supabase
     .from('leave_consumptions')

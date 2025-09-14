@@ -4,26 +4,24 @@ import { ArrowLeft } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
+import InputMessage from '@/components/app/member/chat/detail/ChatFooter';
+import ChatHeader from '@/components/app/member/chat/detail/ChatHeader';
+import ChatMessages from '@/components/app/member/chat/detail/ChatMessages';
+import ChatSettingsDialog from '@/components/app/member/chat/detail/ChatSettingsDialog';
+import MessageDeleteDialog from '@/components/app/member/chat/detail/MessageDeleteDialog';
+import MessageEditDialog from '@/components/app/member/chat/detail/MessageEditDialog';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { getChatDetail, getMessages, markAsRead, sendMessage } from '@/lib/actions/chat';
 import { getChatSendKeySetting } from '@/lib/actions/user-settings';
-import { ChatDetail, ChatMessageData, ChatUser } from '@/schemas/chat';
-
-import InputMessage from '@/components/app/member/chat/ChatFooter';
-import ChatHeader from '@/components/app/member/chat/ChatHeader';
-import ChatMessages from '@/components/app/member/chat/ChatMessages';
-import ChatSettingsDialog from '@/components/app/member/chat/ChatSettingsDialog';
-import MessageDeleteDialog from '@/components/app/member/chat/MessageDeleteDialog';
-import MessageEditDialog from '@/components/app/member/chat/MessageEditDialog';
+import { ChatMessageData, ChatUser } from '@/schemas/chat';
 // import { useAuth } from '@/contexts/auth-context';
-
-import LoadingSpinner from '@/components/layout/LoadingSpinner';
 
 // チャット参加者型を定義
 // ChatUser型はschemas/chat.tsからimportして利用
 
-export default function ChatRoom() {
+export default function ChatDetail() {
   const params = useParams();
   const chatId = params.id as string;
   const { user } = useAuth();

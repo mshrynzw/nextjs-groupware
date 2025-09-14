@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import { createSupabaseBrowserClient } from '@/lib/supabase/client';
 import { ChatMessageData } from '@/schemas/chat';
-
 interface GoodUsersDisplayProps {
   message: ChatMessageData;
 }
@@ -28,6 +28,7 @@ export default function GoodUsersDisplay({ message }: GoodUsersDisplayProps) {
     const fetchGoodUsers = async () => {
       setIsLoading(true);
       try {
+        const supabase = await createSupabaseBrowserClient();
         const { data, error } = await supabase
           .from('user_profiles')
           .select('id, family_name, first_name')
