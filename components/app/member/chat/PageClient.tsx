@@ -2,7 +2,7 @@
 
 import { MessageSquare, Plus, Search, Users } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -20,7 +20,7 @@ export default function PageClient({ user, chats }: PageClientProps) {
   const router = useRouter();
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [chatAdminStatus, setChatAdminStatus] = useState<Record<string, boolean>>({});
+  // const [chatAdminStatus, setChatAdminStatus] = useState<Record<string, boolean>>({});
   // const { companyId } = useData();
   // const { toast } = useToast();
 
@@ -61,41 +61,41 @@ export default function PageClient({ user, chats }: PageClientProps) {
   // }, [user, user.company_id, toast]);
 
   // 管理者権限をchatsから直接取得（useEffectは不要になった）
-  useEffect(() => {
-    if (!chats.length) return;
+  // useEffect(() => {
+  //   if (!chats.length) return;
 
-    const adminStatus: Record<string, boolean> = {};
-    chats.forEach((chat) => {
-      adminStatus[chat.id] = chat.is_admin || false;
-    });
+  //   const adminStatus: Record<string, boolean> = {};
+  //   chats.forEach((chat) => {
+  //     adminStatus[chat.id] = chat.is_admin || false;
+  //   });
 
-    setChatAdminStatus(adminStatus);
-  }, [chats]);
+  //   setChatAdminStatus(adminStatus);
+  // }, [chats]);
 
-  useEffect(() => {
-    if (!user || (user.role !== 'member' && user.role !== 'admin')) {
-      router.push('/login');
-      return;
-    }
-  }, [user, router]);
+  // useEffect(() => {
+  //   if (!user || (user.role !== 'member' && user.role !== 'admin')) {
+  //     router.push('/login');
+  //     return;
+  //   }
+  // }, [user, router]);
 
-  if (!user || (user.role !== 'member' && user.role !== 'admin')) {
-    return null;
-  }
+  // if (!user || (user.role !== 'member' && user.role !== 'admin')) {
+  //   return null;
+  // }
 
-  function getChatDisplayName(chat: ChatListView) {
+  const getChatDisplayName = (chat: ChatListView) => {
     if (chat.chat_type === 'channel') {
       return chat.name || 'チャンネルチャット';
     } else {
       // ダイレクトの場合、他の参加者の名前を表示
       const otherParticipants = chat.participant_names
         .split(', ')
-        .filter((name) => name !== user!.full_name);
+        .filter((name) => name !== user.family_name + ' ' + user.first_name);
       return otherParticipants[0] || 'ダイレクト';
     }
-  }
+  };
 
-  function formatLastMessageTime(timestamp: string | null) {
+  const formatLastMessageTime = (timestamp: string | null) => {
     if (!timestamp) return '';
 
     const date = new Date(timestamp);
@@ -113,11 +113,11 @@ export default function PageClient({ user, chats }: PageClientProps) {
         day: 'numeric',
       });
     }
-  }
+  };
 
-  function handleChatSelect(chat: ChatListView) {
+  const handleChatSelect = (chat: ChatListView) => {
     router.push(`/member/chat/${chat.id}`);
-  }
+  };
 
   return (
     <div className='h-[calc(100vh-8rem)] flex flex-col bg-white/60 backdrop-blur-md rounded-lg'>
@@ -223,12 +223,12 @@ export default function PageClient({ user, chats }: PageClientProps) {
                               {chat.is_participant && (
                                 <div
                                   className={`px-2 py-1 text-[10px] sm:text-xs font-bold text-white rounded-md transition-all duration-300 flex items-center justify-center whitespace-nowrap ${
-                                    chatAdminStatus[chat.id]
+                                    chat.is_admin
                                       ? 'bg-orange-500 group-hover:bg-orange-600'
                                       : 'bg-yellow-500 group-hover:bg-yellow-600'
                                   }`}
                                 >
-                                  {chatAdminStatus[chat.id] ? '管理者' : 'メンバー'}
+                                  {chat.is_admin ? '管理者' : 'メンバー'}
                                 </div>
                               )}
                             </div>
