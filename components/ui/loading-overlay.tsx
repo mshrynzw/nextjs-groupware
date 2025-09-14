@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/common';
 
 interface LoadingOverlayProps {
   isVisible: boolean;
@@ -32,12 +32,12 @@ export default function LoadingOverlay({
         className
       )}
     >
-      <div className="flex flex-col items-center space-y-4">
-        <div className="relative">
-          <div className="w-12 h-12 border-4 border-blue-200 rounded-full animate-spin"></div>
-          <div className="absolute inset-0 w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+      <div className='flex flex-col items-center space-y-4'>
+        <div className='relative'>
+          <div className='w-12 h-12 border-4 border-blue-200 rounded-full animate-spin'></div>
+          <div className='absolute inset-0 w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin'></div>
         </div>
-        <p className="text-gray-700 font-medium animate-pulse">{message}</p>
+        <p className='text-gray-700 font-medium animate-pulse'>{message}</p>
       </div>
     </div>
   );

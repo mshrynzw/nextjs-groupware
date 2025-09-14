@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell, Check, X, MessageSquare, FileText } from 'lucide-react';
+import { Bell, Check, FileText, MessageSquare, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { Badge } from '@/components/ui/badge';
@@ -11,8 +11,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { createClient } from '@/lib/supabase/client';
-import { formatDateTimeForDisplay } from '@/lib/utils';
+import { formatDateTimeForDisplay } from '@/lib/utils/common';
+
+// import { useAuth } from '@/contexts/auth-context';
 
 export interface Notification {
   id: string;
@@ -49,7 +50,7 @@ export default function NotificationSystem({ onNotificationClick }: Notification
 
     try {
       setIsLoading(true);
-      const { data, error } = await createClient
+      const { data, error } = await supabase
         .from('notifications')
         .select('*')
         .eq('user_id', user.id)
@@ -73,7 +74,7 @@ export default function NotificationSystem({ onNotificationClick }: Notification
   const subscribeToNotifications = () => {
     if (!user) return;
 
-    const channel = createClient
+    const channel = supabase
       .channel('notifications')
       .on(
         'postgres_changes',
@@ -92,13 +93,13 @@ export default function NotificationSystem({ onNotificationClick }: Notification
       .subscribe();
 
     return () => {
-      createClient.removeChannel(channel);
+      supabase.removeChannel(channel);
     };
   };
 
   const markAsRead = async (notificationId: string) => {
     try {
-      await createClient.from('notifications').update({ is_read: true }).eq('id', notificationId);
+      await supabase.from('notifications').update({ is_read: true }).eq('id', notificationId);
 
       setNotifications((prev) =>
         prev.map((n) => (n.id === notificationId ? { ...n, is_read: true } : n))
@@ -113,7 +114,7 @@ export default function NotificationSystem({ onNotificationClick }: Notification
     if (!user) return;
 
     try {
-      await createClient
+      await supabase
         .from('notifications')
         .update({ is_read: true })
         .eq('user_id', user.id)
@@ -141,15 +142,15 @@ export default function NotificationSystem({ onNotificationClick }: Notification
   const getNotificationIcon = (type: Notification['type']) => {
     switch (type) {
       case 'request_approval':
-        return <Check className="w-4 h-4 text-green-600" />;
+        return <Check className='w-4 h-4 text-green-600' />;
       case 'request_rejection':
-        return <X className="w-4 h-4 text-red-600" />;
+        return <X className='w-4 h-4 text-red-600' />;
       case 'request_comment':
-        return <MessageSquare className="w-4 h-4 text-blue-600" />;
+        return <MessageSquare className='w-4 h-4 text-blue-600' />;
       case 'request_created':
-        return <FileText className="w-4 h-4 text-purple-600" />;
+        return <FileText className='w-4 h-4 text-purple-600' />;
       default:
-        return <Bell className="w-4 h-4 text-gray-600" />;
+        return <Bell className='w-4 h-4 text-gray-600' />;
     }
   };
 
@@ -157,31 +158,31 @@ export default function NotificationSystem({ onNotificationClick }: Notification
     switch (type) {
       case 'request_approval':
         return (
-          <Badge variant="default" className="text-xs">
+          <Badge variant='default' className='text-xs'>
             承認
           </Badge>
         );
       case 'request_rejection':
         return (
-          <Badge variant="destructive" className="text-xs">
+          <Badge variant='destructive' className='text-xs'>
             却下
           </Badge>
         );
       case 'request_comment':
         return (
-          <Badge variant="secondary" className="text-xs">
+          <Badge variant='secondary' className='text-xs'>
             コメント
           </Badge>
         );
       case 'request_created':
         return (
-          <Badge variant="outline" className="text-xs">
+          <Badge variant='outline' className='text-xs'>
             作成
           </Badge>
         );
       default:
         return (
-          <Badge variant="outline" className="text-xs">
+          <Badge variant='outline' className='text-xs'>
             システム
           </Badge>
         );
@@ -191,61 +192,61 @@ export default function NotificationSystem({ onNotificationClick }: Notification
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="relative">
-          <Bell className="w-5 h-5" />
+        <Button variant='ghost' size='sm' className='relative'>
+          <Bell className='w-5 h-5' />
           {unreadCount > 0 && (
             <Badge
-              variant="destructive"
-              className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center"
+              variant='destructive'
+              className='absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center'
             >
               {unreadCount > 99 ? '99+' : unreadCount}
             </Badge>
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-80">
-        <div className="flex items-center justify-between p-2 border-b">
-          <h3 className="font-medium">通知</h3>
+      <DropdownMenuContent align='end' className='w-80'>
+        <div className='flex items-center justify-between p-2 border-b'>
+          <h3 className='font-medium'>通知</h3>
           {unreadCount > 0 && (
-            <Button variant="ghost" size="sm" onClick={markAllAsRead} className="text-xs">
+            <Button variant='ghost' size='sm' onClick={markAllAsRead} className='text-xs'>
               すべて既読
             </Button>
           )}
         </div>
-        <div className="max-h-96 overflow-y-auto">
+        <div className='max-h-96 overflow-y-auto'>
           {isLoading ? (
-            <div className="p-4 text-center">
-              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mx-auto"></div>
-              <p className="text-sm text-muted-foreground mt-2">読み込み中...</p>
+            <div className='p-4 text-center'>
+              <div className='animate-spin rounded-full h-6 w-6 border-b-2 border-primary mx-auto'></div>
+              <p className='text-sm text-muted-foreground mt-2'>読み込み中...</p>
             </div>
           ) : notifications.length === 0 ? (
-            <div className="p-4 text-center">
-              <Bell className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-              <p className="text-sm text-muted-foreground">通知はありません</p>
+            <div className='p-4 text-center'>
+              <Bell className='w-8 h-8 text-gray-400 mx-auto mb-2' />
+              <p className='text-sm text-muted-foreground'>通知はありません</p>
             </div>
           ) : (
             notifications.map((notification) => (
               <DropdownMenuItem
                 key={notification.id}
-                className="p-3 cursor-pointer hover:bg-muted"
+                className='p-3 cursor-pointer hover:bg-muted'
                 onClick={() => handleNotificationClick(notification)}
               >
-                <div className="flex items-start gap-3 w-full">
-                  <div className="flex-shrink-0 mt-0.5">
+                <div className='flex items-start gap-3 w-full'>
+                  <div className='flex-shrink-0 mt-0.5'>
                     {getNotificationIcon(notification.type)}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <p className="text-sm font-medium truncate">{notification.title}</p>
+                  <div className='flex-1 min-w-0'>
+                    <div className='flex items-center gap-2 mb-1'>
+                      <p className='text-sm font-medium truncate'>{notification.title}</p>
                       {getNotificationBadge(notification.type)}
                       {!notification.is_read && (
-                        <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
+                        <div className='w-2 h-2 bg-primary rounded-full flex-shrink-0'></div>
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground line-clamp-2">
+                    <p className='text-xs text-muted-foreground line-clamp-2'>
                       {notification.message}
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className='text-xs text-muted-foreground mt-1'>
                       {formatDateTimeForDisplay(notification.created_at)}
                     </p>
                   </div>
@@ -269,7 +270,7 @@ export const sendNotification = async (
   metadata?: Record<string, string | number | boolean | undefined>
 ) => {
   try {
-    const { error } = await createClient.from('notifications').insert({
+    const { error } = await supabase.from('notifications').insert({
       user_id: userId,
       title,
       message,

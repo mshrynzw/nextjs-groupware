@@ -68,28 +68,28 @@ export default function WorkHoursChatChart({
   };
 
   return (
-    <div className="space-y-4">
-      <ResponsiveContainer width="100%" height={350}>
+    <div className='space-y-4'>
+      <ResponsiveContainer width='100%' height={350}>
         <ComposedChart data={data} margin={{ top: 20, right: 40, left: 30, bottom: 20 }}>
           <defs>
-            <linearGradient id="workHoursGradientChat" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#3B82F6" stopOpacity={0.1} />
+            <linearGradient id='workHoursGradientChat' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='5%' stopColor='#3B82F6' stopOpacity={0.8} />
+              <stop offset='95%' stopColor='#3B82F6' stopOpacity={0.1} />
             </linearGradient>
-            <linearGradient id="overtimeHoursGradientChat" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#EF4444" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#EF4444" stopOpacity={0.1} />
+            <linearGradient id='overtimeHoursGradientChat' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='5%' stopColor='#EF4444' stopOpacity={0.8} />
+              <stop offset='95%' stopColor='#EF4444' stopOpacity={0.1} />
             </linearGradient>
-            <linearGradient id="chatMessagesGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#10B981" stopOpacity={0.9} />
-              <stop offset="95%" stopColor="#10B981" stopOpacity={0.6} />
+            <linearGradient id='chatMessagesGradient' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='5%' stopColor='#10B981' stopOpacity={0.9} />
+              <stop offset='95%' stopColor='#10B981' stopOpacity={0.6} />
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" strokeWidth={1} opacity={0.5} />
+          <CartesianGrid strokeDasharray='3 3' stroke='#f1f5f9' strokeWidth={1} opacity={0.5} />
           <XAxis
-            dataKey="date"
+            dataKey='date'
             tickFormatter={formatDate}
-            stroke="#64748b"
+            stroke='#64748b'
             fontSize={11}
             tickLine={false}
             axisLine={false}
@@ -97,8 +97,8 @@ export default function WorkHoursChatChart({
             padding={{ left: 10, right: 10 }}
           />
           <YAxis
-            yAxisId="left"
-            stroke="#64748b"
+            yAxisId='left'
+            stroke='#64748b'
             fontSize={11}
             tickLine={false}
             axisLine={false}
@@ -106,9 +106,9 @@ export default function WorkHoursChatChart({
             tick={{ fill: '#64748b', fontSize: 11 }}
           />
           <YAxis
-            yAxisId="right"
-            orientation="right"
-            stroke="#64748b"
+            yAxisId='right'
+            orientation='right'
+            stroke='#64748b'
             fontSize={11}
             tickLine={false}
             axisLine={false}
@@ -145,15 +145,15 @@ export default function WorkHoursChatChart({
               fontSize: '12px',
               fontWeight: '500',
             }}
-            iconType="circle"
+            iconType='circle'
             iconSize={8}
           />
           {/* 棒グラフを先に描画 */}
           <Bar
-            yAxisId="right"
-            dataKey="chatMessages"
-            fill="url(#chatMessagesGradient)"
-            name="チャットメッセージ"
+            yAxisId='right'
+            dataKey='chatMessages'
+            fill='url(#chatMessagesGradient)'
+            name='チャットメッセージ'
             radius={[4, 4, 0, 0]}
             minPointSize={3}
             maxBarSize={35}
@@ -161,10 +161,10 @@ export default function WorkHoursChatChart({
           />
           {/* 折れ線グラフを後で描画 */}
           <Line
-            yAxisId="left"
-            type="monotone"
-            dataKey="workHours"
-            stroke="url(#workHoursGradientChat)"
+            yAxisId='left'
+            type='monotone'
+            dataKey='workHours'
+            stroke='url(#workHoursGradientChat)'
             strokeWidth={3}
             dot={{
               fill: '#3B82F6',
@@ -180,13 +180,13 @@ export default function WorkHoursChatChart({
               fill: '#ffffff',
               filter: 'drop-shadow(0 4px 8px rgba(59, 130, 246, 0.4))',
             }}
-            name="勤務時間"
+            name='勤務時間'
           />
           <Line
-            yAxisId="left"
-            type="monotone"
-            dataKey="overtimeHours"
-            stroke="url(#overtimeHoursGradientChat)"
+            yAxisId='left'
+            type='monotone'
+            dataKey='overtimeHours'
+            stroke='url(#overtimeHoursGradientChat)'
             strokeWidth={3}
             dot={{
               fill: '#EF4444',
@@ -202,7 +202,7 @@ export default function WorkHoursChatChart({
               fill: '#ffffff',
               filter: 'drop-shadow(0 4px 8px rgba(239, 68, 68, 0.4))',
             }}
-            name="残業時間"
+            name='残業時間'
           />
         </ComposedChart>
       </ResponsiveContainer>

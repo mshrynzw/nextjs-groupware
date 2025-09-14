@@ -13,7 +13,7 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/common';
 
 interface ComboboxOption {
   value: string;
@@ -73,27 +73,27 @@ export const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
       >
         <PopoverTrigger asChild>
           <Button
-            variant="outline"
-            role="combobox"
+            variant='outline'
+            role='combobox'
             aria-expanded={open}
             className={cn('w-full justify-between', className)}
             disabled={disabled}
           >
             {selectedOption ? (
-              <span className="truncate">
+              <span className='truncate'>
                 {selectedOption.label}
                 {selectedOption.code && ` (${selectedOption.code})`}
               </span>
             ) : (
-              <span className="text-muted-foreground">{placeholder}</span>
+              <span className='text-muted-foreground'>{placeholder}</span>
             )}
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-full p-0" align="start">
+        <PopoverContent className='w-full p-0' align='start'>
           <Command shouldFilter={false}>
             <CommandInput
-              placeholder="検索..."
+              placeholder='検索...'
               value={searchValue}
               onValueChange={setSearchValue}
             />
@@ -119,7 +119,7 @@ export const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
                     <span>
                       {option.label}
                       {option.code && (
-                        <span className="text-muted-foreground"> ({option.code})</span>
+                        <span className='text-muted-foreground'> ({option.code})</span>
                       )}
                     </span>
                   </CommandItem>

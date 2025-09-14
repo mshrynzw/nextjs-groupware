@@ -1,0 +1,43 @@
+import { defaultSchema } from 'hast-util-sanitize';
+
+export const markdownSanitizeSchema = {
+  ...defaultSchema,
+  tagNames: [
+    ...(defaultSchema.tagNames || []),
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'ul',
+    'ol',
+    'li',
+    'p',
+    'blockquote',
+    'strong',
+    'em',
+    'del',
+    'code',
+    'pre',
+    'a',
+    'img',
+    'table',
+    'thead',
+    'tbody',
+    'tr',
+    'th',
+    'td',
+    'hr',
+    'br',
+    // 必要に応じて追加
+  ],
+  attributes: {
+    ...(defaultSchema.attributes || {}),
+    a: ['href', 'title', 'target', 'rel'],
+    img: ['src', 'alt', 'title'],
+    code: ['className'],
+    th: ['colspan', 'rowspan'],
+    td: ['colspan', 'rowspan'],
+  },
+};

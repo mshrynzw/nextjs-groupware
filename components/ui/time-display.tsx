@@ -40,17 +40,17 @@ export default function TimeDisplay() {
 
   if (!time) {
     return (
-      <div className="text-center">
-        <div className="text-4xl font-bold text-gray-900 mb-2">--:--:--</div>
-        <div className="text-lg text-gray-600">読み込み中...</div>
+      <div className='text-center'>
+        <div className='text-4xl font-bold text-gray-900 mb-2'>--:--:--</div>
+        <div className='text-lg text-gray-600'>読み込み中...</div>
       </div>
     );
   }
 
   return (
-    <div className="text-center">
-      <div className="text-4xl font-bold text-gray-900 mb-2">{formatTime(time)}</div>
-      <div className="text-lg text-gray-600">{formatDate(time)}</div>
+    <div className='text-center'>
+      <div className='text-4xl font-bold text-gray-900 mb-2'>{formatTime(time)}</div>
+      <div className='text-lg text-gray-600'>{formatDate(time)}</div>
     </div>
   );
 }

@@ -55,24 +55,24 @@ export default function WorkHoursChartSimple({
   };
 
   return (
-    <div className="space-y-4">
-      <ResponsiveContainer width="100%" height={350}>
+    <div className='space-y-4'>
+      <ResponsiveContainer width='100%' height={350}>
         <LineChart data={data} margin={{ top: 20, right: 30, left: 30, bottom: 20 }}>
           <defs>
-            <linearGradient id="workHoursGradientSimple" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#3B82F6" stopOpacity={0.1} />
+            <linearGradient id='workHoursGradientSimple' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='5%' stopColor='#3B82F6' stopOpacity={0.8} />
+              <stop offset='95%' stopColor='#3B82F6' stopOpacity={0.1} />
             </linearGradient>
-            <linearGradient id="overtimeHoursGradientSimple" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#EF4444" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#EF4444" stopOpacity={0.1} />
+            <linearGradient id='overtimeHoursGradientSimple' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='5%' stopColor='#EF4444' stopOpacity={0.8} />
+              <stop offset='95%' stopColor='#EF4444' stopOpacity={0.1} />
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" strokeWidth={1} opacity={0.5} />
+          <CartesianGrid strokeDasharray='3 3' stroke='#f1f5f9' strokeWidth={1} opacity={0.5} />
           <XAxis
-            dataKey="date"
+            dataKey='date'
             tickFormatter={formatDate}
-            stroke="#64748b"
+            stroke='#64748b'
             fontSize={11}
             tickLine={false}
             axisLine={false}
@@ -80,7 +80,7 @@ export default function WorkHoursChartSimple({
             padding={{ left: 10, right: 10 }}
           />
           <YAxis
-            stroke="#64748b"
+            stroke='#64748b'
             fontSize={11}
             tickLine={false}
             axisLine={false}
@@ -110,13 +110,13 @@ export default function WorkHoursChartSimple({
               fontSize: '12px',
               fontWeight: '500',
             }}
-            iconType="circle"
+            iconType='circle'
             iconSize={8}
           />
           <Line
-            type="monotone"
-            dataKey="workHours"
-            stroke="url(#workHoursGradientSimple)"
+            type='monotone'
+            dataKey='workHours'
+            stroke='url(#workHoursGradientSimple)'
             strokeWidth={3}
             dot={{
               fill: '#3B82F6',
@@ -132,12 +132,12 @@ export default function WorkHoursChartSimple({
               fill: '#ffffff',
               filter: 'drop-shadow(0 4px 8px rgba(59, 130, 246, 0.4))',
             }}
-            name="勤務時間"
+            name='勤務時間'
           />
           <Line
-            type="monotone"
-            dataKey="overtimeHours"
-            stroke="url(#overtimeHoursGradientSimple)"
+            type='monotone'
+            dataKey='overtimeHours'
+            stroke='url(#overtimeHoursGradientSimple)'
             strokeWidth={3}
             dot={{
               fill: '#EF4444',
@@ -153,7 +153,7 @@ export default function WorkHoursChartSimple({
               fill: '#ffffff',
               filter: 'drop-shadow(0 4px 8px rgba(239, 68, 68, 0.4))',
             }}
-            name="残業時間"
+            name='残業時間'
           />
         </LineChart>
       </ResponsiveContainer>

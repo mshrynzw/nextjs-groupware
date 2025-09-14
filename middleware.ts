@@ -3,7 +3,12 @@ import { type NextRequest } from 'next/server';
 import { updateSession } from '@/lib/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  const response = await updateSession(request);
+
+  // パス情報をヘッダーに追加
+  response.headers.set('x-pathname', request.nextUrl.pathname);
+
+  return response;
 }
 
 export const config = {

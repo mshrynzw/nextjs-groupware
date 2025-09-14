@@ -18,9 +18,9 @@ export default function Particles() {
   }, [particlesCount]);
 
   return (
-    <div className="absolute inset-0 pointer-events-none">
+    <div className='absolute inset-0 pointer-events-none'>
       {particles.map((particle) => (
-        <div key={particle.id} className="timeport-particle" style={particle.style} />
+        <div key={particle.id} className='timeport-particle' style={particle.style} />
       ))}
     </div>
   );

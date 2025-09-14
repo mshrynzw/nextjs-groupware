@@ -1,7 +1,7 @@
 import { Eye, Edit, Send, Trash2, Check, X } from 'lucide-react';
 import React from 'react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/common';
 
 import { Button, ButtonProps } from './button';
 
@@ -64,13 +64,13 @@ export const ActionButton = ({
 
   return (
     <Button
-      variant="outline"
-      size="sm"
+      variant='outline'
+      size='sm'
       disabled={disabled}
       className={cn(disabled ? config.disabledClassName : config.className, className)}
       {...props}
     >
-      {children || <IconComponent className="w-4 h-4" />}
+      {children || <IconComponent className='w-4 h-4' />}
     </Button>
   );
 };

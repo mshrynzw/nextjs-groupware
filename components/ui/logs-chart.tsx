@@ -50,20 +50,20 @@ export default function LogsChart({ data, selectedPeriod }: LogsChartProps) {
   };
 
   return (
-    <div className="space-y-4">
-      <ResponsiveContainer width="100%" height={350}>
+    <div className='space-y-4'>
+      <ResponsiveContainer width='100%' height={350}>
         <LineChart data={data} margin={{ top: 20, right: 40, left: 30, bottom: 20 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+          <CartesianGrid strokeDasharray='3 3' stroke='#f0f0f0' />
           <XAxis
-            dataKey="date"
+            dataKey='date'
             tickFormatter={formatDate}
-            stroke="#666"
+            stroke='#666'
             fontSize={12}
             tickLine={false}
             axisLine={false}
           />
           <YAxis
-            stroke="#666"
+            stroke='#666'
             fontSize={12}
             tickLine={false}
             axisLine={false}
@@ -80,30 +80,30 @@ export default function LogsChart({ data, selectedPeriod }: LogsChartProps) {
             }}
           />
           <Legend
-            verticalAlign="bottom"
+            verticalAlign='bottom'
             height={36}
-            iconType="line"
+            iconType='line'
             wrapperStyle={{
               paddingTop: '10px',
             }}
           />
           <Line
-            type="monotone"
-            dataKey="errorLogs"
-            stroke="#ef4444"
+            type='monotone'
+            dataKey='errorLogs'
+            stroke='#ef4444'
             strokeWidth={3}
             dot={{ fill: '#ef4444', strokeWidth: 2, r: 4 }}
             activeDot={{ r: 6, stroke: '#ef4444', strokeWidth: 2 }}
-            name="システムエラーログ"
+            name='システムエラーログ'
           />
           <Line
-            type="monotone"
-            dataKey="auditLogs"
-            stroke="#3b82f6"
+            type='monotone'
+            dataKey='auditLogs'
+            stroke='#3b82f6'
             strokeWidth={3}
             dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
             activeDot={{ r: 6, stroke: '#3b82f6', strokeWidth: 2 }}
-            name="監査ログ"
+            name='監査ログ'
           />
         </LineChart>
       </ResponsiveContainer>
