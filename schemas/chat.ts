@@ -258,6 +258,14 @@ export const UserSearchResultSchema = z.object({
   email: z.string().email(),
 });
 
+/**
+ * チャンネルスキーマ（chat_type === 'channel'の場合）
+ */
+export const ChannelSchema = ChatSchema.extend({
+  chat_type: z.literal('channel'),
+  name: z.string(), // チャンネル名は必須
+});
+
 // チャット関連
 export type ChatType = z.infer<typeof ChatTypeSchema>;
 export type MessageType = z.infer<typeof MessageTypeSchema>;
@@ -278,3 +286,4 @@ export type SendMessageRequest = z.infer<typeof SendMessageRequestSchema>;
 export type AddReactionRequest = z.infer<typeof AddReactionRequestSchema>;
 export type MarkAsReadRequest = z.infer<typeof MarkAsReadRequestSchema>;
 export type UserSearchResult = z.infer<typeof UserSearchResultSchema>;
+export type Channel = z.infer<typeof ChannelSchema>;

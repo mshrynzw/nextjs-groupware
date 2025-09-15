@@ -2,8 +2,12 @@ import { Suspense } from 'react';
 
 import PageClient from '@/components/app/member/chat/create/PageClient';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { getChannelsByCompany } from '@/lib/actions/chat';
+import { getGroupsByCompany, getUserGroupsWithMembers } from '@/lib/actions/groups';
 import { getCompanyUsers } from '@/lib/actions/user';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { Channel } from '@/schemas/chat';
+import { Group } from '@/schemas/group';
 import { UserProfile } from '@/schemas/user_profile';
 
 // プロフィール取得とチャットデータ取得の非同期コンポーネント
@@ -33,13 +37,38 @@ async function ChatCreateContent({ authUser }: { authUser: { id: string } }) {
     userId: authUser.id,
     companyId: userProfile.company_id,
   });
-  console.log('companyUsers', companyUsers);
 
   if (!companyUsers.success) {
     throw new Error('企業ユーザー一覧が見つかりません');
   }
 
-  return <PageClient user={userProfile} users={companyUsers.data as UserProfile[]} />;
+  const userGroupsWithMembers = await getUserGroupsWithMembers(
+    userProfile.company_id,
+    userProfile.id
+  );
+  if (userGroupsWithMembers.length === 0) {
+    throw new Error('ユーザーグループが見つかりませんでした');
+  }
+
+  const groups = await getGroupsByCompany(userProfile.company_id);
+  if (groups.length === 0) {
+    throw new Error('グループが見つかりませんでした');
+  }
+
+  const channels = await getChannelsByCompany(userProfile.company_id);
+  if (channels.length === 0) {
+    throw new Error('チャンネルが見つかりませんでした');
+  }
+
+  return (
+    <PageClient
+      user={userProfile}
+      users={companyUsers.data as UserProfile[]}
+      groups={groups as Group[]}
+      userGroupsWithMembers={userGroupsWithMembers}
+      channels={channels as Channel[]}
+    />
+  );
 }
 
 export default async function MemberChatCreate() {

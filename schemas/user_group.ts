@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import type { UUID, Timestamp } from '@/types/common';
+import { UserProfileSchema } from '@/schemas/user_profile';
 
 // ================================
 // ユーザーグループ関連スキーマ
@@ -12,6 +12,15 @@ import type { UUID, Timestamp } from '@/types/common';
 export const UserGroupSchema = z.object({
   id: z.string().uuid(),
   user_id: z.string().uuid(),
+  group_id: z.string().uuid(),
+  created_at: z.string().datetime(),
+  updated_at: z.string().datetime(),
+  deleted_at: z.string().datetime().optional(),
+});
+
+export const UserGroupWithMembersSchema = z.object({
+  id: z.string().uuid(),
+  users: z.array(UserProfileSchema),
   group_id: z.string().uuid(),
   created_at: z.string().datetime(),
   updated_at: z.string().datetime(),
@@ -82,6 +91,7 @@ export const DeleteUserGroupResultSchema = z.object({
 
 // ユーザーグループ関連
 export type UserGroup = z.infer<typeof UserGroupSchema>;
+export type UserGroupWithMembers = z.infer<typeof UserGroupWithMembersSchema>;
 export type CreateUserGroupInput = z.infer<typeof CreateUserGroupInputSchema>;
 export type UpdateUserGroupInput = z.infer<typeof UpdateUserGroupInputSchema>;
 export type DeleteUserGroupInput = z.infer<typeof DeleteUserGroupInputSchema>;

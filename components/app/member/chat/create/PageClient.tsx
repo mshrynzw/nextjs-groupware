@@ -1,7 +1,7 @@
 'use client';
 import { ArrowLeft, BadgeCheck, Mail, Minus, Plus, Search, Users } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -26,29 +26,32 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import {
   createChannelChat,
-  getChannelsByCompany,
   getChats,
   getOrCreateDirectChat,
   getUserCompanyId,
 } from '@/lib/actions/chat';
-import { getGroupsByCompanyAndUser } from '@/lib/actions/groups';
+import { Channel } from '@/schemas/chat';
+import { Group } from '@/schemas/group';
+import { UserGroupWithMembers } from '@/schemas/user_group';
 import { UserProfile } from '@/schemas/user_profile';
 
 interface PageClientProps {
   user: UserProfile;
   users: UserProfile[];
+  groups: Group[];
+  userGroupsWithMembers: UserGroupWithMembers[];
+  channels: Channel[];
 }
-export default function PageClient({ user, users }: PageClientProps) {
-  // const { user } = useAuth();
-  // const { companyId, users } = useData();
-  const companyId = user.company_id;
+export default function PageClient({
+  user,
+  users,
+  groups,
+  userGroupsWithMembers,
+  channels,
+}: PageClientProps) {
   const router = useRouter();
   const { toast } = useToast();
-  console.log('users', users);
-  const [groups, setGroups] = useState<Array<{ id: string; name: string }>>([]);
-  const [userGroups, setUserGroups] = useState<{ user_id: string; group_id: string }[] | null>(
-    user.group_ids.map((groupId: string) => ({ user_id: user.id, group_id: groupId }))
-  );
+
   const [chatType, setChatType] = useState<'direct' | 'channel'>('direct');
   const [channelName, setChannelName] = useState('');
   const [selectedParticipants, setSelectedParticipants] = useState<string[]>([user?.id || '']);
@@ -56,81 +59,10 @@ export default function PageClient({ user, users }: PageClientProps) {
   const [selectedGroup, setSelectedGroup] = useState('all');
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [creating, setCreating] = useState(false);
-  const [channels, setChannels] = useState<Array<{ id: string; name: string }>>([]);
 
-  // useEffect(() => {
-  //   let ignore = false;
-  //   const fetchUserGroups = async () => {
-  //     if (!Array.isArray(users)) return;
-  //     const { data, error } = await supabase
-  //       .from('user_groups')
-  //       .select('user_id, group_id')
-  //       .is('deleted_at', null);
-  //     if (!ignore) {
-  //       setUserGroups(error ? [] : data || []);
-  //     }
-  //   }
-  //   fetchUserGroups();
-  //   return () => {
-  //     ignore = true;
-  //   };
-  // }, [users]);
+  // ユーザーリスト表示用（フィルタリング機能のため）
+  const usersWithGroups = users;
 
-  // channels を actions から取得（companyId でフィルタ）
-  useEffect(() => {
-    let cancelled = false;
-    const loadChannels = async () => {
-      if (!companyId) return;
-      const list = await getChannelsByCompany(companyId);
-      if (!cancelled) {
-        setChannels(list.map((c) => ({ id: c.id, name: c.name })));
-      }
-    };
-    loadChannels();
-    return () => {
-      cancelled = true;
-    };
-  }, [companyId]);
-
-  // groups を actions から取得（companyId と user.id でフィルタ）
-  useEffect(() => {
-    let cancelled = false;
-    const loadGroups = async () => {
-      if (!user?.id || !companyId) return;
-      const list = await getGroupsByCompanyAndUser(companyId, user.id);
-      if (!cancelled) {
-        setGroups(list.map((g) => ({ id: g.id, name: g.name })));
-      }
-    };
-    loadGroups();
-    return () => {
-      cancelled = true;
-    };
-  }, [user?.id, companyId]);
-
-  // グループ一括操作
-  useEffect(() => {
-    if (!user?.id || !companyId) return;
-    (async () => {
-      const list = await getGroupsByCompanyAndUser(companyId, user.id);
-      setUserGroups(list.map((g) => ({ user_id: user.id, group_id: g.id })));
-    })();
-  }, [user?.id, companyId]);
-
-  const usersWithGroups: ((typeof users)[0] & { groups: typeof groups })[] = useMemo(() => {
-    if (!Array.isArray(users) || !Array.isArray(groups) || !Array.isArray(userGroups)) return [];
-    return users.map((u) => {
-      const joinedGroupIds = userGroups
-        .filter((ug) => ug.user_id === u.id)
-        .map((ug) => ug.group_id);
-      return {
-        ...u,
-        groups: groups.filter((g) => joinedGroupIds.includes(g.id)),
-      };
-    });
-  }, [users, groups, userGroups]);
-
-  // --- linterエラー対応: function宣言に修正 ---
   const toggleParticipant = (userId: string) => {
     if (chatType === 'channel') {
       setSelectedParticipants((prev) =>
@@ -140,24 +72,40 @@ export default function PageClient({ user, users }: PageClientProps) {
       setSelectedParticipants([user?.id || '', userId]);
     }
   };
+
   const addGroupUsers = (groupId: string) => {
-    const groupUsers = usersWithGroups.filter((u) => u.groups.some((c) => c.id === groupId));
+    // userGroupsWithMembersから該当グループのメンバーを取得
+    const groupData = userGroupsWithMembers.find((ug) => ug.group_id === groupId);
+    if (!groupData) {
+      console.error('Group not found:', groupId);
+      return;
+    }
+
+    const groupUsers = groupData.users;
+
     setSelectedParticipants((prev) => {
       const set = new Set(prev);
       groupUsers.forEach((u) => set.add(u.id));
-      return Array.from(set);
+      const newArray = Array.from(set);
+      return newArray;
     });
   };
+
   const removeGroupUsers = (groupId: string) => {
-    const groupUsers = usersWithGroups.filter((u) => u.groups.some((c) => c.id === groupId));
+    // userGroupsWithMembersから該当グループのメンバーを取得
+    const groupData = userGroupsWithMembers.find((ug) => ug.group_id === groupId);
+    if (!groupData) return;
+
+    const groupUsers = groupData.users;
     setSelectedParticipants((prev) => prev.filter((id) => !groupUsers.some((u) => u.id === id)));
   };
+
   const handleCreateChat = async () => {
     if (!user) return;
     setCreating(true);
     try {
       let _chatId = '';
-      const effectiveCompanyId = companyId || (await getUserCompanyId(user.id));
+      const effectiveCompanyId = user.company_id || (await getUserCompanyId(user.id));
       if (chatType === 'direct') {
         if (selectedParticipants.length !== 2) {
           toast({
@@ -224,25 +172,22 @@ export default function PageClient({ user, users }: PageClientProps) {
       );
     }
     if (selectedGroup !== 'all') {
-      list = list.filter((u) => u.groups.some((c) => c.id === selectedGroup));
+      // userGroupsWithMembersから該当グループのメンバーIDを取得
+      const groupData = userGroupsWithMembers.find((ug) => ug.group_id === selectedGroup);
+      if (groupData) {
+        const groupUserIds = groupData.users.map((u) => u.id);
+        list = list.filter((u) => groupUserIds.includes(u.id));
+      }
     }
     return list;
-  }, [usersWithGroups, searchQuery, selectedGroup]);
+  }, [usersWithGroups, searchQuery, selectedGroup, userGroupsWithMembers]);
 
   const selectedUserObjs = useMemo(() => {
     return usersWithGroups.filter((u) => selectedParticipants.includes(u.id));
   }, [usersWithGroups, selectedParticipants]);
 
-  if (!user || !Array.isArray(users) || !Array.isArray(channels) || !Array.isArray(userGroups)) {
-    return (
-      <div className='flex items-center justify-center min-h-screen text-gray-500'>
-        読み込み中...
-      </div>
-    );
-  }
-
   return (
-    <div className='flex flex-col h-screen'>
+    <div className='m-4'>
       {/* 最上部: グループ一覧カード */}
       <div className='max-w-full py-6'>
         <Card className='w-full'>
@@ -310,40 +255,50 @@ export default function PageClient({ user, users }: PageClientProps) {
               </CardContent>
             </Card>
             {/* グループ一括操作 */}
-            <Card>
-              <CardHeader>
-                <CardTitle>グループ操作</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className='flex flex-col gap-2'>
-                  {groups.map((group) => (
-                    <div
-                      key={group.id}
-                      className='flex items-center space-x-2 border rounded px-2 py-1 bg-gray-50'
-                    >
-                      <Users className='w-4 h-4 text-blue-500' />
-                      <span className='flex-1 truncate'>{group.name}</span>
-                      <Button
-                        size='sm'
-                        variant='ghost'
-                        onClick={() => addGroupUsers(group.id)}
-                        title='グループの全員を追加'
-                      >
-                        <Plus className='w-4 h-4' />
-                      </Button>
-                      <Button
-                        size='sm'
-                        variant='ghost'
-                        onClick={() => removeGroupUsers(group.id)}
-                        title='グループの全員を除外'
-                      >
-                        <Minus className='w-4 h-4' />
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            {chatType === 'channel' && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>グループ操作</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className='flex flex-col gap-2'>
+                    {userGroupsWithMembers.map((groupData) => {
+                      const group = groups.find((g) => g.id === groupData.group_id);
+                      if (!group) return null;
+
+                      return (
+                        <div
+                          key={groupData.group_id}
+                          className='flex items-center space-x-2 border rounded px-2 py-1 bg-gray-50'
+                        >
+                          <Users className='w-4 h-4 text-blue-500' />
+                          <span className='flex-1 truncate'>{group.name}</span>
+                          <span className='text-xs text-gray-500'>
+                            ({groupData.users.length}人)
+                          </span>
+                          <Button
+                            size='sm'
+                            variant='ghost'
+                            onClick={() => addGroupUsers(groupData.group_id)}
+                            title='グループの全員を追加'
+                          >
+                            <Plus className='w-4 h-4' />
+                          </Button>
+                          <Button
+                            size='sm'
+                            variant='ghost'
+                            onClick={() => removeGroupUsers(groupData.group_id)}
+                            title='グループの全員を除外'
+                          >
+                            <Minus className='w-4 h-4' />
+                          </Button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
           {/* 右カラム: 灰色背景 */}
           <div className='flex-1 flex flex-col bg-gray-50/90 p-4 md:p-8'>
@@ -370,11 +325,15 @@ export default function PageClient({ user, users }: PageClientProps) {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value='all'>全てのグループ</SelectItem>
-                        {groups.map((group) => (
-                          <SelectItem key={group.id} value={group.id}>
-                            {group.name}
-                          </SelectItem>
-                        ))}
+                        {userGroupsWithMembers.map((groupData) => {
+                          const group = groups.find((g) => g.id === groupData.group_id);
+                          if (!group) return null;
+                          return (
+                            <SelectItem key={groupData.group_id} value={groupData.group_id}>
+                              {group.name} ({groupData.users.length}人)
+                            </SelectItem>
+                          );
+                        })}
                       </SelectContent>
                     </Select>
                   </div>
@@ -424,19 +383,11 @@ export default function PageClient({ user, users }: PageClientProps) {
                           {u.role === 'admin' ? '管理者' : 'メンバー'}
                         </Badge>
                       </div>
-                      {u.groups.length > 0 && (
-                        <div className='flex flex-wrap gap-1 mt-1 overflow-x-auto'>
-                          {u.groups.map((g) => (
-                            <Badge
-                              key={g.id}
-                              variant='outline'
-                              className='text-xs whitespace-nowrap'
-                            >
-                              {g.name}
-                            </Badge>
-                          ))}
-                        </div>
-                      )}
+                      <div className='flex flex-wrap gap-1 mt-1 overflow-x-auto'>
+                        <Badge key={u.id} variant='outline' className='text-xs whitespace-nowrap'>
+                          {u.family_name} {u.first_name}
+                        </Badge>
+                      </div>
 
                       <input
                         type='button'
