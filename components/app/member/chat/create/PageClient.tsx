@@ -191,7 +191,7 @@ export default function PageClient({
     <div className='m-4'>
       {/* 最上部: グループ一覧カード */}
       <div className='max-w-full py-6'>
-        <Card className='w-full'>
+        <Card className='w-full bg-white/5 bg-gradient-to-br from-white via-gray-50/50 to-blue-50/30'>
           <CardHeader className='flex flex-row'>
             <BackButton backPath='/member/chat' />
             <CardTitle>チャンネル一覧</CardTitle>
@@ -209,10 +209,10 @@ export default function PageClient({
           </CardContent>
         </Card>
       </div>
-      <div className='bg-gradient-to-br from-white via-gray-50 to-blue-50'>
+      <div className='bg-white/5 bg-gradient-to-br from-white via-gray-50/50 to-blue-50/30'>
         <div className='flex flex-col md:flex-row'>
           {/* 左カラム: 白背景 */}
-          <div className='w-full md:w-96 md:min-w-[320px] md:border-r border-b md:border-b-0 bg-white/90 backdrop-blur-md flex flex-col p-4 md:p-6 space-y-6'>
+          <div className='w-full md:w-96 md:min-w-[320px] md:border-r border-b md:border-b-0 flex flex-col p-4 md:p-6 space-y-6'>
             {/* チャットタイプ・グループ名 */}
             <Card>
               <CardHeader>
@@ -295,7 +295,7 @@ export default function PageClient({
             )}
           </div>
           {/* 右カラム: 灰色背景 */}
-          <div className='flex-1 flex flex-col bg-gray-50/90 p-4 md:p-8'>
+          <div className='flex-1 flex flex-col p-4 md:p-8'>
             {/* フィルタカード */}
             <div className='mb-6'>
               <Card>
