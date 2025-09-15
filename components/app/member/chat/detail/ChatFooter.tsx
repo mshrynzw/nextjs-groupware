@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import JoinChatButton from '@/components/app/member/chat/detail/JoinChatButton';
 import MessageInput from '@/components/app/member/chat/detail/MessageInput';
-import type { ChatDetail } from '@/schemas/chat';
+import type { ChatRoom } from '@/schemas/chat';
 import { ChatUser } from '@/schemas/chat';
 
 export default function InputMessage({
@@ -26,9 +26,9 @@ export default function InputMessage({
   chatId: string;
   getChatDisplayName: () => string;
   isParticipant: boolean;
-  setChat: (chat: ChatDetail) => void;
+  setChat: (chat: ChatRoom) => void;
   setChatUsers: React.Dispatch<React.SetStateAction<ChatUser[]>>;
-  getChatDetail: (chatId: string) => Promise<ChatDetail | null>;
+  getChatDetail: (chatId: string) => Promise<ChatRoom | null>;
 }) {
   const [attachments, setAttachments] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);

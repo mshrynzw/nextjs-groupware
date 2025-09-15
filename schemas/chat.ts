@@ -155,7 +155,7 @@ export const MessageSearchCriteriaSchema = z.object({
 /**
  * チャット詳細スキーマ
  */
-export const ChatDetailSchema = ChatSchema.extend({
+export const ChatRoomSchema = ChatSchema.extend({
   participants: z.array(
     z.object({
       user_id: z.string().uuid(),
@@ -279,7 +279,7 @@ export type ChatListView = z.infer<typeof ChatListViewSchema>;
 export type UnreadMessageCountView = z.infer<typeof UnreadMessageCountViewSchema>;
 export type ChatSearchCriteria = z.infer<typeof ChatSearchCriteriaSchema>;
 export type MessageSearchCriteria = z.infer<typeof MessageSearchCriteriaSchema>;
-export type ChatDetail = z.infer<typeof ChatDetailSchema>;
+export type ChatRoom = z.infer<typeof ChatRoomSchema>;
 export type MessageDetail = z.infer<typeof MessageDetailSchema>;
 export type CreateChatRequest = z.infer<typeof CreateChatRequestSchema>;
 export type SendMessageRequest = z.infer<typeof SendMessageRequestSchema>;

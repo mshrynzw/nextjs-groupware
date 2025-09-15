@@ -7,7 +7,7 @@ import MessageCopyButton from '@/components/app/member/chat/detail/MessageCopyBu
 import MessageMarkdown from '@/components/app/member/chat/detail/MessageMarkdown';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { ChatDetail, ChatMessageData } from '@/schemas/chat';
+import { ChatMessageData, ChatRoom } from '@/schemas/chat';
 // import LinkkButton from '@/components/app/member/chat/detail/detailLinkkButton';
 import '@/styles/github-markdown.css';
 
@@ -27,7 +27,7 @@ export default function ChatMessages({
 }: {
   messages: ChatMessageData[];
   user: { id: string };
-  chat: ChatDetail;
+  chat: ChatRoom;
   getMessageSender: (message: ChatMessageData) => {
     id: string;
     family_name: string;

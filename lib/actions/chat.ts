@@ -5,10 +5,10 @@ import { revalidatePath } from 'next/cache';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import {
   type AddReactionRequest,
-  type ChatDetail,
   type ChatListView,
   type ChatMessageData as ChatMessage,
   type ChatMessageReactionData as ChatMessageReaction,
+  type ChatRoom,
   type CreateChatRequest,
   type MarkAsReadRequest,
   type SendMessageRequest,
@@ -326,7 +326,7 @@ export async function getChats(userId: string, companyId?: string): Promise<Chat
 /**
  * チャット詳細を取得（パブリックチャンネルは誰でも閲覧可）
  */
-export async function getChatDetail(chatId: string): Promise<ChatDetail | null> {
+export async function getChatRoom(chatId: string): Promise<ChatRoom | null> {
   const supabase = await createSupabaseServerClient();
   // チャット情報を取得
   const { data: chat, error: chatError } = await supabase
