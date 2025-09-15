@@ -55,3 +55,22 @@ export const systemAdminMenuItems: MenuItem[] = [
   { href: '/system-admin/log', icon: 'activity', label: 'ログ' },
   { href: '/system-admin/system', icon: 'barChart3', label: 'システム管理' },
 ];
+
+// ビューに応じたメニューを取得するヘルパー関数
+export const getMenuByView = (view: 'member' | 'admin' | 'system-admin'): MenuItem[] => {
+  switch (view) {
+    case 'system-admin':
+      return systemAdminMenuItems;
+    case 'admin':
+      return adminMenuItems;
+    default:
+      return baseUserMenuItems;
+  }
+};
+
+// パスからビューを判定するヘルパー関数
+export const getViewFromPath = (pathname: string): 'member' | 'admin' | 'system-admin' => {
+  if (pathname.startsWith('/system-admin')) return 'system-admin';
+  if (pathname.startsWith('/admin')) return 'admin';
+  return 'member';
+};

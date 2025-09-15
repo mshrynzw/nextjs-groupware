@@ -22,8 +22,9 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { redirect, usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { getMenuByView, getViewFromPath } from '@/components/common/sidebar/Menu';
 import { toast } from '@/hooks/use-toast';
 import { logoutAction } from '@/lib/actions/auth';
 import { cn } from '@/lib/utils/common';
@@ -58,17 +59,43 @@ interface SidebarProps {
 export default function Sidebar({ setIsOpen, isOpen = false, user, menu }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [currentView, setCurrentView] = useState<'member' | 'admin' | 'system-admin'>('member');
   const router = useRouter();
   const pathname = usePathname();
 
+  // パスから現在のビューを判定
+  useEffect(() => {
+    const view = getViewFromPath(pathname);
+    setCurrentView(view);
+  }, [pathname]);
+
+  // 現在のビューに応じたメニューを取得
+  const currentMenu = getMenuByView(currentView);
+
   const role = user.role;
   const features = user.features;
-  const menuItems = menu.filter((item) => {
+  const menuItems = currentMenu.filter((item) => {
     if (!('href' in item) || item.href === '') return true;
     if ('features' in item && item.features && typeof item.features === 'string')
       return !!(features as Record<string, boolean>)[item.features];
     return true;
   });
+
+  // 画面切り替えハンドラー
+  const handleViewChange = (view: 'member' | 'admin' | 'system-admin') => {
+    setCurrentView(view);
+    switch (view) {
+      case 'member':
+        router.push('/member');
+        break;
+      case 'admin':
+        router.push('/admin');
+        break;
+      case 'system-admin':
+        router.push('/system-admin');
+        break;
+    }
+  };
 
   const sidebarClasses = cn(
     'fixed left-0 top-0 z-50 h-full min-h-screen timeport-sidebar text-white transition-all duration-300 shadow-2xl flex flex-col',
@@ -137,10 +164,10 @@ export default function Sidebar({ setIsOpen, isOpen = false, user, menu }: Sideb
           <div className='flex flex-col space-y-2 w-full items-center justify-center'>
             {user.role !== 'member' && (
               <button
-                onClick={() => {
-                  router.push('/member');
-                }}
-                className={`w-full p-2 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors ${pathname.startsWith('/member') ? 'bg-white/30 border-white/50 border-2' : 'bg-white/10'}`}
+                onClick={() => handleViewChange('member')}
+                className={`w-full p-2 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors ${
+                  currentView === 'member' ? 'bg-white/30 border-white/50 border-2' : 'bg-white/10'
+                }`}
                 title='メンバー画面'
               >
                 <Users className='w-4 h-4 text-white' />
@@ -150,10 +177,10 @@ export default function Sidebar({ setIsOpen, isOpen = false, user, menu }: Sideb
 
             {user.role !== 'member' && (
               <button
-                onClick={() => {
-                  router.push('/admin');
-                }}
-                className={`w-full p-2 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors ${pathname.startsWith('/admin') ? 'bg-white/30 border-white/50 border-2' : 'bg-white/10'}`}
+                onClick={() => handleViewChange('admin')}
+                className={`w-full p-2 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors ${
+                  currentView === 'admin' ? 'bg-white/30 border-white/50 border-2' : 'bg-white/10'
+                }`}
                 title='管理者画面'
               >
                 <Server className='w-4 h-4 text-white' />
@@ -163,10 +190,12 @@ export default function Sidebar({ setIsOpen, isOpen = false, user, menu }: Sideb
 
             {user.role === 'system-admin' && (
               <button
-                onClick={() => {
-                  router.push('/system-admin');
-                }}
-                className={`w-full p-2 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors ${pathname.startsWith('/system-admin') ? 'bg-white/30 border-white/50 border-2' : 'bg-white/10'}`}
+                onClick={() => handleViewChange('system-admin')}
+                className={`w-full p-2 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors ${
+                  currentView === 'system-admin'
+                    ? 'bg-white/30 border-white/50 border-2'
+                    : 'bg-white/10'
+                }`}
                 title='システム管理者画面'
               >
                 <Shield className='w-4 h-4 text-white' />
@@ -204,7 +233,6 @@ export default function Sidebar({ setIsOpen, isOpen = false, user, menu }: Sideb
                   isCollapsed && 'justify-center'
                 )}
                 prefetch={true}
-                // モバイルでメニュー項目クリック時の処理は削除
               >
                 <Icon className={cn('w-5 h-5 flex-shrink-0', isActive && 'animate-pulse')} />
                 {!isCollapsed && <span className='ml-3'>{item.label}</span>}
