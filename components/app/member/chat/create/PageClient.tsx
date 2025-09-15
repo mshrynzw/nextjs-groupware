@@ -1,8 +1,9 @@
 'use client';
-import { ArrowLeft, BadgeCheck, Mail, Minus, Plus, Search, Users } from 'lucide-react';
+import { BadgeCheck, Mail, Minus, Plus, Search, Users } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 
+import BackButton from '@/components/common/BackButton';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -77,7 +78,7 @@ export default function PageClient({
     // userGroupsWithMembersから該当グループのメンバーを取得
     const groupData = userGroupsWithMembers.find((ug) => ug.group_id === groupId);
     if (!groupData) {
-      console.error('Group not found:', groupId);
+      console.error('グループが見つかりませんでした:', groupId);
       return;
     }
 
@@ -192,14 +193,7 @@ export default function PageClient({
       <div className='max-w-full py-6'>
         <Card className='w-full'>
           <CardHeader className='flex flex-row'>
-            <Button
-              variant='ghost'
-              size='sm'
-              onClick={() => router.push('/member/chat')}
-              className='mr-2'
-            >
-              <ArrowLeft className='w-4 h-4' />
-            </Button>
+            <BackButton backPath='/member/chat' />
             <CardTitle>チャンネル一覧</CardTitle>
           </CardHeader>
           <CardContent className='py-3 flex flex-wrap gap-2'>
