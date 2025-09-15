@@ -3,6 +3,7 @@ import '@/app/globals.css';
 import { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 
+import { Toaster } from '@/components/ui/toaster';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -64,6 +65,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
       </head>
       <body className={inter.className} suppressHydrationWarning>
         {children}
+        <Toaster />
       </body>
     </html>
   );

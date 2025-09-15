@@ -108,7 +108,7 @@ export default function PageClient({
   };
 
   return (
-    <div className='space-y-6 m-4'>
+    <div className='space-y-4 m-4'>
       {/* Top Section with Graph and Stats */}
       <div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
         {/* Large Graph Area */}
@@ -166,7 +166,7 @@ export default function PageClient({
             <StatsCard
               title='最新日のシステムエラーログ'
               value={errorLogsCount}
-              change={errorLogsChange}
+              change={Math.round(errorLogsChange / 100)}
               icon={<AlertCircle className='w-6 h-6' />}
               comparisonText='前日比較'
             />
@@ -177,7 +177,7 @@ export default function PageClient({
             <StatsCard
               title='最新日の監査ログ'
               value={auditLogsCount}
-              change={auditLogsChange}
+              change={Math.round(auditLogsChange / 100)}
               icon={<Settings className='w-6 h-6' />}
               comparisonText='前日比較'
             />
@@ -231,13 +231,23 @@ export default function PageClient({
           </CardHeader>
           <CardContent>
             <div className='space-y-3'>
-              <div className='flex items-center space-x-3 p-3 bg-green-50 rounded-lg'>
-                <CheckCircle className='w-5 h-5 text-green-600' />
-                <div>
-                  <div className='font-medium text-sm text-green-800'>システム正常稼働中</div>
-                  <div className='text-xs text-green-700'>全サービスが正常に動作しています</div>
+              {errorLogsChange > 0 ? (
+                <div className='flex items-center space-x-3 p-3 bg-red-50 rounded-lg'>
+                  <AlertCircle className='w-5 h-5 text-red-600' />
+                  <div>
+                    <div className='font-medium text-sm text-red-800'>システム異常稼働中</div>
+                    <div className='text-xs text-red-700'>システムエラーログが増加しています。</div>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className='flex items-center space-x-3 p-3 bg-green-50 rounded-lg'>
+                  <CheckCircle className='w-5 h-5 text-green-600' />
+                  <div>
+                    <div className='font-medium text-sm text-green-800'>システム正常稼働中</div>
+                    <div className='text-xs text-green-700'>全サービスが正常に動作しています</div>
+                  </div>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>

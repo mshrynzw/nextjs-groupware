@@ -1,42 +1,39 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Company } from '@/schemas/company';
-
-// import { useAuth } from '@/contexts/auth-context';
 import { deleteCompany } from '@/lib/actions/system-admin/company';
+import { Company } from '@/schemas/company';
+import type { UserProfile } from '@/schemas/user_profile';
 
 export default function CompanyDeleteDialog({
+  user,
   open,
   onOpenChangeAction,
   company,
 }: {
+  user: UserProfile;
   open: boolean;
   onOpenChangeAction: (open: boolean) => void;
   company: Company | null;
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
-  const { user: currentUser } = useAuth();
-
   const handleDelete = async () => {
     if (!company) return;
     setLoading(true);
     setError(null);
 
     try {
-      const result = await deleteCompany(company.id, currentUser?.id);
+      const result = await deleteCompany(company.id, user.id);
 
       if (result.success) {
         onOpenChangeAction(false);

@@ -1,17 +1,19 @@
 'use client';
-import { useState, useEffect } from 'react';
 import {
-  Eye,
   Building2,
-  MapPin,
-  Phone,
   Calendar,
   CheckCircle2,
-  XCircle,
+  Eye,
+  MapPin,
+  Phone,
   Users,
+  XCircle,
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
@@ -19,15 +21,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { getAdminUsers } from '@/lib/actions/admin/users';
+import { getAllCompanyFeatures } from '@/lib/actions/system-admin/feature';
 import type { Company } from '@/schemas/company';
 import type { CompanyFeatures } from '@/schemas/features';
 import type { UserProfileData } from '@/schemas/users';
-import { getAdminUsers } from '@/lib/actions/admin/users';
-
-import { getAllCompanyFeatures } from '@/lib/actions/system-admin/features';
 
 interface CompanyPreviewDialogProps {
   company: Company;

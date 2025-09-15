@@ -38,7 +38,7 @@ if (!serviceRoleKey) {
   console.error('SUPABASE_SERVICE_ROLE_KEY is not set');
 }
 
-const supabaseAdmin = await createSupabaseServerClient();
+// supabaseAdminは各関数内で作成する
 
 /**
  * クライアント情報を取得
@@ -155,6 +155,7 @@ function validateEditCompanyForm(form: EditCompanyFormData): CompanyValidationRe
  * コードの重複チェック
  */
 async function checkCompanyCodeExists(code: string, excludeId?: string): Promise<boolean> {
+  const supabaseAdmin = await createSupabaseServerClient();
   const query = supabaseAdmin
     .from('companies')
     .select('id')
@@ -173,6 +174,7 @@ async function checkCompanyCodeExists(code: string, excludeId?: string): Promise
  * メールアドレスの重複チェック
  */
 async function checkEmailExists(email: string): Promise<boolean> {
+  const supabaseAdmin = await createSupabaseServerClient();
   const { data } = await supabaseAdmin
     .from('user_profiles')
     .select('id')
@@ -186,6 +188,7 @@ async function checkEmailExists(email: string): Promise<boolean> {
  * コードの重複チェック
  */
 async function checkUserCodeExists(code: string): Promise<boolean> {
+  const supabaseAdmin = await createSupabaseServerClient();
   const { data } = await supabaseAdmin
     .from('user_profiles')
     .select('id')
@@ -240,6 +243,8 @@ export async function createCompany(
   }
 
   return withErrorHandling(async () => {
+    const supabaseAdmin = await createSupabaseServerClient();
+
     // バリデーション
     const validation = validateCreateCompanyForm(form);
     if (!validation.isValid) {
@@ -591,6 +596,8 @@ export async function updateCompany(
   });
 
   return withErrorHandling(async () => {
+    const supabaseAdmin = await createSupabaseServerClient();
+
     // バリデーション
     const validation = validateEditCompanyForm(form);
     if (!validation.isValid) {
@@ -750,6 +757,8 @@ export async function deleteCompany(
   });
 
   return withErrorHandling(async () => {
+    const supabaseAdmin = await createSupabaseServerClient();
+
     // 企業の存在確認
     const { data: existingCompany, error: fetchError } = await supabaseAdmin
       .from('companies')
@@ -880,6 +889,8 @@ export async function getCompanies(
   });
 
   return withErrorHandling(async () => {
+    const supabaseAdmin = await createSupabaseServerClient();
+
     const {
       search = '',
       status = 'all',
@@ -984,6 +995,8 @@ export async function getCompanyStats(): Promise<
   });
 
   return withErrorHandling(async () => {
+    const supabaseAdmin = await createSupabaseServerClient();
+
     const { data: companies, error } = await supabaseAdmin
       .from('companies')
       .select('is_active, deleted_at, created_at, updated_at');

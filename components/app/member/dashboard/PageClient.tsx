@@ -419,7 +419,7 @@ export default function PageClient({
   const notificationCount = user.dashboard_notification_count ?? 3;
 
   return (
-    <div className='space-y-6 m-4'>
+    <div className='space-y-4 m-4'>
       {/* 統計カード - デスクトップのみ */}
       <div
         className={`hidden lg:grid gap-4 mb-6 ${user.is_show_overtime ? 'lg:grid-cols-3' : 'lg:grid-cols-2'}`}

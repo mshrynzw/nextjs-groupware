@@ -1,28 +1,29 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { Company } from '@/schemas/company';
-import type { EditCompanyFormData } from '@/schemas/company';
 import { updateCompany } from '@/lib/actions/system-admin/company';
-// import { useAuth } from '@/contexts/auth-context';
+import type { EditCompanyFormData } from '@/schemas/company';
+import { Company } from '@/schemas/company';
+import type { UserProfile } from '@/schemas/user_profile';
 
 export default function CompanyEditDialog({
+  user,
   open,
   onOpenChangeAction,
   company,
 }: {
+  user: UserProfile;
   open: boolean;
   onOpenChangeAction: (open: boolean) => void;
   company: Company | null;
@@ -37,8 +38,8 @@ export default function CompanyEditDialog({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const router = useRouter();
-  const { user: currentUser } = useAuth();
+  // const router = useRouter();
+  // const { user: currentUser } = useAuth();
 
   // 企業データが変更されたときにフォームを更新
   useEffect(() => {
@@ -61,7 +62,7 @@ export default function CompanyEditDialog({
 
     try {
       if (company) {
-        const result = await updateCompany(company.id, editForm, currentUser?.id);
+        const result = await updateCompany(company.id, editForm, user.id);
 
         if (result.success) {
           onOpenChangeAction(false);

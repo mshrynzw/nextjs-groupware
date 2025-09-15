@@ -51,7 +51,7 @@ export const adminMenuItems: MenuItem[] = [
 export const systemAdminMenuItems: MenuItem[] = [
   { href: '/system-admin', icon: 'home', label: 'ダッシュボード' },
   { href: '/system-admin/company', icon: 'building', label: '企業管理' },
-  { href: '/system-admin/features', icon: 'settings', label: '機能管理' },
+  { href: '/system-admin/feature', icon: 'settings', label: '機能管理' },
   { href: '/system-admin/logs', icon: 'activity', label: 'ログ' },
   { href: '/system-admin/system', icon: 'barChart3', label: 'システム管理' },
 ];

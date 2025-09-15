@@ -1,0 +1,6 @@
+<Card className='bg-white/5 bg-gradient-to-br from-white via-gray-50/50 to-blue-50/30'>
+
+{/* Bottom border with gradient */}
+<div className='absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-400 rounded-b-lg'></div>
+
+<div className='space-y-4 m-4'>

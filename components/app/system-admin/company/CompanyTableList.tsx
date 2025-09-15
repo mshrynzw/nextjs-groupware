@@ -1,51 +1,50 @@
 'use client';
-import { useState, useMemo } from 'react';
 import {
-  Pencil,
-  Trash2,
-  Plus,
   Building2,
   CheckCircle2,
-  HelpCircle,
-  Search,
-  Filter,
-  ChevronUp,
   ChevronDown,
   ChevronsUpDown,
+  ChevronUp,
   Eye,
+  Filter,
+  HelpCircle,
+  Plus,
+  Search,
   Settings,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
 
-import { Button } from '@/components/ui/button';
 import { ActionButton } from '@/components/ui/action-button';
-import { StandardButton } from '@/components/ui/standard-button';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select';
+import { StandardButton } from '@/components/ui/standard-button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import type { Company } from '@/schemas/company';
-import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
-import { useToast } from '@/hooks/use-toast';
+import type { UserProfile } from '@/schemas/user_profile';
 
 import CompanyCreateDialog from './CompanyCreateDialog';
-import CompanyEditDialog from './CompanyEditDialog';
 import CompanyDeleteDialog from './CompanyDeleteDialog';
+import CompanyEditDialog from './CompanyEditDialog';
 import CompanyPreviewDialog from './CompanyPreviewDialog';
 
 // import { useAuth } from '@/contexts/auth-context';
 
-export default function CompanyListTable({
+export default function CompanyTableList({
+  user,
   companies,
   activeCompanyCount,
   deletedCompanyCount,
 }: {
+  user: UserProfile;
   companies: Company[];
   activeCompanyCount: number;
   deletedCompanyCount: number;
@@ -56,7 +55,6 @@ export default function CompanyListTable({
     'created_at' | 'name' | 'code' | 'is_active' | 'updated_at'
   >('created_at');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
-  const { toast } = useToast();
   const router = useRouter();
 
   // ダイアログの状態管理
@@ -65,9 +63,6 @@ export default function CompanyListTable({
   const [editTarget, setEditTarget] = useState<Company | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<Company | null>(null);
-
-  // 認証コンテキストを取得
-  const { user, isLoggingOut } = useAuth();
 
   // フィルタリングとソート
   const filteredCompanies = useMemo(() => {
@@ -179,16 +174,11 @@ export default function CompanyListTable({
     router.push(`/system-admin/features?company=${company.id}`);
   };
 
-  // ログアウト中またはユーザーが存在しない場合は何も表示しない
-  if (isLoggingOut || !user) {
-    return null;
-  }
-
   return (
     <div className='space-y-6'>
       {/* サマリーカード */}
       <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-        <Card>
+        <Card className='bg-white/5 bg-gradient-to-br from-white via-gray-50/50 to-blue-50/30'>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
             <CardTitle className='text-sm font-medium'>総企業数</CardTitle>
             <Building2 className='h-4 w-4 text-muted-foreground' />
@@ -197,7 +187,7 @@ export default function CompanyListTable({
             <div className='text-2xl font-bold'>{companies.length}</div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className='bg-white/5 bg-gradient-to-br from-white via-gray-50/50 to-blue-50/30'>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
             <CardTitle className='text-sm font-medium'>アクティブ</CardTitle>
             <CheckCircle2 className='h-4 w-4 text-green-600' />
@@ -206,7 +196,7 @@ export default function CompanyListTable({
             <div className='text-2xl font-bold text-green-600'>{activeCompanyCount}</div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className='bg-white/5 bg-gradient-to-br from-white via-gray-50/50 to-blue-50/30'>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
             <CardTitle className='text-sm font-medium'>削除済み企業数</CardTitle>
             <HelpCircle className='h-4 w-4 text-muted-foreground' />
@@ -218,7 +208,7 @@ export default function CompanyListTable({
       </div>
 
       {/* フィルター */}
-      <Card>
+      <Card className='bg-white/5 bg-gradient-to-br from-white via-gray-50/50 to-blue-50/30'>
         <CardHeader>
           <CardTitle className='flex items-center gap-2'>
             <Filter className='h-5 w-5' />▽ フィルター
@@ -257,7 +247,7 @@ export default function CompanyListTable({
       </Card>
 
       {/* 企業一覧テーブル */}
-      <div className='bg-white rounded-lg shadow p-4'>
+      <div className='bg-white/5 bg-gradient-to-br from-white via-gray-50/50 to-blue-50/30 rounded-lg shadow p-4'>
         <div className='flex items-center justify-between mb-4'>
           <h2 className='text-lg font-semibold'>企業一覧</h2>
           <StandardButton buttonType='create' onClick={() => setCreateDialogOpen(true)}>
@@ -412,15 +402,21 @@ export default function CompanyListTable({
       </div>
 
       {/* 分割済みダイアログコンポーネント */}
-      <CompanyCreateDialog open={createDialogOpen} onOpenChangeAction={setCreateDialogOpen} />
+      <CompanyCreateDialog
+        user={user}
+        open={createDialogOpen}
+        onOpenChangeAction={setCreateDialogOpen}
+      />
 
       <CompanyEditDialog
+        user={user}
         open={editDialogOpen}
         onOpenChangeAction={setEditDialogOpen}
         company={editTarget}
       />
 
       <CompanyDeleteDialog
+        user={user}
         open={deleteDialogOpen}
         onOpenChangeAction={setDeleteDialogOpen}
         company={deleteTarget}

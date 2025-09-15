@@ -1,30 +1,30 @@
 'use client';
-import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import type { CreateCompanyFormData } from '@/schemas/company';
 import { createCompany } from '@/lib/actions/system-admin/company';
-// import { useAuth } from '@/contexts/auth-context';
-import { AppError } from '@/lib/utils/error-handling';
+import type { CreateCompanyFormData } from '@/schemas/company';
+import type { UserProfile } from '@/schemas/user_profile';
 
 const steps = [{ label: '企業情報' }, { label: 'グループ情報' }, { label: '管理者ユーザー情報' }];
 
 export default function CompanyCreateDialog({
+  user,
   open,
   onOpenChangeAction,
 }: {
+  user: UserProfile;
   open: boolean;
   onOpenChangeAction: (open: boolean) => void;
 }) {
@@ -33,7 +33,7 @@ export default function CompanyCreateDialog({
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const { user: currentUser } = useAuth();
+  // const { user: currentUser } = useAuth();
 
   const [form, setForm] = useState<CreateCompanyFormData>({
     name: '',
@@ -51,8 +51,6 @@ export default function CompanyCreateDialog({
     group_name: 'デフォルト',
   });
 
-  const router = useRouter();
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -60,7 +58,7 @@ export default function CompanyCreateDialog({
     setFieldErrors({});
 
     try {
-      const result = await createCompany(form, currentUser?.id);
+      const result = await createCompany(form, user.id);
 
       if (result.success) {
         onOpenChangeAction(false);

@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import PageClient from '@/components/app/system-admin/PageClient';
+import PageClient from '@/components/app/system-admin/dashboard/PageClient';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { getOrganizationStats } from '@/lib/actions/system-admin/organization-stats';
 import { getRoleStats } from '@/lib/actions/system-admin/role-stats';
