@@ -18,7 +18,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useToast } from '@/hooks/use-toast';
-import { toggleFeature } from '@/lib/actions/system-admin/feature';
+import { toggleFeature } from '@/lib/actions/feature';
 import type { Company } from '@/schemas/company';
 import type { CompanyFeatures } from '@/schemas/features';
 import type { UserProfile } from '@/schemas/user_profile';

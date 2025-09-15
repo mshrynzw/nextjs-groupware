@@ -22,7 +22,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { getAdminUsers } from '@/lib/actions/admin/users';
-import { getAllCompanyFeatures } from '@/lib/actions/system-admin/feature';
+import { getAllCompanyFeatures } from '@/lib/actions/feature';
 import type { Company } from '@/schemas/company';
 import type { CompanyFeatures } from '@/schemas/features';
 import type { UserProfileData } from '@/schemas/users';

@@ -13,7 +13,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { createCompany } from '@/lib/actions/system-admin/company';
+import { createCompany } from '@/lib/actions/company';
 import type { CreateCompanyFormData } from '@/schemas/company';
 import type { UserProfile } from '@/schemas/user_profile';
 

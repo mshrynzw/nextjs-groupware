@@ -2,8 +2,8 @@ import { Suspense } from 'react';
 
 import PageClient from '@/components/app/system-admin/feature/PageClient';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { getCompanies } from '@/lib/actions/system-admin/company';
-import { getAllCompanyFeatures } from '@/lib/actions/system-admin/feature';
+import { getCompanies } from '@/lib/actions/company';
+import { getAllCompanyFeatures } from '@/lib/actions/feature';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import type { UserProfile } from '@/schemas/user_profile';
 

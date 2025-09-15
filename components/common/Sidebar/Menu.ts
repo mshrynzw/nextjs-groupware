@@ -22,7 +22,7 @@ export type MenuItem =
 export const baseUserMenuItems: MenuItem[] = [
   { href: '/member', icon: 'home', label: 'ダッシュボード' },
   { href: '/member/attendance', icon: 'clock', label: '勤怠' },
-  { href: '/member/requests', icon: 'fileText', label: '申請' },
+  { href: '/member/request', icon: 'fileText', label: '申請' },
   { href: '/member/leave', icon: 'house', label: '休暇' },
   { href: '/member/schedule', icon: 'calendar', label: 'スケジュール', feature: 'schedule' },
   { href: '/member/report', icon: 'barChart3', label: 'レポート', feature: 'report' },
@@ -32,10 +32,10 @@ export const baseUserMenuItems: MenuItem[] = [
 
 export const adminMenuItems: MenuItem[] = [
   { href: '/admin', icon: 'home', label: 'ダッシュボード' },
-  { href: '/admin/users', icon: 'users', label: 'ユーザー管理' },
+  { href: '/admin/user', icon: 'users', label: 'ユーザー管理' },
   { href: '/admin/group', icon: 'building', label: 'グループ管理' },
   { href: '/admin/attendance', icon: 'clock', label: '勤怠管理' },
-  { href: '/admin/requests', icon: 'fileText', label: '申請管理' },
+  { href: '/admin/request', icon: 'fileText', label: '申請管理' },
   { href: '/admin/leave', icon: 'house', label: '休暇管理' },
   {
     href: '/admin/report',
@@ -43,8 +43,8 @@ export const adminMenuItems: MenuItem[] = [
     label: 'レポート管理',
     feature: 'report',
   },
-  { href: '/admin/logs', icon: 'activity', label: 'ログ' },
-  { href: '/admin/personal-settings', icon: 'users', label: '個人設定' },
+  { href: '/admin/log', icon: 'activity', label: 'ログ' },
+  { href: '/admin/personal-setting', icon: 'users', label: '個人設定' },
   { href: '/admin/settings', icon: 'settings', label: '管理設定' },
 ];
 
@@ -52,6 +52,6 @@ export const systemAdminMenuItems: MenuItem[] = [
   { href: '/system-admin', icon: 'home', label: 'ダッシュボード' },
   { href: '/system-admin/company', icon: 'building', label: '企業管理' },
   { href: '/system-admin/feature', icon: 'settings', label: '機能管理' },
-  { href: '/system-admin/logs', icon: 'activity', label: 'ログ' },
+  { href: '/system-admin/log', icon: 'activity', label: 'ログ' },
   { href: '/system-admin/system', icon: 'barChart3', label: 'システム管理' },
 ];

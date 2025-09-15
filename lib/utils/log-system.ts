@@ -1,5 +1,5 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { AuditLog, LogLevel, LogSettingKey, SystemLog } from '@/schemas/database/log';
+import { AuditLog, LogLevel, LogSettingKey, SystemLog } from '@/schemas/log';
 
 // ログ設定値の型定義
 type LogSettingValue = string | number | boolean | string[];

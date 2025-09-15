@@ -12,7 +12,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { updateCompany } from '@/lib/actions/system-admin/company';
+import { updateCompany } from '@/lib/actions/company';
 import type { EditCompanyFormData } from '@/schemas/company';
 import { Company } from '@/schemas/company';
 import type { UserProfile } from '@/schemas/user_profile';

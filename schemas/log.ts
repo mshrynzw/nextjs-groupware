@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { BaseEntitySchema, UUIDSchema, DynamicDataSchema } from './base';
+import { BaseEntitySchema, DynamicDataSchema, UUIDSchema } from './database/base';
 
 // ================================
 // ログシステム関連型
@@ -189,6 +189,56 @@ export const LogStatsSchema = z.object({
   avg_response_time: z.number().optional(),
 });
 
+export const SystemLogsPageSchema = z.object({
+  page: z.number().min(1).default(1),
+  limit: z.number().min(1).max(1000).default(50),
+});
+
+export const AuditLogsPageSchema = z.object({
+  page: z.number().min(1).default(1),
+  limit: z.number().min(1).max(1000).default(50),
+});
+
+/**
+ * システムログ表示列の設定
+ */
+export const SystemLogsVisibleColumnsSchema = z.object({
+  id: z.boolean().default(true),
+  level: z.boolean().default(true),
+  created_at: z.boolean().default(true),
+  host: z.boolean().default(false),
+  method: z.boolean().default(false),
+  path: z.boolean().default(true),
+  status_code: z.boolean().default(false),
+  response_time_ms: z.boolean().default(false),
+  user_id: z.boolean().default(false),
+  company_id: z.boolean().default(false),
+  ip_address: z.boolean().default(false),
+  user_agent: z.boolean().default(false),
+  feature_name: z.boolean().default(false),
+  action_type: z.boolean().default(false),
+  error_message: z.boolean().default(true),
+  environment: z.boolean().default(false),
+  app_version: z.boolean().default(false),
+});
+
+/**
+ * 監査ログ表示列の設定
+ */
+export const AuditLogsVisibleColumnsSchema = z.object({
+  id: z.boolean().default(true),
+  created_at: z.boolean().default(true),
+  user_id: z.boolean().default(true),
+  company_id: z.boolean().default(false),
+  action: z.boolean().default(true),
+  target_type: z.boolean().default(false),
+  target_id: z.boolean().default(false),
+  ip_address: z.boolean().default(false),
+  user_agent: z.boolean().default(false),
+  session_id: z.boolean().default(false),
+  user_profiles: z.boolean().default(true),
+});
+
 // ================================
 // 型定義のエクスポート
 // ================================
@@ -200,3 +250,7 @@ export type LogSetting = z.infer<typeof LogSettingSchema>;
 export type LogSettingKey = z.infer<typeof LogSettingKeySchema>;
 export type LogFilter = z.infer<typeof LogFilterSchema>;
 export type LogStats = z.infer<typeof LogStatsSchema>;
+export type SystemLogsPage = z.infer<typeof SystemLogsPageSchema>;
+export type AuditLogsPage = z.infer<typeof AuditLogsPageSchema>;
+export type SystemLogsVisibleColumns = z.infer<typeof SystemLogsVisibleColumnsSchema>;
+export type AuditLogsVisibleColumns = z.infer<typeof AuditLogsVisibleColumnsSchema>;

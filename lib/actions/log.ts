@@ -1,7 +1,8 @@
 import { revalidatePath } from 'next/cache';
 
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { LogFilter, LogSetting, LogSettingKey, LogStats } from '@/schemas/database/log';
+import { AppError } from '@/lib/utils/error-handling';
+import { AuditLog, LogFilter, LogSetting, LogSettingKey, LogStats, SystemLog } from '@/schemas/log';
 
 // ログ設定値の型定義
 type LogSettingValue = string | number | boolean | string[];
@@ -10,7 +11,12 @@ type LogSettingValue = string | number | boolean | string[];
 // システムログ取得
 // ================================
 
-export async function getSystemLogs(filter: LogFilter = { page: 1, limit: 50 }) {
+export async function getSystemLogs(
+  companyId?: string,
+  filter: LogFilter = { page: 1, limit: 50 }
+): Promise<
+  { success: true; data: SystemLog[]; count: number } | { success: false; error: AppError }
+> {
   try {
     const supabase = await createSupabaseServerClient();
 
@@ -68,19 +74,25 @@ export async function getSystemLogs(filter: LogFilter = { page: 1, limit: 50 }) 
     const { data, error, count } = await query;
 
     if (error) {
-      throw new Error(`Failed to fetch system logs: ${error.message}`);
+      return {
+        success: false,
+        error: AppError.fromSupabaseError(error, 'システムログ取得に失敗しました'),
+      };
     }
 
     return {
-      data: data || [],
-      total: count || 0,
-      page,
-      limit,
-      totalPages: Math.ceil((count || 0) / limit),
+      success: true,
+      data,
+      count: count || 0,
     };
   } catch (error) {
-    console.error('Error fetching system logs:', error);
-    throw error;
+    return {
+      success: false,
+      error: AppError.fromSupabaseError(
+        error,
+        'システムログ取得中に予期しないエラーが発生しました'
+      ),
+    };
   }
 }
 
@@ -88,7 +100,17 @@ export async function getSystemLogs(filter: LogFilter = { page: 1, limit: 50 }) 
 // 監査ログ取得
 // ================================
 
-export async function getAuditLogs(filter: LogFilter = { page: 1, limit: 50 }) {
+export async function getAuditLogs(
+  companyId?: string,
+  filter: LogFilter = { page: 1, limit: 50 }
+): Promise<
+  | {
+      success: true;
+      data: AuditLog[];
+      count: number;
+    }
+  | { success: false; error: AppError }
+> {
   try {
     const supabase = await createSupabaseServerClient();
 
@@ -128,19 +150,22 @@ export async function getAuditLogs(filter: LogFilter = { page: 1, limit: 50 }) {
     const { data, error, count } = await query;
 
     if (error) {
-      throw new Error(`Failed to fetch audit logs: ${error.message}`);
+      return {
+        success: false,
+        error: AppError.fromSupabaseError(error, '監査ログ取得に失敗しました'),
+      };
     }
 
     return {
-      data: data || [],
-      total: count || 0,
-      page,
-      limit,
-      totalPages: Math.ceil((count || 0) / limit),
+      success: true,
+      data,
+      count: count || 0,
     };
   } catch (error) {
-    console.error('Error fetching audit logs:', error);
-    throw error;
+    return {
+      success: false,
+      error: AppError.fromSupabaseError(error, '監査ログ取得中に予期しないエラーが発生しました'),
+    };
   }
 }
 

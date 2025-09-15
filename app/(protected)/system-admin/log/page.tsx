@@ -1,13 +1,12 @@
 import { Suspense } from 'react';
 
-import PageClient from '@/components/app/system-admin/company/PageClient';
+import PageClient from '@/components/app/system-admin/log/PageClient';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { getCompanies } from '@/lib/actions/company';
-import { getAllCompanyFeatures } from '@/lib/actions/feature';
+import { getAuditLogs, getSystemLogs } from '@/lib/actions/log';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import type { UserProfile } from '@/schemas/user_profile';
+import { UserProfile } from '@/schemas/user_profile';
 
-async function SystemAdminCompanyContent({ authUser }: { authUser: { id: string } }) {
+export async function SystemAdminLogContent({ authUser }: { authUser: { id: string } }) {
   const supabase = await createSupabaseServerClient();
   const { data: userProfile } = await supabase
     .from('user_profiles')
@@ -28,29 +27,32 @@ async function SystemAdminCompanyContent({ authUser }: { authUser: { id: string 
     );
   }
 
-  const companiesResult = await getCompanies({
-    orderBy: 'created_at',
-    ascending: false,
-  });
-  if (!companiesResult.success) {
-    throw new Error('企業データの取得に失敗しました（' + companiesResult.error.message + '）');
+  const systemLogsResult = await getSystemLogs();
+  if (!systemLogsResult.success) {
+    throw new Error('システムログの取得に失敗しました（' + systemLogsResult.error.message + '）');
   }
+  const systemLogsData = systemLogsResult.data;
+  const systemLogsCount = systemLogsResult.count;
 
-  const featuresResult = await getAllCompanyFeatures();
-  if (!featuresResult.success) {
-    throw new Error('機能データの取得に失敗しました（' + featuresResult.error.message + '）');
+  const auditLogsResult = await getAuditLogs();
+  if (!auditLogsResult.success) {
+    throw new Error('監査ログの取得に失敗しました（' + auditLogsResult.error.message + '）');
   }
+  const auditLogsData = auditLogsResult.data;
+  const auditLogsCount = auditLogsResult.count;
 
   return (
     <PageClient
       user={userProfile as UserProfile}
-      companies={companiesResult.data.companies}
-      companyFeaturesData={featuresResult.data}
+      systemLogsData={systemLogsData}
+      systemLogsCount={systemLogsCount}
+      auditLogsData={auditLogsData}
+      auditLogsCount={auditLogsCount}
     />
   );
 }
 
-export default async function SystemAdminCompany() {
+export default async function SystemAdminLog() {
   const supabase = await createSupabaseServerClient();
   const {
     data: { user: authUser },
@@ -62,7 +64,7 @@ export default async function SystemAdminCompany() {
 
   return (
     <Suspense fallback={<LoadingSpinner />}>
-      <SystemAdminCompanyContent authUser={authUser} />
+      <SystemAdminLogContent authUser={authUser} />
     </Suspense>
   );
 }

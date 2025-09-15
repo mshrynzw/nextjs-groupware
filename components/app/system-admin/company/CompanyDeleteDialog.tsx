@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { deleteCompany } from '@/lib/actions/system-admin/company';
+import { deleteCompany } from '@/lib/actions/company';
 import { Company } from '@/schemas/company';
 import type { UserProfile } from '@/schemas/user_profile';
 
