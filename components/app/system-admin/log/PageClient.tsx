@@ -310,15 +310,7 @@ export default function SystemAdminLogPage({
   };
 
   return (
-    <div className='container mx-auto p-6 space-y-6'>
-      {/* ヘッダー */}
-      <div className='flex items-center justify-between'>
-        <div>
-          <h1 className='text-3xl font-bold text-gray-900'>ログ管理</h1>
-          <p className='text-gray-600 mt-2'>システムログと監査ログを管理します</p>
-        </div>
-      </div>
-
+    <div className='space-y-4 m-4'>
       <Tabs value={activeTab} onValueChange={setActiveTab} className='space-y-6'>
         <TabsList className='grid w-full grid-cols-2'>
           <TabsTrigger value='system-logs' className='flex items-center space-x-2'>
